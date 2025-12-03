@@ -7,6 +7,7 @@ ENV TZ=UTC
 RUN apt-get update && apt-get install -y \
     texlive-xetex \
     texlive-latex-extra \
+    texlive-lang-extra \
     texlive-lang-arabic \
     latexmk \
     make \
