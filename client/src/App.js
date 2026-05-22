@@ -1,9 +1,10 @@
+import InputArea from "./components/MainArea/InputArea";
 
 function App() {
   return (
-    <div className="bg-red-400 w-full">
-      something 
-      
+    <div className="bg-main-color text-white w-full h-screen flex justify-center">
+      <InputArea>
+      </InputArea>
     </div>
   );
 }
