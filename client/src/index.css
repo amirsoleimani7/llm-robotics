@@ -17,3 +17,6 @@ code {
     monospace;
 }
 
+textarea{
+  scrollbar-width: thin; 
+}
