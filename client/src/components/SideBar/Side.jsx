@@ -69,12 +69,15 @@ function Side() {
 
   return (
     <>
-      <button
-        onClick={handle_sidebar}
-        className="fixed top-2 w-[40px] aspect-square  flex justify-center items-center p-1 duration-300 ease-in-out transition-all max-md:translate-x-full -translate-x-full  max-md:-left-7"
-      >
-        <RxHamburgerMenu />
-      </button>
+      <div className="fixed top-2 w-[150px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 -left-full" >
+        <button
+          onClick={handle_sidebar}
+          
+        >
+          <RxHamburgerMenu />
+        </button>
+        <p className="font-bold text-2xl">Robo Talk</p>
+      </div>
       <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[200px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all">
         <img
           src=""
@@ -100,11 +103,12 @@ function Side() {
       <div
         className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0 z-10 flex-none overflow-hidden bg-main-color-1 px-2 flex flex-col gap-3"
         style={{
-          width: `${is_open ? "250px" : "0px"}`,
+          width: `${is_open ? "270px" : "0px"}`,
           opacity: `${is_open ? "100" : "0"}`,
           borderRight: `${is_open ? "1px solid rgb(55 65 81 / var(--tw-border-opacity, 1)" : ""}`,
         }}
       >
+        
         <div className="h-10 bg flex justify-between items-center mt-4">
           <div className="flex gap-1 items-center w-full">
             <img
