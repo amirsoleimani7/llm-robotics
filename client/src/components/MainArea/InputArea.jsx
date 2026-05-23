@@ -11,7 +11,7 @@ function InputArea() {
 
   return (
     <>
-      <div className="flex flex-col bg-second-color w-[700px] h-36 p-6 rounded-[2rem] mt-auto mb-8 duration-300 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4 max-md:mb-4 max-md:mx-2 mr-auto">
+      <div className="flex flex-col bg-second-color w-[700px] h-36 p-6 rounded-[2rem] mt-auto mb-2 duration-300 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4 ">
         <textarea
           type="text"
           placeholder="Message to Robot"
