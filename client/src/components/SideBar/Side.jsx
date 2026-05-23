@@ -26,7 +26,7 @@ function Side() {
       <div className="fixed top-2 w-[150px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 -left-full">
         <button
           onClick={handle_sidebar}
-          className="w-[20px] h-full aspect-square  "
+          className="w-[20px] h-full aspect-square"
         >
           <RxHamburgerMenu />
         </button>
