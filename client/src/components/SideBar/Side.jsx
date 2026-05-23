@@ -4,6 +4,7 @@ import { IoIosShareAlt } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { CgSidebar } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
+import { RiChatNewFill } from "react-icons/ri";
 
 /*
 
@@ -68,8 +69,11 @@ function Side() {
 
   return (
     <>
-      <button onClick={handle_sidebar} className="fixed top-2 w-[40px] aspect-square  flex justify-center items-center p-1 duration-300 ease-in-out transition-all max-md:translate-x-full -translate-x-full  max-md:-left-7">
-        <RxHamburgerMenu/>
+      <button
+        onClick={handle_sidebar}
+        className="fixed top-2 w-[40px] aspect-square  flex justify-center items-center p-1 duration-300 ease-in-out transition-all max-md:translate-x-full -translate-x-full  max-md:-left-7"
+      >
+        <RxHamburgerMenu />
       </button>
       <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[200px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all">
         <img
@@ -94,14 +98,14 @@ function Side() {
       </div>
 
       <div
-        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0 z-10 flex-none overflow-hidden bg-main-color-1"
+        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0 z-10 flex-none overflow-hidden bg-main-color-1 px-2 flex flex-col gap-3"
         style={{
           width: `${is_open ? "250px" : "0px"}`,
           opacity: `${is_open ? "100" : "0"}`,
           borderRight: `${is_open ? "1px solid rgb(55 65 81 / var(--tw-border-opacity, 1)" : ""}`,
         }}
       >
-        <div className="h-10 bg flex justify-between items-center my-5 mx-2 " >
+        <div className="h-10 bg flex justify-between items-center mt-4">
           <div className="flex gap-1 items-center w-full">
             <img
               src=""
@@ -109,7 +113,6 @@ function Side() {
               className="bg-red-100 w-[40px] h-[40px] rounded-[2rem] aspect-square"
             />
             <h1 className="font-bold text-lg">RoboTalk</h1>
-
           </div>
           <div className="flex gap-2">
             <button className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]">
@@ -123,6 +126,33 @@ function Side() {
             </button>
           </div>
         </div>
+
+        <button className="flex justify-center items-center w-full p-2 rounded-3xl bg-second-color-2 border-y border-gray-500 gap-1">
+          <RiChatNewFill />
+          <p>New Chat</p>
+        </button>
+
+        <div className="flex flex-col gap-1">
+          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
+            Acidental Type Clarification
+          </div>
+          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
+            Acidental Type Clarification
+          </div>
+          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
+            Acidental Type Clarification
+          </div>
+          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
+            Acidental Type Clarification
+          </div>
+          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
+            Acidental Type Clarification
+          </div>
+          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
+            Acidental Type Clarification
+          </div>
+        </div>
+        <div></div>
       </div>
     </>
   );
