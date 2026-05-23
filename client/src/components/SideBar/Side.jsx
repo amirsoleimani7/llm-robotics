@@ -1,56 +1,10 @@
 import { useState } from "react";
-import { topButtons, bottomButtons } from "./buttons";
-import { IoIosShareAlt } from "react-icons/io";
+import { topButtons } from "./buttons";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { CgSidebar } from "react-icons/cg";
+import { CgMore, CgSidebar } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
 import { RiChatNewFill } from "react-icons/ri";
-
-/*
-
-        <button
-          className="absolute top-4 -translate-x-full max-md:translate-x-full max-md:left-2 duration-300 ease-in-out transition-all "
-          onClick={handle_sidebar}
-        >
-          <RxHamburgerMenu />
-        </button>
-      <div
-        className="duration-300 ease-in-out h-full border-r border-gray-700  max-lg:fixed max-lg:left-0 bg-red-300"
-        // style={{
-        //   width: `${is_open ? "250px" : "0px"}`,
-        //   opacity: `${is_open ? "100" : "100"}`,
-        // }}
-      >
-        <div className="w-[100vw] absolute  top-2 left-2 gap-1 duration-300 ease-in-out tarnsform-all">
-          <div className="flex gap-2">
-            <img
-              src=""
-              alt=""
-              className="bg-red-100 rounded-[2rem] aspect-square"
-            />
-            <div className="flex bg-main-color-2 gap-2 p-1 rounded-[2rem] border border-gray-700">
-              {topButtons.map((btn) => {
-                const Icon = btn.icon;
-                return (
-                  <button
-                    key={btn.id}
-                    className="w-full aspect-square p-1 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]"
-                    onClick={handlers[btn.onClick]}
-                  >
-                    <Icon className="scale-105" />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-          <button className="rounded-[2rem] p-3 b ml-auto">
-            <IoIosShareAlt />
-          </button>
-        </div>
-        
-      </div>
-
-        */
+import { IoIosMore } from "react-icons/io";
 
 function Side() {
   const [is_open, setIs_open] = useState(false);
@@ -69,10 +23,10 @@ function Side() {
 
   return (
     <>
-      <div className="fixed top-2 w-[150px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 -left-full" >
+      <div className="fixed top-2 w-[150px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 -left-full">
         <button
           onClick={handle_sidebar}
-          
+          className="w-[20px] h-full aspect-square  "
         >
           <RxHamburgerMenu />
         </button>
@@ -108,7 +62,6 @@ function Side() {
           borderRight: `${is_open ? "1px solid rgb(55 65 81 / var(--tw-border-opacity, 1)" : ""}`,
         }}
       >
-        
         <div className="h-10 bg flex justify-between items-center mt-4">
           <div className="flex gap-1 items-center w-full">
             <img
@@ -156,7 +109,17 @@ function Side() {
             Acidental Type Clarification
           </div>
         </div>
-        <div></div>
+        <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
+          <div className="flex items-center gap-1">
+            <div
+              className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500"
+            />
+            <p className="text-sm">amirhossein soleimani</p>
+          </div>
+          <button>
+            <CgMore />
+          </button>
+        </div>
       </div>
     </>
   );
