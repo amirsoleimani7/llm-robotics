@@ -21,7 +21,7 @@ function Side() {
   return (
     <>
       <div
-        className=" duration-300 ease-in-out h-full border-r border-gray-700 mr-auto max-md:fixed max-md:left-0"
+        className=" duration-300 ease-in-out h-full border-r border-gray-700 mr-auto"
         // style={{
         //   width: `${is_open ? "250px" : "50px"}`,
         //   opacity: `${is_open ? "100" : "100"}`,
@@ -33,7 +33,7 @@ function Side() {
         <button className="absolute right-2 top-2 rounded-[2rem] p-3">
           <IoIosShareAlt/>
         </button>
-
+        
         <div className="w-[180px] absolute flex top-2 left-2 gap-1 duration-300 ease-in-out tarnsform-all max-md:-translate-x-full max-md:left-0">
           <img src="" alt="" className="bg-red-100 w-1/4 rounded-[2rem] aspect-square" />
           <div className="flex bg-main-color-2 w-3/4 gap-2 p-1 rounded-[2rem] border border-gray-700">
