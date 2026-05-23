@@ -11,7 +11,7 @@ function InputArea() {
 
   return (
     <>
-      <div className="flex flex-col bg-second-color w-[700px] h-36 p-6 rounded-[2rem] mt-auto mb-8 duration-300 ease-in-out transition-all border border-gray-500 max-md:h-28 max-md:text-sm max-md:p-4 max-md:mb-2 mr-auto">
+      <div className="flex flex-col bg-second-color w-[700px] h-36 p-6 rounded-[2rem] mt-auto mb-8 duration-300 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4 max-md:mb-4 max-md:mx-2 mr-auto">
         <textarea
           type="text"
           placeholder="Message to Robot"
@@ -19,12 +19,12 @@ function InputArea() {
           className="bg-transparent focus:outline-none w-full h-[80%] resize-none text-white font-semibold"
         />
         <div className="flex justify-between mt-auto w-full">
-          <button className="flex items-center justify-center gap-1 border px-2 border-gray-500 rounded-[2rem] text-sm ">
+          <button className="flex items-center justify-center gap-1 border px-2 border-gray-700 rounded-[2rem] text-sm ">
             <LuBrain></LuBrain>
             <p>Model</p>
           </button>
           <button
-            className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-500 duration-300 ease-in-out"
+            className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-700 duration-300 ease-in-out"
             style={{
               background: `${!is_voice ? "gray" : ""}`,
             }}
