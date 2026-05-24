@@ -90,7 +90,7 @@ function Side() {
           <p>New Chat</p>
         </button>
 
-        <div className="flex flex-col gap-1">
+        <div className="side-section flex flex-col gap-1 overflow-scroll overflow-x-hidden">
         <Chats/>
         <Chats/>
         <Chats/>
@@ -98,6 +98,61 @@ function Side() {
         <Chats/>
         <Chats/>
         <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+
         </div>
         <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
           <div className="flex items-center gap-1">

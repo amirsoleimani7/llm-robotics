@@ -6,7 +6,7 @@ export default function Chats() {
   return (
     <>
       <div
-        className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer"
+        className="w-full p-2 rounded-xl duration-100 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer"
         onClick={go_to_chat_detail}
       >
         Acidental Type Clarification
