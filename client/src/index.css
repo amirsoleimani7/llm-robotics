@@ -23,9 +23,7 @@ textarea{
   scrollbar-width: thin; 
 }
 
-.my-section {
-
-  scrollbar-width: none;
-  scrollbar-color: gray #363738; /* thumb and track */
-  
+.chat-section{
+  scrollbar-width: thin;
+  scrollbar-color: #3c3c3d #0d1117;
 }
