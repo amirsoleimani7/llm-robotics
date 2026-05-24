@@ -2,21 +2,32 @@ import { use, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { LuBrain } from "react-icons/lu";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
+import { faker } from '@faker-js/faker';
+import { useGlobalContext } from "../contextHandle/Context";
 
 function InputArea() {
+  const global_handler = useGlobalContext();
   const [is_voice, SetIsVoice] = useState(true);
   const [input, setInput] = useState("");
   const [high_len, setHighlen] = useState(false);
 
   const handle_user_input = (e) => {
     const input = e.target.value;
+    
+    // checks for the the string
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
+    
     setInput(input);
-  };
 
+  };
+  
+  
   const handle_input = () => {
-    console.log(`prompt is : ${input}`);
+    const user_input = input;
+    const repsone = faker.lorem.paragraph(4);
+    global_handler.handle_messages(user_input,repsone);
+    
   };
 
   return (

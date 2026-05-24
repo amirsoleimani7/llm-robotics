@@ -1,9 +1,20 @@
+import { useGlobalContext } from "../contextHandle/Context";
+
 export default function ChatDetail() {
+  const chat_data = useGlobalContext();
+
   return (
     <>
-      <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae reprehenderit, quod mollitia repellendus odio et distinctio. Debitis veritatis eius ipsum, iure ducimus error totam dolores, beatae earum optio ullam asperiores!
-      </div>      
+      {chat_data.messages.map((m, index) => {
+        return (
+          <>
+            <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words">
+              {m.user_prompt}
+            </div>
+            <div className="w-full ">{m.llm_response}</div>
+          </>
+        );
+      })}
     </>
   );
 }

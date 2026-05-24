@@ -34,11 +34,10 @@ function Side() {
         <p className="font-bold text-2xl">Robo Talk</p>
       </div>
       <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[200px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all">
-        <img
-          src=""
-          alt=""
+        <div
           className="bg-red-100 w-1/4  h-full rounded-full aspect-square"
-        />
+        >
+        </div>
         <div className="flex w-3/4 p-1 gap-1  bg-main-color-2 rounded-[2rem] border border-gray-700">
           {topButtons.map((btn) => {
             const Icon = btn.icon;
@@ -65,11 +64,9 @@ function Side() {
       >
         <div className="h-10 bg flex justify-between items-center mt-4">
           <div className="flex gap-1 items-center w-full">
-            <img
-              src=""
-              alt=""
+            <div
               className="bg-red-100 w-[40px] h-[40px] rounded-[2rem] aspect-square"
-            />
+            ></div>
             <h1 className="font-bold text-lg">RoboTalk</h1>
           </div>
           <div className="flex gap-2">
