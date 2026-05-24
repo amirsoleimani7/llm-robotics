@@ -12,20 +12,26 @@ function InputArea() {
     const input = e.target.value;
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
-    console.log(high_len)
+    setInput(input);
+  };
+
+  const handle_input = () => {
+    console.log(`prompt is : ${input}`);
   };
 
   return (
     <>
-      <div className="flex flex-col bg-second-color w-full h-36 p-6 rounded-[2rem] mt-auto mb-2 duration-500 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4 "
-      style={{
-        height : `${high_len ? "230px" : ""}`
-      }}>
+      <div
+        className="flex flex-col bg-second-color w-full h-36 p-6 rounded-[2rem] mt-auto mb-2 duration-500 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4"
+        style={{
+          height: `${high_len ? "230px" : ""}`,
+        }}
+      >
         <textarea
           type="text"
           placeholder="Message to Robot"
           onChange={handle_user_input}
-          className="bg-transparent focus:outline-none w-full h-[80%] resize-none text-white font-semibold"
+          className="bg-transparent focus:outline-none w-full h-[80%] resize-none text-white "
         />
         <div className="flex justify-between mt-auto w-full">
           <button className="flex items-center justify-center gap-1 border px-2 border-gray-700 rounded-[2rem] text-sm ">
@@ -37,6 +43,7 @@ function InputArea() {
             style={{
               background: `${!is_voice ? "gray" : ""}`,
             }}
+            onClick={handle_input}
           >
             {is_voice ? (
               <MdOutlineKeyboardVoice></MdOutlineKeyboardVoice>
