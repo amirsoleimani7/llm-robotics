@@ -102,57 +102,6 @@ function Side() {
         <Chats/>
         <Chats/>
         <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-
         </div>
         <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
           <div className="flex items-center gap-1">
