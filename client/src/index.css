@@ -22,3 +22,10 @@ code {
 textarea{
   scrollbar-width: thin; 
 }
+
+.my-section {
+
+  scrollbar-width: none;
+  scrollbar-color: gray #363738; /* thumb and track */
+  
+}
