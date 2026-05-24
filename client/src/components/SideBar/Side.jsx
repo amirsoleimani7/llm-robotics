@@ -4,7 +4,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { CgMore, CgSidebar } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
 import { RiChatNewFill } from "react-icons/ri";
-import { IoIosMore } from "react-icons/io";
+
+import Chats from "../Chats/Chats";
 
 function Side() {
   const [is_open, setIs_open] = useState(false);
@@ -28,7 +29,7 @@ function Side() {
           onClick={handle_sidebar}
           className="w-[20px] h-full aspect-square"
         >
-          <RxHamburgerMenu />
+          <RxHamburgerMenu className="pointer-events-none" />
         </button>
         <p className="font-bold text-2xl">Robo Talk</p>
       </div>
@@ -90,30 +91,17 @@ function Side() {
         </button>
 
         <div className="flex flex-col gap-1">
-          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
-            Acidental Type Clarification
-          </div>
-          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
-            Acidental Type Clarification
-          </div>
-          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
-            Acidental Type Clarification
-          </div>
-          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
-            Acidental Type Clarification
-          </div>
-          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
-            Acidental Type Clarification
-          </div>
-          <div className="w-full p-2 rounded-xl duration-300 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer">
-            Acidental Type Clarification
-          </div>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
+        <Chats/>
         </div>
         <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
           <div className="flex items-center gap-1">
-            <div
-              className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500"
-            />
+            <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500" />
             <p className="text-sm">amirhossein soleimani</p>
           </div>
           <button>
