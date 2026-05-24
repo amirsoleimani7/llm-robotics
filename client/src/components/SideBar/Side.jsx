@@ -90,7 +90,7 @@ function Side() {
           <p>New Chat</p>
         </button>
 
-        <div className="side-section flex flex-col gap-1 overflow-scroll overflow-x-hidden">
+        <div className="side-section flex flex-col gap-1 overflow-scroll overflow-x-hidden h-full">
         <Chats/>
         <Chats/>
         <Chats/>
