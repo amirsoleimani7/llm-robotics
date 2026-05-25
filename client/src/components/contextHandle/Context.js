@@ -11,9 +11,12 @@ const AppProvider = ({ children }) => {
       user_prompt,
       llm_response,
     };
+    
+    // adding to prev_chats
     setMessages((prev) => [...prev, current_pair]);
   };
-  console.log(messages);
+  
+  
 
   return <AppContext.Provider value={{messages,handle_messages}}>{children}</AppContext.Provider>;
 };

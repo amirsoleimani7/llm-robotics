@@ -11,10 +11,12 @@ export default function ChatDetail() {
             <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words">
               {m.user_prompt}
             </div>
-            <div className="w-full ">{m.llm_response}</div>
+            <div className="w-full break-words">{m.llm_response}</div>
           </>
         );
       })}
     </>
   );
 }
+
+

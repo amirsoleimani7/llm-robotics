@@ -2,7 +2,7 @@ import { use, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { LuBrain } from "react-icons/lu";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 import { useGlobalContext } from "../contextHandle/Context";
 
 function InputArea() {
@@ -13,26 +13,24 @@ function InputArea() {
 
   const handle_user_input = (e) => {
     const input = e.target.value;
-    
+
     // checks for the the string
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
-    
-    setInput(input);
 
+    setInput(input);
   };
-  
-  
-  const handle_input = () => {
+
+  const handle_input = (e) => {
+    e.preventDefault(); // Prevent page reload
     const user_input = input;
     const repsone = faker.lorem.paragraph(4);
-    global_handler.handle_messages(user_input,repsone);
-    
+    global_handler.handle_messages(user_input, repsone);
   };
-
+  
   return (
     <>
-      <div
+      <form
         className="flex flex-col bg-second-color w-full h-36 p-6 rounded-[2rem] mt-auto mb-2 duration-500 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4"
         style={{
           height: `${high_len ? "230px" : ""}`,
@@ -54,6 +52,7 @@ function InputArea() {
             style={{
               background: `${!is_voice ? "gray" : ""}`,
             }}
+            
             onClick={handle_input}
           >
             {is_voice ? (
@@ -63,7 +62,7 @@ function InputArea() {
             )}
           </button>
         </div>
-      </div>
+      </form>
     </>
   );
 }
