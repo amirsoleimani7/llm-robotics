@@ -29,8 +29,11 @@ function InputArea() {
     const repsone = faker.lorem.paragraph(4);
     global_handler.handle_messages(user_input, repsone);
     
-    const response =  axios.get(
-      "http://127.0.0.1:8000/get_tests"
+    const response =  axios.post(
+      `http://127.0.0.1:8000/get_tests` , {
+        name : user_input,
+        desc : "asdasd"
+      }
     ).then(response  => {
       console.log(response)
     }).catch(error => {
@@ -38,6 +41,7 @@ function InputArea() {
       console.log(error)
     })
   };
+  
   
   return (
     <>
