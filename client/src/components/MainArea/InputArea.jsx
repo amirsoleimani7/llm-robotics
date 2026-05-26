@@ -4,6 +4,8 @@ import { LuBrain } from "react-icons/lu";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
 import { faker } from "@faker-js/faker";
 import { useGlobalContext } from "../contextHandle/Context";
+import axios, { isCancel, AxiosError } from "axios";
+
 
 function InputArea() {
   const global_handler = useGlobalContext();
@@ -26,6 +28,15 @@ function InputArea() {
     const user_input = input;
     const repsone = faker.lorem.paragraph(4);
     global_handler.handle_messages(user_input, repsone);
+    
+    const response =  axios.get(
+      "http://127.0.0.1:8000/get_tests"
+    ).then(response  => {
+      console.log(response)
+    }).catch(error => {
+      console.log(`error is  : ${error}`)
+      console.log(error)
+    })
   };
   
   return (
