@@ -30,9 +30,8 @@ function InputArea() {
     global_handler.handle_messages(user_input, repsone);
     
     const response =  axios.post(
-      `http://127.0.0.1:8000/get_tests` , {
-        name : user_input,
-        desc : "asdasd"
+      `http://127.0.0.1:8000/handle_prompt` , {
+        prompt : user_input
       }
     ).then(response  => {
       console.log(response)
