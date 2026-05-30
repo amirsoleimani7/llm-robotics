@@ -6,42 +6,55 @@ import { faker } from "@faker-js/faker";
 import { useGlobalContext } from "../contextHandle/Context";
 import axios, { isCancel, AxiosError } from "axios";
 
-
 function InputArea() {
   const global_handler = useGlobalContext();
   const [is_voice, SetIsVoice] = useState(true);
   const [input, setInput] = useState("");
+  const [response, setResponse] = useState("");
   const [high_len, setHighlen] = useState(false);
 
   const handle_user_input = (e) => {
     const input = e.target.value;
-
     // checks for the the string
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
-
+    
     setInput(input);
   };
 
-  const handle_input = (e) => {
-    e.preventDefault(); // Prevent page reload
+  const handle_input = async (e) => {
+    e.preventDefault();
     const user_input = input;
-    const repsone = faker.lorem.paragraph(4);
-    global_handler.handle_messages(user_input, repsone);
-    
-    const response =  axios.post(
-      `http://127.0.0.1:8000/handle_prompt` , {
-        prompt : user_input
-      }
-    ).then(response  => {
-      console.log(response)
-    }).catch(error => {
-      console.log(`error is  : ${error}`)
-      console.log(error)
-    })
+
+    // 1. Add user message immediately
+    global_handler.addUserMessage(user_input);
+
+    // Clear input (optional)
+    setInput("");
+
+    try {
+      // 2. Make API call
+      const response = await axios.post(`http://127.0.0.1:8000/handle_prompt`, {
+        prompt: user_input,
+      });
+
+      console.log("Response data:", response.data);
+      setResponse(response.data);
+
+      // 3. Add LLM response when received
+      global_handler.addLLMResponse(response);
+      
+
+    } catch (error) {
+      console.error("Error:", error);
+      const errorMsg = error.response?.data?.message || error.message;
+      setResponse(errorMsg);
+
+      // 4. Add error as response
+      global_handler.addLLMResponse(`Error: ${errorMsg}`);
+    }
   };
-  
-  
+
   return (
     <>
       <form
@@ -66,7 +79,6 @@ function InputArea() {
             style={{
               background: `${!is_voice ? "gray" : ""}`,
             }}
-            
             onClick={handle_input}
           >
             {is_voice ? (

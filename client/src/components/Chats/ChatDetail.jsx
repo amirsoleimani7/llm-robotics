@@ -1,22 +1,32 @@
+// ChatDetail.js
 import { useGlobalContext } from "../contextHandle/Context";
+import React from "react";
 
 export default function ChatDetail() {
-  const chat_data = useGlobalContext();
+  const { messages } = useGlobalContext();
 
   return (
     <>
-      {chat_data.messages.map((m, index) => {
-        return (
-          <>
+      {messages.map((m, index) => (
+        <>
+          {m.type === "user" ? (
             <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words">
-              {m.user_prompt}
+              {m.content}
             </div>
-            <div className="w-full break-words">{m.llm_response}</div>
-          </>
-        );
-      })}
+          ) : (
+            <div className="w-full break-words">
+              <p>
+                {m.content.split("\n").map((line, index) => (
+                  <React.Fragment key={index}>
+                    {line}
+                    {index < m.content.split("\n").length - 1 && <br />}
+                  </React.Fragment>
+                ))}
+              </p>
+            </div>
+          )}
+        </>
+      ))}
     </>
   );
 }
-
-
