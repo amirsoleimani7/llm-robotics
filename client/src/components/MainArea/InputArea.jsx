@@ -21,7 +21,7 @@ function InputArea() {
     
     setInput(input);
   };
-
+  
   const handle_input = async (e) => {
     e.preventDefault();
     const user_input = input;
@@ -42,7 +42,7 @@ function InputArea() {
       setResponse(response.data);
 
       // 3. Add LLM response when received
-      global_handler.addLLMResponse(response);
+      global_handler.addLLMResponse(response.data);
       
 
     } catch (error) {

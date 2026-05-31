@@ -8,22 +8,29 @@ MODEL_PATH = "/home/amir/Desktop/projects/llm-con-test/models/hub/models--micros
 
 class RobotController:
     def __init__(self, model_path):
-        print("Loading model and tokenizer on CPU. This might take a minute...")
-        # REMOVED trust_remote_code=True so it uses native transformers code
+        print("Loading model and tokenizer on CUDA...")
+        
+        # Check if CUDA is available
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(f"Using device: {self.device}")
+        
+        if torch.cuda.is_available():
+            print(f"GPU: {torch.cuda.get_device_name(0)}")
+            print(f"GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
+        
         self.tokenizer = AutoTokenizer.from_pretrained(model_path)
         self.model = AutoModelForCausalLM.from_pretrained(
             model_path,
-            torch_dtype=torch.float32,
-            device_map="cpu"
+            torch_dtype=torch.float16,  # Use float16 for faster inference on GPU
+            device_map="auto"  # Automatically use GPU if available
         )
 
         self.pipe = pipeline(
             "text-generation",
             model=self.model,
-            tokenizer=self.tokenizer
+            tokenizer=self.tokenizer,
         )
         
-
         self.chat_history = [
             {"role": "system", "content": get_system_prompt()}
         ]
@@ -42,15 +49,12 @@ class RobotController:
                 add_generation_prompt=True
             )
             
+            print(f"prompt is : {prompt}")
 
-            # print(f"propmt type is : {type(prompt)}")
-            print(f"propmt is : {prompt}")
-
-            # UPDATED: Added generation_config=None to silence the warning
             outputs = self.pipe(
                 prompt,
                 max_new_tokens=150,
-                temperature=0.1, # low randomness for more concret resualts
+                temperature=0.1,
                 do_sample=True,
                 return_full_text=False,
                 generation_config=None
@@ -78,33 +82,5 @@ class RobotController:
 
         return "System Error: LLM failed to generate valid commands after multiple attempts."
 
-
 # making the instance
 agent = RobotController(model_path=MODEL_PATH)
-
-# # --- Run the Interactive Loop ---
-# if __name__ == "__main__":
-#     model_path = "./models/hub/models--microsoft--Phi-3.5-mini-instruct/snapshots/2fe192450127e6a83f7441aef6e3ca586c338b77"
-
-#     agent = RobotController(model_path)
-#     print("\n=== Robot Control Terminal Ready ===")
-#     print("Type 'exit' to quit or 'clear' to reset memory.\n")
-
-#     while True:
-#         user_input = input("Operator Directive: ")
-
-#         if user_input.lower() in ['exit', 'quit']:
-#             break
-#         elif user_input.lower() == 'clear':
-#             agent.chat_history = [
-#                 {"role": "system", "content": get_system_prompt()}]
-#             print("Memory cleared.\n")
-#             continue
-
-#         print("Thinking...")
-#         commands = agent.process_command(user_input)
-
-#         print("\n--- Executable Robot Commands ---")
-#         print(commands)
-#         print("---------------------------------\n")
-

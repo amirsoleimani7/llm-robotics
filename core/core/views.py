@@ -4,7 +4,7 @@ from rest_framework import status
 from .models import Conversation,Message
 from .serializers import ConversationSerilizer, MessageSerializer
 from rest_framework.decorators import api_view
-from .create_llm import agent
+from .utils.create_llm import agent
 
 @api_view(['GET', 'POST'])
 def handle_prompt(request):
