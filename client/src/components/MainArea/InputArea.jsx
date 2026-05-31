@@ -23,36 +23,6 @@ function InputArea() {
   };
   
   const handle_input = async (e) => {
-    e.preventDefault();
-    const user_input = input;
-
-    // 1. Add user message immediately
-    global_handler.addUserMessage(user_input);
-
-    // Clear input (optional)
-    setInput("");
-
-    try {
-      // 2. Make API call
-      const response = await axios.post(`http://127.0.0.1:8000/handle_prompt`, {
-        prompt: user_input,
-      });
-
-      console.log("Response data:", response.data);
-      setResponse(response.data);
-
-      // 3. Add LLM response when received
-      global_handler.addLLMResponse(response.data);
-      
-
-    } catch (error) {
-      console.error("Error:", error);
-      const errorMsg = error.response?.data?.message || error.message;
-      setResponse(errorMsg);
-
-      // 4. Add error as response
-      global_handler.addLLMResponse(`Error: ${errorMsg}`);
-    }
   };
 
   return (

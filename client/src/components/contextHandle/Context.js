@@ -3,7 +3,10 @@ import React, { useContext, useState } from "react";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
+  
   const [messages, setMessages] = useState([]);
+  const [conversations, setConversations] = useState([]);
+  
   const addUserMessage = (user_prompt) => {
     const userMessage = {
       type: "user",

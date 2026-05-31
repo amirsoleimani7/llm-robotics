@@ -4,8 +4,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { CgMore, CgSidebar } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
 import { RiChatNewFill } from "react-icons/ri";
-
+import axios  from "axios";
 import Chats from "../Chats/Chats";
+import { IoConstructOutline } from "react-icons/io5";
 
 function Side() {
   const [is_open, setIs_open] = useState(false);
@@ -14,12 +15,38 @@ function Side() {
     setIs_open(!is_open);
   };
 
+  const handle_newChat = async () => {
+    // we need to make a newchat and get the id from the server
+
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
+        command : "add_new"
+      });
+      
+      let conversation_id = response.data;
+      if (conversation_id !== null){
+        await axios.post('http://127.0.0.1:8000/make_chat', {
+          command : "make_chat" ,
+          conv_id : conversation_id,
+          role : "user",
+          content : "move home locaion and then move to 1,1,1"
+        })
+        
+        console.log("message added!");
+      }
+
+      
+    } catch (error) {
+      
+      console.error("Error:", error);
+
+    }
+  };
+
+
   const handlers = {
     handle_sidebar,
-    // handle_search,
-    // handle_newChat,
-    // handle_profile,
-    // handle_settings
+    handle_newChat,
   };
 
   return (
@@ -34,10 +61,7 @@ function Side() {
         <p className="font-bold text-2xl">Robo Talk</p>
       </div>
       <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[200px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all">
-        <div
-          className="bg-red-100 w-1/4  h-full rounded-full aspect-square"
-        >
-        </div>
+        <div className="bg-red-100 w-1/4  h-full rounded-full aspect-square"></div>
         <div className="flex w-3/4 p-1 gap-1  bg-main-color-2 rounded-[2rem] border border-gray-700">
           {topButtons.map((btn) => {
             const Icon = btn.icon;
@@ -64,9 +88,7 @@ function Side() {
       >
         <div className="h-10 bg flex justify-between items-center mt-4">
           <div className="flex gap-1 items-center w-full">
-            <div
-              className="bg-red-100 w-[40px] h-[40px] rounded-[2rem] aspect-square"
-            ></div>
+            <div className="bg-red-100 w-[40px] h-[40px] rounded-[2rem] aspect-square"></div>
             <h1 className="font-bold text-lg">RoboTalk</h1>
           </div>
           <div className="flex gap-2">
@@ -82,23 +104,26 @@ function Side() {
           </div>
         </div>
 
-        <button className="flex justify-center items-center w-full p-2 rounded-3xl bg-second-color-2 border-y border-gray-500 gap-1">
+        <button
+          className="flex justify-center items-center w-full p-2 rounded-3xl bg-second-color-2 border-y border-gray-500 gap-1"
+          onClick={handle_newChat}
+        >
           <RiChatNewFill />
           <p>New Chat</p>
         </button>
 
         <div className="side-section flex flex-col gap-1 overflow-scroll overflow-x-hidden h-full">
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
-        <Chats/>
+          <Chats />
+          <Chats />
+          <Chats />
+          <Chats />
+          <Chats />
+          <Chats />
+          <Chats />
+          <Chats />
+          <Chats />
+          <Chats />
+          <Chats />
         </div>
         <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
           <div className="flex items-center gap-1">

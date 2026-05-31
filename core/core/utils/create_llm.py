@@ -6,6 +6,8 @@ from .rag_functions import get_system_prompt, post_process_output, extract_funct
 os.environ['HF_HUB_OFFLINE'] = '1'
 MODEL_PATH = "/home/amir/Desktop/projects/llm-con-test/models/hub/models--microsoft--Phi-3.5-mini-instruct/snapshots/2fe192450127e6a83f7441aef6e3ca586c338b77"
 
+
+
 class RobotController:
     def __init__(self, model_path):
         print("Loading model and tokenizer on CUDA...")
@@ -83,4 +85,4 @@ class RobotController:
         return "System Error: LLM failed to generate valid commands after multiple attempts."
 
 # making the instance
-agent = RobotController(model_path=MODEL_PATH)
+# agent = RobotController(model_path=MODEL_PATH)

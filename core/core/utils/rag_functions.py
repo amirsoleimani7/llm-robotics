@@ -145,7 +145,8 @@ step 1 : move_home()
 step 1 : open_gripper()
 step 1 : move_to_position(50, -30, 100)
 
-REMEMBER: Output ONLY the function calls. No explanations, no additional text. No comments on the commands at all"""
+REMEMBER: Output ONLY the function calls. No explanations, no additional text. No comments on the commands at all 
+Dont't randomnly use the gripper"""
     
 
 # def get_system_prompt(current_position=None) -> str:
