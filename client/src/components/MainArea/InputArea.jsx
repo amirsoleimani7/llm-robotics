@@ -5,6 +5,7 @@ import { MdOutlineKeyboardVoice } from "react-icons/md";
 import { faker } from "@faker-js/faker";
 import { useGlobalContext } from "../contextHandle/Context";
 import axios, { isCancel, AxiosError } from "axios";
+import { FaRegSurprise } from "react-icons/fa";
 
 function InputArea() {
   const global_handler = useGlobalContext();
@@ -13,16 +14,30 @@ function InputArea() {
   const [response, setResponse] = useState("");
   const [high_len, setHighlen] = useState(false);
 
-  const handle_user_input = (e) => {
+  const handle_user_input = async (e) => {
     const input = e.target.value;
     // checks for the the string
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
-    
     setInput(input);
+    console.log(input);
   };
-  
+
   const handle_input = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
+        command: "new_message",
+        conversaion : global_handler.current_conversation,
+        role: "user",
+        content : input
+      });
+      global_handler.addUserMessage(response.data);
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (

@@ -11,7 +11,6 @@ from rest_framework.decorators import api_view
 
 @api_view(['GET', 'POST'])
 def handle_prompt(request):
-
     # this functions will handle differnet kinds of GETs (based on )
     if request.method == 'GET' and request.query_params.get("commnad") == "get_conversations":
         all_conversations = Conversation.objects.all()
@@ -44,3 +43,13 @@ def add_new_chat(request):
         serialized_conv = ConversationSerilizer(created_conversation)
         return Response(serialized_conv.data, status=status.HTTP_201_CREATED)
     
+
+    if request.method == 'POST' and request.data['command'] == "new_message":
+        
+        current_conv = Conversation.objects.get(conversation_id=request.data['conversaion']['conv_id'])
+        new_msg = Message(conversation=current_conv,role=request.data['role'],content=request.data['content'])
+        new_msg.save()
+        msg_serial =  MessageSerializer(new_msg);
+         
+        
+        return Response(msg_serial.data, status=status.HTTP_201_CREATED)
