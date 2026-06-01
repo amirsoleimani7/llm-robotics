@@ -34,32 +34,30 @@ function Side() {
 
   const handle_newChat = async () => {
     try {
+
       const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
         command: "new_chat",
       });
+  
+      const conv_id = response.data.conversation_id;
+      await global_handlers.setcurrentconversation(response.data);
       
-      global_handlers.setcurrentconversation(response.data)
-    
+      const res = await axios.get(`http://127.0.0.1:8000/get_conversation/${conv_id}`);
+
+      console.log(res.data);
+
+      global_handlers.setMessages(res.data);
+      
+
+      // load the data 
     } catch (error) {
       console.error("Error:", error);
     }
 
-    // here we need to change to that chat
-    // global_handlers.setcurrentconversation({
-    //   conv_id: conversationId,
-    //   created_at: createdDate,
-    //   last_edited: lastEdited,
-    // });
-
-    //   if (conversation_id !== null) {
-    //     await axios.post("http://127.0.0.1:8000/make_chat", {
-    //       command: "make_chat",
-    //       conv_id: conversation_id,
-    //       role: "user",
-    //       content: "move home locaion and then move to 1,1,1",
-    //     });
-    //     console.log("message added!");
-    //   }
+    // adding to the list of conversations
+    await update_conversations(global_handlers);
+    
+    
   };
 
   const handlers = {

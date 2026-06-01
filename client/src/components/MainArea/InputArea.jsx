@@ -33,6 +33,7 @@ function InputArea() {
         role: "user",
         content : input
       });
+      
       global_handler.addUserMessage(response.data);
       
     } catch (error) {

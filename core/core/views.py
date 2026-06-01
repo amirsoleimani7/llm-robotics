@@ -45,8 +45,8 @@ def add_new_chat(request):
     
 
     if request.method == 'POST' and request.data['command'] == "new_message":
-        
-        current_conv = Conversation.objects.get(conversation_id=request.data['conversaion']['conv_id'])
+        print(request.data)
+        current_conv = Conversation.objects.get(conversation_id=request.data['conversaion']['conversation_id'])
         new_msg = Message(conversation=current_conv,role=request.data['role'],content=request.data['content'])
         new_msg.save()
         msg_serial =  MessageSerializer(new_msg);
