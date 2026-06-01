@@ -14,7 +14,7 @@ export default function ChatDetail() {
     <>
       {messages.map((m, index) => (
         <>
-          {m.type === "user" ? (
+          {m.role === "user" ? (
             <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words">
               {m.content}
             </div>

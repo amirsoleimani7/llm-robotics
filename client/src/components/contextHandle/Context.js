@@ -6,24 +6,14 @@ const AppProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
   const [current_conversation, setcurrentconversation] = useState({});
-  
-  const addUserMessage = (user_prompt) => {
-    const userMessage = {
-      type: "user",
-      content: user_prompt,
-    };
 
-    setMessages((prev) => [...prev, userMessage]);
+  const addUserMessage = (user_prompt) => {
+    setMessages((prev) => [...prev, user_prompt]);
   };
 
   // Add LLM response
   const addLLMResponse = (llm_response) => {
-    const llmMessage = {
-      type: "assistant",
-      content: llm_response,
-    };
-
-    setMessages((prev) => [...prev, llmMessage]);
+    setMessages((prev) => [...prev, llm_response]);
   };
 
   const handle_messages = (user_prompt, llm_response) => {
@@ -36,6 +26,7 @@ const AppProvider = ({ children }) => {
       value={{
         messages,
         addUserMessage,
+        setMessages,
         addLLMResponse,
         handle_messages,
         conversations,

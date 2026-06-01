@@ -12,8 +12,9 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
       last_edited: lastEdited,
     });
 
-    const res = await axios.get(`http://127.0.0.1:8000/get_conversation/${conversation_id}`);
-    console.log(res);
+    const res = await axios.get(`http://127.0.0.1:8000/get_conversation/${conversation_id}`);    
+    // loading initial data
+    handler.setMessages(res.data);    
     
   };
 
