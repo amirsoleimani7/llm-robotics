@@ -7,6 +7,10 @@ const AppProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
   
+  const get_all_covnersations = (all_conv) => {
+    setConversations(all_conv);    
+  }
+  
   const addUserMessage = (user_prompt) => {
     const userMessage = {
       type: "user",
@@ -33,7 +37,9 @@ const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ messages, addUserMessage, addLLMResponse, handle_messages }}
+      value={{ messages, addUserMessage, addLLMResponse, handle_messages ,
+        conversations ,setConversations
+       }}
     >
       {children}
     </AppContext.Provider>

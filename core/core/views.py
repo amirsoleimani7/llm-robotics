@@ -6,24 +6,27 @@ from .serializers import ConversationSerilizer, MessageSerializer
 from rest_framework.decorators import api_view
 # from .utils.create_llm import agent
 
+
 @api_view(['GET', 'POST'])
 def handle_prompt(request):
     
-    if request.method == 'GET':
-        tests = Conversation.objects.all()
-        serializers = ConversationSerilizer(tests, many=True)
+    # this functions will handle differnet kinds of GETs (based on ) 
+    if request.method == 'GET' and request.query_params.get("commnad") == "get_conversations":
+        all_conversations = Conversation.objects.all()
+        serializers = ConversationSerilizer(all_conversations, many=True)
         return JsonResponse(serializers.data, safe=False)
 
-    if request.method == 'POST':
-        serializer = ConversationSerilizer(data=request.data)
+    
+    # if request.method == 'POST':
+    #     serializer = ConversationSerilizer(data=request.data)
 
-        if serializer.is_valid():
-            # serializer.save()
-            prompt = request.data['prompt']
-            # response = agent.process_command(prompt)
-            # print(response)
+    #     if serializer.is_valid():
+    #         # serializer.save()
+    #         prompt = request.data['prompt']
+    #         # response = agenct.process_command(prompt)
+    #         # print(response)
             
-            return Response(prompt, status=status.HTTP_201_CREATED)
+    #         return Response(prompt, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def handle_add_chat(request):
@@ -41,13 +44,12 @@ def handle_add_chat(request):
             conversation_ = Conversation.objects.get(conversation_id=conv_id)
             role = request.data['role']
             content = request.data['content']
-            
-            chat = Message(conversation=conversation_,role=role,content=content)
 
+            chat = Message(conversation=conversation_,role=role,content=content)
+            
             chat.save()
             chat_id = chat.pk
             return Response(chat_id, status=status.HTTP_201_CREATED)
-
             
 
         # we have to make new chat

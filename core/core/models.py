@@ -26,7 +26,6 @@ class Message(models.Model):
     role = models.CharField(choices=ROLES)
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField()
-
     
 
 

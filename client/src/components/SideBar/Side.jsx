@@ -4,11 +4,14 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { CgMore, CgSidebar } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
 import { RiChatNewFill } from "react-icons/ri";
-import axios  from "axios";
+import axios from "axios";
 import Chats from "../Chats/Chats";
 import { IoConstructOutline } from "react-icons/io5";
+import { useGlobalContext } from "../contextHandle/Context";
+import { BsCloudFog } from "react-icons/bs";
 
 function Side() {
+  const global_handlers = useGlobalContext()
   const [is_open, setIs_open] = useState(false);
 
   const handle_sidebar = () => {
@@ -17,32 +20,43 @@ function Side() {
 
   const handle_newChat = async () => {
     // we need to make a newchat and get the id from the server
-
-    try {
-      const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
-        command : "add_new"
-      });
-      
-      let conversation_id = response.data;
-      if (conversation_id !== null){
-        await axios.post('http://127.0.0.1:8000/make_chat', {
-          command : "make_chat" ,
-          conv_id : conversation_id,
-          role : "user",
-          content : "move home locaion and then move to 1,1,1"
-        })
-        
-        console.log("message added!");
+    
+    const res = await axios.get("http://127.0.0.1:8000/handle_prompt", {
+      params :{
+        commnad : "get_conversations"
       }
+    });
+    
+    console.log(res);
+    
+    global_handlers.setConversations(res.data);
+    
+    console.log(global_handlers.conversations); 
 
-      
-    } catch (error) {
-      
-      console.error("Error:", error);
 
-    }
+    // try {
+    //   const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
+    //     command : "add_new"
+    //   });
+
+    //   let conversation_id = response.data;
+    //   if (conversation_id !== null){
+    //     await axios.post('http://127.0.0.1:8000/make_chat', {
+    //       command : "make_chat" ,
+    //       conv_id : conversation_id,
+    //       role : "user",
+    //       content : "move home locaion and then move to 1,1,1"
+    //     })
+
+    //     console.log("message added!");
+    //   }
+
+    // } catch (error) {
+
+    //   console.error("Error:", error);
+
+    // }
   };
-
 
   const handlers = {
     handle_sidebar,
@@ -113,17 +127,16 @@ function Side() {
         </button>
 
         <div className="side-section flex flex-col gap-1 overflow-scroll overflow-x-hidden h-full">
-          <Chats />
-          <Chats />
-          <Chats />
-          <Chats />
-          <Chats />
-          <Chats />
-          <Chats />
-          <Chats />
-          <Chats />
-          <Chats />
-          <Chats />
+          {
+            global_handlers.conversations.map((conv,index) => {
+              return(
+                <>
+                  <Chats conversation_id={conv.conversation_id} created_date={conv.created_at} last_edited={conv.lastedited_at}/>
+                </>
+              )
+            })
+          }
+          
         </div>
         <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
           <div className="flex items-center gap-1">
