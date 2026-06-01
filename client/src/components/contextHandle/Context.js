@@ -7,7 +7,6 @@ const AppProvider = ({ children }) => {
   const [conversations, setConversations] = useState([]);
   const [current_conversation, setcurrentconversation] = useState({});
 
-  
   // add User Prompt
   const addUserMessage = (user_prompt) => {
     setMessages((prev) => [...prev, user_prompt]);

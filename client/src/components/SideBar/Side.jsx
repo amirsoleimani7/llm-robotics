@@ -33,31 +33,28 @@ function Side() {
   };
 
   const handle_newChat = async () => {
+    
     try {
-
       const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
         command: "new_chat",
       });
   
       const conv_id = response.data.conversation_id;
+
       await global_handlers.setcurrentconversation(response.data);
       
       const res = await axios.get(`http://127.0.0.1:8000/get_conversation/${conv_id}`);
 
-      console.log(res.data);
-
       global_handlers.setMessages(res.data);
       
-
-      // load the data 
     } catch (error) {
       console.error("Error:", error);
     }
 
+
     // adding to the list of conversations
     await update_conversations(global_handlers);
-    
-    
+      
   };
 
   const handlers = {
@@ -137,6 +134,7 @@ function Side() {
                 created_date={conv.created_at}
                 last_edited={conv.lastedited_at}
               />
+              
             );
           })}
         </div>

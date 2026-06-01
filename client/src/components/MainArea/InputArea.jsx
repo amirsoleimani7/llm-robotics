@@ -20,7 +20,6 @@ function InputArea() {
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
     setInput(input);
-    console.log(input);
   };
 
   const handle_input = async (e) => {
@@ -33,7 +32,7 @@ function InputArea() {
         role: "user",
         content : input
       });
-      
+
       global_handler.addUserMessage(response.data);
       
     } catch (error) {

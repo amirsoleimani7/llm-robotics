@@ -15,11 +15,11 @@ export default function ChatDetail() {
       {messages.map((m, index) => (
         <>
           {m.role === "user" ? (
-            <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words">
+            <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words" key={index}>
               {m.content}
             </div>
           ) : (
-            <div className="w-full break-words">
+            <div className="w-full break-words" key={index}>
               <p>
                 {m.content.split("\n").map((line, index) => (
                   <React.Fragment key={index}>
