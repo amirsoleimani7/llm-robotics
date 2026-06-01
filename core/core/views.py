@@ -1,22 +1,23 @@
 from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Conversation,Message
+from .models import Conversation, Message
 from .serializers import ConversationSerilizer, MessageSerializer
 from rest_framework.decorators import api_view
+
 # from .utils.create_llm import agent
 
 
 @api_view(['GET', 'POST'])
 def handle_prompt(request):
-    
-    # this functions will handle differnet kinds of GETs (based on ) 
+
+    # this functions will handle differnet kinds of GETs (based on )
     if request.method == 'GET' and request.query_params.get("commnad") == "get_conversations":
         all_conversations = Conversation.objects.all()
         serializers = ConversationSerilizer(all_conversations, many=True)
         return JsonResponse(serializers.data, safe=False)
-    
-    
+
     # if request.method == 'POST':
     #     serializer = ConversationSerilizer(data=request.data)
 
@@ -25,17 +26,26 @@ def handle_prompt(request):
     #         prompt = request.data['prompt']
     #         # response = agenct.process_command(prompt)
     #         # print(response)
-            
+
     #         return Response(prompt, status=status.HTTP_201_CREATED)
-    
+
 
 @api_view(['GET'])
 def get_conversation_chats(request, pk):
     if request.method == 'GET':
-        print(f'query items is : {pk}')
-        
+        try:
+            query_conv = Conversation.objects.get(conversation_id=pk)
+            messages = Message.objects.filter(conversation=query_conv)
+            serialzied_Data = MessageSerializer(messages, many=True)
+            return JsonResponse(serialzied_Data.data, safe=False)
+
+        except ObjectDoesNotExist:
+            print("object does not exist!")
+            Response("object does not exist", status=status.HTTP_404_NOT_FOUND)
+
         return Response("somehing", status=status.HTTP_200_OK)
-  
+
+
 @api_view(['POST'])
 def handle_add_chat(request):
     if request.method == 'POST':
@@ -46,19 +56,17 @@ def handle_add_chat(request):
             return Response(conversation_id, status=status.HTTP_201_CREATED)
 
         if request.data['command'] == "make_chat":
-            
 
             conv_id = request.data['conv_id']
             conversation_ = Conversation.objects.get(conversation_id=conv_id)
             role = request.data['role']
             content = request.data['content']
 
-            chat = Message(conversation=conversation_,role=role,content=content)
-            
+            chat = Message(conversation=conversation_,
+                           role=role, content=content)
+
             chat.save()
             chat_id = chat.pk
             return Response(chat_id, status=status.HTTP_201_CREATED)
-            
 
         # we have to make new chat
-    

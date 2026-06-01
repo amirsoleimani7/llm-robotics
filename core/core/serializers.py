@@ -9,5 +9,5 @@ class ConversationSerilizer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
-        mode = Message
+        model = Message
         fields = ['conversation' , 'role' ,'created_at' , 'content']
