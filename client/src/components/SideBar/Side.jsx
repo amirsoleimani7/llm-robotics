@@ -10,6 +10,7 @@ import { IoConstructOutline } from "react-icons/io5";
 import { useGlobalContext } from "../contextHandle/Context";
 import { BsCloudFog } from "react-icons/bs";
 
+// load he
 const update_conversations = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/handle_prompt", {
     params: {
@@ -17,7 +18,7 @@ const update_conversations = async (handler) => {
     },
   });
   handler.setConversations(res.data);
-  
+
   console.log(`data updated!`);
 };
 
@@ -34,21 +35,31 @@ function Side() {
   const handle_newChat = async () => {
     try {
       const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
-        command: "add_new",
+        command: "new_chat",
       });
-      let conversation_id = response.data;
-      if (conversation_id !== null) {
-        await axios.post("http://127.0.0.1:8000/make_chat", {
-          command: "make_chat",
-          conv_id: conversation_id,
-          role: "user",
-          content: "move home locaion and then move to 1,1,1",
-        });
-        console.log("message added!");
-      }
+      
+      global_handlers.setcurrentconversation(response.data)
+    
     } catch (error) {
       console.error("Error:", error);
     }
+
+    // here we need to change to that chat
+    // global_handlers.setcurrentconversation({
+    //   conv_id: conversationId,
+    //   created_at: createdDate,
+    //   last_edited: lastEdited,
+    // });
+
+    //   if (conversation_id !== null) {
+    //     await axios.post("http://127.0.0.1:8000/make_chat", {
+    //       command: "make_chat",
+    //       conv_id: conversation_id,
+    //       role: "user",
+    //       content: "move home locaion and then move to 1,1,1",
+    //     });
+    //     console.log("message added!");
+    //   }
   };
 
   const handlers = {
