@@ -15,7 +15,7 @@ def handle_prompt(request):
         all_conversations = Conversation.objects.all()
         serializers = ConversationSerilizer(all_conversations, many=True)
         return JsonResponse(serializers.data, safe=False)
-
+    
     
     # if request.method == 'POST':
     #     serializer = ConversationSerilizer(data=request.data)
@@ -27,7 +27,15 @@ def handle_prompt(request):
     #         # print(response)
             
     #         return Response(prompt, status=status.HTTP_201_CREATED)
+    
 
+@api_view(['GET'])
+def get_conversation_chats(request, pk):
+    if request.method == 'GET':
+        print(f'query items is : {pk}')
+        
+        return Response("somehing", status=status.HTTP_200_OK)
+  
 @api_view(['POST'])
 def handle_add_chat(request):
     if request.method == 'POST':

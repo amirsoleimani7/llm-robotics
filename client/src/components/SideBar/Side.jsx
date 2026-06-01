@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { topButtons } from "./buttons";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { CgMore, CgSidebar } from "react-icons/cg";
@@ -10,52 +10,45 @@ import { IoConstructOutline } from "react-icons/io5";
 import { useGlobalContext } from "../contextHandle/Context";
 import { BsCloudFog } from "react-icons/bs";
 
+const update_conversations = async (handler) => {
+  const res = await axios.get("http://127.0.0.1:8000/handle_prompt", {
+    params: {
+      commnad: "get_conversations",
+    },
+  });
+  handler.setConversations(res.data);
+  
+  console.log(`data updated!`);
+};
+
 function Side() {
-  const global_handlers = useGlobalContext()
+  const global_handlers = useGlobalContext();
   const [is_open, setIs_open] = useState(false);
 
-  const handle_sidebar = () => {
+  const handle_sidebar = async () => {
     setIs_open(!is_open);
+    // when ever it opense we can update the data
+    await update_conversations(global_handlers);
   };
 
   const handle_newChat = async () => {
-    // we need to make a newchat and get the id from the server
-    
-    const res = await axios.get("http://127.0.0.1:8000/handle_prompt", {
-      params :{
-        commnad : "get_conversations"
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
+        command: "add_new",
+      });
+      let conversation_id = response.data;
+      if (conversation_id !== null) {
+        await axios.post("http://127.0.0.1:8000/make_chat", {
+          command: "make_chat",
+          conv_id: conversation_id,
+          role: "user",
+          content: "move home locaion and then move to 1,1,1",
+        });
+        console.log("message added!");
       }
-    });
-    
-    console.log(res);
-    
-    global_handlers.setConversations(res.data);
-    
-    console.log(global_handlers.conversations); 
-
-
-    // try {
-    //   const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
-    //     command : "add_new"
-    //   });
-
-    //   let conversation_id = response.data;
-    //   if (conversation_id !== null){
-    //     await axios.post('http://127.0.0.1:8000/make_chat', {
-    //       command : "make_chat" ,
-    //       conv_id : conversation_id,
-    //       role : "user",
-    //       content : "move home locaion and then move to 1,1,1"
-    //     })
-
-    //     console.log("message added!");
-    //   }
-
-    // } catch (error) {
-
-    //   console.error("Error:", error);
-
-    // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const handlers = {
@@ -127,16 +120,16 @@ function Side() {
         </button>
 
         <div className="side-section flex flex-col gap-1 overflow-scroll overflow-x-hidden h-full">
-          {
-            global_handlers.conversations.map((conv,index) => {
-              return(
-                <>
-                  <Chats conversation_id={conv.conversation_id} created_date={conv.created_at} last_edited={conv.lastedited_at}/>
-                </>
-              )
-            })
-          }
-          
+          {global_handlers.conversations.map((conv) => {
+            return (
+              <Chats
+                key={conv.conversation_id}
+                conversation_id={conv.conversation_id}
+                created_date={conv.created_at}
+                last_edited={conv.lastedited_at}
+              />
+            );
+          })}
         </div>
         <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
           <div className="flex items-center gap-1">

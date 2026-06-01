@@ -3,13 +3,9 @@ import React, { useContext, useState } from "react";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
-  
-  const get_all_covnersations = (all_conv) => {
-    setConversations(all_conv);    
-  }
+  const [current_conversation, setcurrentconversation] = useState({});
   
   const addUserMessage = (user_prompt) => {
     const userMessage = {
@@ -37,9 +33,16 @@ const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ messages, addUserMessage, addLLMResponse, handle_messages ,
-        conversations ,setConversations
-       }}
+      value={{
+        messages,
+        addUserMessage,
+        addLLMResponse,
+        handle_messages,
+        conversations,
+        setConversations,
+        current_conversation,
+        setcurrentconversation,
+      }}
     >
       {children}
     </AppContext.Provider>

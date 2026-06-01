@@ -1,8 +1,13 @@
 // ChatDetail.js
 import { useGlobalContext } from "../contextHandle/Context";
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function ChatDetail() {
+  const handler = useGlobalContext();
+  useEffect(() => {
+    console.log(handler.current_conversation);
+  }, [handler.current_conversation]);
+
   const { messages } = useGlobalContext();
 
   return (
