@@ -6,6 +6,7 @@ import { MdDriveFileRenameOutline } from "react-icons/md";
 import { BsPinAngle } from "react-icons/bs";
 import { RiShareForwardLine } from "react-icons/ri";
 import { MdDeleteOutline } from "react-icons/md";
+import {update_conversations} from "../SideBar/Side"
 
 export default function Chats({ conversation_id, created_date, last_edited }) {
   const handler = useGlobalContext();
@@ -48,13 +49,17 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
     const { conversationId } = e.currentTarget.dataset;
     setShowMore(!show_more);
     console.log(conversationId);
+    
   };
 
   const handle_delete = (e) => {
     const {conversationId} = e.currentTarget.dataset;
     handler.setChangeConv(conversationId);
     handler.setShowConfirm(true);
+    
+    // update the list of conversations
   }
+
   
   return (
     <>

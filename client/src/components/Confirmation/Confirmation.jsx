@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../contextHandle/Context";
 import { IoSearch } from "react-icons/io5";
+import axios from "axios";
+import {update_conversations} from "../SideBar/Side"
+
 
 function Confirmation() {
   const handle = useGlobalContext();
-
+  
   const handle_cancel = () => {
     handle.setShowConfirm(false);
   };
 
-  const handle_delete = () => {
+  const handle_delete = async () => {
     handle.setShowConfirm(false);
+    const conv_id = handle.change_conv;
+    
+    // delete the item
+    const res = await axios.delete(`http://127.0.0.1:8000/delete_conversation/${conv_id}`);
+    console.log(res);
+    
+    await update_conversations(handle);
   };
+  
 
   return (
     <div

@@ -11,7 +11,7 @@ import { useGlobalContext } from "../contextHandle/Context";
 import { BsCloudFog } from "react-icons/bs";
 
 // load he
-const update_conversations = async (handler) => {
+export const update_conversations = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/get_converastions", {
     params: {
       commnad: "get_conversations",
@@ -32,18 +32,19 @@ function Side() {
   };
 
   const handle_newChat = async () => {
-    
     try {
       const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
         command: "new_chat",
       });
-  
+
       const conv_id = response.data.conversation_id;
 
       await global_handlers.setcurrentconversation(response.data);
-      
-      const res = await axios.get(`http://127.0.0.1:8000/get_conversation/${conv_id}`);
-      
+
+      const res = await axios.get(
+        `http://127.0.0.1:8000/get_conversation/${conv_id}`,
+      );
+
       // get the init messages
       global_handlers.setMessages(res.data);
     } catch (error) {
@@ -52,7 +53,6 @@ function Side() {
 
     // adding to the list of conversations
     await update_conversations(global_handlers);
-      
   };
 
   const handlers = {

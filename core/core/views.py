@@ -54,3 +54,13 @@ def add_new_chat(request):
         
         return Response(msg_serial.data, status=status.HTTP_201_CREATED)
     
+@api_view(['DELETE'])
+def delete_conversation(request, conversation_id):
+    if request.method == 'DELETE':
+        try :
+            query_delete = Conversation.objects.get(conversation_id=conversation_id)
+            query_delete.delete()
+            return Response("ok nigga im gonna remove this object", status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response("some error", status=status.HTTP_404_NOT_FOUND)
+            
