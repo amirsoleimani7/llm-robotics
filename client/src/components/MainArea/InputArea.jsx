@@ -14,49 +14,52 @@ function InputArea() {
 
   const handle_user_input = async (e) => {
     const input = e.target.value;
+
     // checks for the the string
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
+
     setInput(input);
   };
 
   const handle_input = async (e) => {
     e.preventDefault();
-
-    try {
-      const conv = global_handler.current_conversation;
-      if (Object.keys(conv).length != 0) {
-        const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
-          command: "new_message",
-          conversaion: global_handler.current_conversation,
-          role: "user",
-          content: input,
-        });
-        global_handler.addUserMessage(response.data);
-      } else {
-        // make a conversation and put the messages in it
-        const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
-          command: "new_chat",  
-        });
-
-        await global_handler.setcurrentconversation(response.data);
-        
-        const response_msg = await axios.post(
-          `http://127.0.0.1:8000/make_chat`,
-          {
+    if (input.length > 0) {
+      try {
+        const conv = global_handler.current_conversation;
+        if (Object.keys(conv).length != 0) {
+          const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
             command: "new_message",
-            conversaion: response.data,
+            conversaion: global_handler.current_conversation,
             role: "user",
             content: input,
-          },
-        );
-        global_handler.addUserMessage(response_msg.data);
-      }      
-    } catch (error) {
-      console.error("Error:", error);
+          });
+          global_handler.addUserMessage(response.data);
+        } else {
+          // make a conversation and put the messages in it
+          const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
+            command: "new_chat",
+          });
+
+          await global_handler.setcurrentconversation(response.data);
+
+          const response_msg = await axios.post(
+            `http://127.0.0.1:8000/make_chat`,
+            {
+              command: "new_message",
+              conversaion: response.data,
+              role: "user",
+              content: input,
+            },
+          );
+          global_handler.addUserMessage(response_msg.data);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
     }
   };
-
+  
   return (
     <>
       <form

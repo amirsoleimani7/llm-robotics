@@ -12,14 +12,13 @@ import { BsCloudFog } from "react-icons/bs";
 
 // load he
 const update_conversations = async (handler) => {
-  const res = await axios.get("http://127.0.0.1:8000/handle_prompt", {
+  const res = await axios.get("http://127.0.0.1:8000/get_converastions", {
     params: {
       commnad: "get_conversations",
     },
   });
   handler.setConversations(res.data);
-
-  console.log(`data updated!`);
+  console.log("sidebar conversations updated!");
 };
 
 function Side() {
@@ -44,13 +43,12 @@ function Side() {
       await global_handlers.setcurrentconversation(response.data);
       
       const res = await axios.get(`http://127.0.0.1:8000/get_conversation/${conv_id}`);
+      
       // get the init messages
       global_handlers.setMessages(res.data);
-      
     } catch (error) {
       console.error("Error:", error);
     }
-
 
     // adding to the list of conversations
     await update_conversations(global_handlers);
@@ -134,7 +132,6 @@ function Side() {
                 created_date={conv.created_at}
                 last_edited={conv.lastedited_at}
               />
-              
             );
           })}
         </div>

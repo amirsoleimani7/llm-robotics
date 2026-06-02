@@ -10,12 +10,14 @@ from rest_framework.decorators import api_view
 
 
 @api_view(['GET', 'POST'])
-def handle_prompt(request):
+def get_converastions(request):
     # this functions will handle differnet kinds of GETs (based on )
     if request.method == 'GET' and request.query_params.get("commnad") == "get_conversations":
         all_conversations = Conversation.objects.all()
         serializers = ConversationSerilizer(all_conversations, many=True)
         return JsonResponse(serializers.data, safe=False)
+
+
 
 
 @api_view(['GET'])

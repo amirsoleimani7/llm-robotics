@@ -27,8 +27,10 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField()
     
-
-
+    def __str__(self):
+        return f"{self.content[:20]}"
     
-    
+    def generate_title(self):
+        return f"{self.content[:20]}"
+
     
