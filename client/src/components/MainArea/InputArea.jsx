@@ -63,7 +63,8 @@ function InputArea() {
   return (
     <>
       <form
-        className="flex flex-col bg-second-color w-full h-36 p-6 rounded-[2rem] mt-auto mb-2 duration-500 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4"
+        className="flex flex-col bg-second-color w-full h-36 p-6 rounded-[2rem] mt-auto mb-2 duration-500 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4
+        "
         style={{
           height: `${high_len ? "230px" : ""}`,
         }}

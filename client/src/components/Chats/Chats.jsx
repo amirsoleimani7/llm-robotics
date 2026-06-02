@@ -50,6 +50,11 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
     console.log(conversationId);
   };
 
+  const handle_delete = (e) => {
+    const {conversationId} = e.currentTarget.dataset;
+    console.log(conversationId);
+  }
+  
   return (
     <>
       <div
@@ -68,31 +73,34 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
             className="relative"
             data-conversation-id={conversation_id}
             onClick={handle_more}
+            ref={more_ref}
           >
-            <FiMoreHorizontal />
+            <FiMoreHorizontal className="pointer-events-none"/>
           </button>
         </div>
-
         <div
-          className="flex z-50  bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-lg top-10 -right-[35%] p-1 shadow-lg"
+          className="flex z-50  bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-xl top-10 -right-[35%] p-1 shadow-lg"
           style={{
             display: `${show_more ? "flex" : "none"}`,
           }}
           ref={more_ref}
         >
-          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-lg px-2">
+          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2">
             <MdDriveFileRenameOutline size={20} className="w-1/4" />
             <p className="w-3/4 text-left">Rename</p>
           </button>
-          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-lg px-2">
+          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2">
             <BsPinAngle size={20} className="w-1/4" />{" "}
             <p className="w-3/4 text-left">Pin</p>
           </button>
-          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-lg px-2">
+          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2">
             <RiShareForwardLine size={20} className="w-1/4" />{" "}
             <p className="w-3/4 text-left">Share</p>
           </button>
-          <button className="flex items-center gap-1  h-[40px] hover:bg-red-950 text-red-500 rounded-lg px-2">
+          <button className="flex items-center gap-1  h-[40px] hover:bg-red-950 text-red-500 rounded-xl px-2"
+          onClick={handle_delete}
+          data-conversation-id={conversation_id}
+          >
             <MdDeleteOutline size={20} className="w-1/4" />{" "}
             <p className="w-3/4 text-left">Delete</p>
           </button>
