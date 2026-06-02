@@ -56,19 +56,20 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
             <FiMoreHorizontal />
           </button>
         </div>
-        <div className="flex  bg-second-color-1 flex-col w-[130px] absolute rounded-lg  right-0 p-1 shadow-lg">
-          <button className="flex items-center gap-1  h-[40px] hover:bg-main-color-1 rounded-lg px-2">
+        <div className="flex  bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-lg  right-0 p-1 shadow-lg">
+          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-lg px-2">
             <MdDriveFileRenameOutline size={20} className="w-1/4" />
             <p className="w-3/4 text-left">Rename</p>
           </button>
-          <button className="flex items-center gap-1  h-[40px] hover:bg-main-color-1 rounded-lg px-2">
-            <BsPinAngle size={20}  className="w-1/4" /> <p className="w-3/4 text-left">Pin</p>
+          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-lg px-2">
+            <BsPinAngle size={20} className="w-1/4" />{" "}
+            <p className="w-3/4 text-left">Pin</p>
           </button>
-          <button className="flex items-center gap-1  h-[40px] hover:bg-main-color-1 rounded-lg px-2">
+          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-lg px-2">
             <RiShareForwardLine size={20} className="w-1/4" />{" "}
             <p className="w-3/4 text-left">Share</p>
           </button>
-          <button className="flex items-center gap-1  h-[40px] hover:bg-main-color-1 rounded-lg px-2">
+          <button className="flex items-center gap-1  h-[40px] hover:bg-red-950 text-red-500 rounded-lg px-2">
             <MdDeleteOutline size={20} className="w-1/4" />{" "}
             <p className="w-3/4 text-left">Delete</p>
           </button>
