@@ -1,11 +1,9 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { LuBrain } from "react-icons/lu";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
-import { faker } from "@faker-js/faker";
 import { useGlobalContext } from "../contextHandle/Context";
 import axios, { isCancel, AxiosError } from "axios";
-import { FaRegSurprise } from "react-icons/fa";
 
 function InputArea() {
   const global_handler = useGlobalContext();
@@ -24,17 +22,36 @@ function InputArea() {
 
   const handle_input = async (e) => {
     e.preventDefault();
-    
-    try {
-      const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
-        command: "new_message",
-        conversaion : global_handler.current_conversation,
-        role: "user",
-        content : input
-      });
 
-      global_handler.addUserMessage(response.data);
-      
+    try {
+      const conv = global_handler.current_conversation;
+      if (Object.keys(conv).length != 0) {
+        const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
+          command: "new_message",
+          conversaion: global_handler.current_conversation,
+          role: "user",
+          content: input,
+        });
+        global_handler.addUserMessage(response.data);
+      } else {
+        // make a conversation and put the messages in it
+        const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
+          command: "new_chat",  
+        });
+
+        await global_handler.setcurrentconversation(response.data);
+        
+        const response_msg = await axios.post(
+          `http://127.0.0.1:8000/make_chat`,
+          {
+            command: "new_message",
+            conversaion: response.data,
+            role: "user",
+            content: input,
+          },
+        );
+        global_handler.addUserMessage(response_msg.data);
+      }      
     } catch (error) {
       console.error("Error:", error);
     }

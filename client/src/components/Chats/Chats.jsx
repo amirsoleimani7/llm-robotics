@@ -24,7 +24,7 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
   return (
     <>
       <div
-        className="w-full p-2 rounded-xl duration-100 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer hover:font-bold"
+        className="w-full p-2 rounded-xl duration-75 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer hover:font-bold"
         onClick={go_to_chat_detail}
         data-conversation-id={conversation_id}
         data-created-date={created_date}

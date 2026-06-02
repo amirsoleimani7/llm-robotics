@@ -44,7 +44,7 @@ function Side() {
       await global_handlers.setcurrentconversation(response.data);
       
       const res = await axios.get(`http://127.0.0.1:8000/get_conversation/${conv_id}`);
-
+      // get the init messages
       global_handlers.setMessages(res.data);
       
     } catch (error) {
