@@ -52,7 +52,8 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
 
   const handle_delete = (e) => {
     const {conversationId} = e.currentTarget.dataset;
-    console.log(conversationId);
+    handler.setChangeConv(conversationId);
+    handler.setShowConfirm(true);
   }
   
   return (

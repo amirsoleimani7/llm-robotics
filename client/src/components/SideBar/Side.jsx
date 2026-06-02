@@ -90,7 +90,7 @@ function Side() {
       </div>
 
       <div
-        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0 z-10 flex-none  bg-main-color-1 px-2 flex flex-col gap-3"
+        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0 z-40 flex-none  bg-main-color-1 px-2 flex flex-col gap-3"
         style={{
           width: `${is_open ? "270px" : "0px"}`,
           opacity: `${is_open ? "100" : "0"}`,

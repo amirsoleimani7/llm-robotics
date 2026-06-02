@@ -18,8 +18,6 @@ def get_converastions(request):
         return JsonResponse(serializers.data, safe=False)
 
 
-
-
 @api_view(['GET'])
 def get_conversation_chats(request, pk):
     if request.method == 'GET':
@@ -55,3 +53,4 @@ def add_new_chat(request):
          
         
         return Response(msg_serial.data, status=status.HTTP_201_CREATED)
+    
