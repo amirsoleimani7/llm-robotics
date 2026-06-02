@@ -10,7 +10,6 @@ export const topButtons = [
     icon: BsLayoutSidebarReverse,
     label: "Toggle Sidebar",
     onClick: "handle_sidebar", // This will be passed from parent
-    className: "translate-x-[-1]",
   },
   {
     id: "search",

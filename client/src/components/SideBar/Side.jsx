@@ -90,7 +90,7 @@ function Side() {
       </div>
 
       <div
-        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0 z-10 flex-none overflow-hidden bg-main-color-1 px-2 flex flex-col gap-3"
+        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0 z-10 flex-none  bg-main-color-1 px-2 flex flex-col gap-3"
         style={{
           width: `${is_open ? "270px" : "0px"}`,
           opacity: `${is_open ? "100" : "0"}`,
@@ -123,7 +123,7 @@ function Side() {
           <p>New Chat</p>
         </button>
 
-        <div className="side-section flex flex-col gap-1 overflow-scroll overflow-x-hidden h-full">
+        <div className="side-section flex flex-col gap-1  h-full ">
           {global_handlers.conversations.map((conv) => {
             return (
               <Chats
@@ -138,7 +138,7 @@ function Side() {
         <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
           <div className="flex items-center gap-1">
             <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500" />
-            <p className="text-sm">amirhossein soleimani</p>
+            <p className="text-sm">AmirHossein Soleimani</p>
           </div>
           <button>
             <CgMore />

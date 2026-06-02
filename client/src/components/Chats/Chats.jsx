@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useGlobalContext } from "../contextHandle/Context";
 import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
@@ -10,7 +10,23 @@ import { MdDeleteOutline } from "react-icons/md";
 export default function Chats({ conversation_id, created_date, last_edited }) {
   const handler = useGlobalContext();
   const [show_more, setShowMore] = useState(false);
+  const more_ref = useRef(null);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (more_ref.current && !more_ref.current.contains(event.target)) {
+        setShowMore(false);
+      }
+    }
+
+    if (show_more) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [show_more]);
+
+  
   const go_to_chat_detail = async (e) => {
     const { conversationId, createdDate, lastEdited } = e.currentTarget.dataset;
     handler.setcurrentconversation({
@@ -30,7 +46,7 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
   const handle_more = (e) => {
     // reading conversationId for the more option
     const { conversationId } = e.currentTarget.dataset;
-
+    setShowMore(!show_more);
     console.log(conversationId);
   };
 
@@ -56,7 +72,14 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
             <FiMoreHorizontal />
           </button>
         </div>
-        <div className="flex  bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-lg  right-0 p-1 shadow-lg">
+
+        <div
+          className="flex z-50  bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-lg top-10 -right-[35%] p-1 shadow-lg"
+          style={{
+            display: `${show_more ? "flex" : "none"}`,
+          }}
+          ref={more_ref}
+        >
           <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-lg px-2">
             <MdDriveFileRenameOutline size={20} className="w-1/4" />
             <p className="w-3/4 text-left">Rename</p>
