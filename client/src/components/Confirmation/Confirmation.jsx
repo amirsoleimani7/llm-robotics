@@ -3,9 +3,8 @@ import React from "react";
 function Confirmation() {
 
 
-
   return (
-    <div className="z-20 absolute w-screen h-screen  bg-main-color-2 bg-[rgba(0, 0, 0, 0.5)] flex justify-center items-center">
+    <div className="z-20 absolute w-screen h-screen  bg-[rgba(0,0,0,0.8)] flex justify-center items-center">
         <div className="bg-main-color-3 p-3 w-[320px] h-[120px] font-bold rounded-2xl flex flex-col left-[50%] top-[50%]">
           <h1>This conversation can't be recovered.</h1>
           <div className="w-[60%] flex font-bold text-sm gap-2 self-end mt-auto">
