@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGlobalContext } from "../contextHandle/Context";
 import { IoClose } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
@@ -10,6 +10,8 @@ import {
 } from "react-icons/md";
 
 function Setting() {
+  const [tab, setTab] = useState("general");
+
   const handle = useGlobalContext();
 
   return (
@@ -33,39 +35,53 @@ function Setting() {
         </div>
 
         <div className="flex mt-1 gap-3">
-          <div className="flex flex-col w-[25%]">
-            <button className="text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color">
+          <div className="flex flex-col w-[25%] gap-1">
+            <button
+              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "general" ? "bg-select-color" : ""} `}
+              onClick={() => {
+                setTab("general");
+              }}
+            >
               <IoIosSettings />
               <p>General</p>
             </button>
-            <button className="text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color">
+            <button
+              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab == "profile" ? "bg-select-color" : ""}  `}
+              onClick={() => {
+                setTab("profile");
+              }}
+            >
               <RxAvatar />
               <p>Profile</p>
             </button>
           </div>
           <div className="w-[75%] flex flex-col gap-8">
             <div className="flex flex-col gap-3">
-                <h1>Theme</h1>
-                <div className="flex gap-2 ">
-                  <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
-                    <MdOutlineLightMode />
-                    <p>Light</p>
-                  </button>
-                  <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
-                    <MdOutlineDarkMode />
-                    <p>Light</p>
-                  </button>
-                  <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
-                    <MdComputer />
-                    <p>System</p>
-                  </button>
-                </div>
+              <h1>Theme</h1>
+              <div className="flex gap-2 ">
+                <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
+                  <MdOutlineLightMode />
+                  <p>Light</p>
+                </button>
+                <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
+                  <MdOutlineDarkMode />
+                  <p>Light</p>
+                </button>
+                <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
+                  <MdComputer />
+                  <p>System</p>
+                </button>
+              </div>
             </div>
             <div className="flex justify-between">
               <p>Language</p>
               <div className="flex gap-1">
-                <button className="px-2 py-1 rounded-[2rem] bg-select-color">English</button>
-                <button className="px-2 py-1 rounded-[2rem] bg-select-color">Persian</button>
+                <button className="px-2 py-1 rounded-[2rem] bg-select-color">
+                  English
+                </button>
+                <button className="px-2 py-1 rounded-[2rem] bg-select-color">
+                  Persian
+                </button>
               </div>
             </div>
           </div>
