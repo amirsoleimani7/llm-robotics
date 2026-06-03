@@ -11,6 +11,8 @@ import {
 
 function Setting() {
   const [tab, setTab] = useState("general");
+  const [theme, setTheme] = useState("System");
+  const [Language, setLanguage] = useState("English");
 
   const handle = useGlobalContext();
 
@@ -59,15 +61,30 @@ function Setting() {
             <div className="flex flex-col gap-3">
               <h1>Theme</h1>
               <div className="flex gap-2 ">
-                <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
+                <button
+                  className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Light" ? "bg-select-color" : ""}`}
+                  onClick={() => {
+                    setTheme("Light");
+                  }}
+                >
                   <MdOutlineLightMode />
                   <p>Light</p>
                 </button>
-                <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
+                <button
+                  className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Dark" ? "bg-select-color" : ""}`}
+                  onClick={() => {
+                    setTheme("Dark");
+                  }}
+                >
                   <MdOutlineDarkMode />
-                  <p>Light</p>
+                  <p>Dark</p>
                 </button>
-                <button className="flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600">
+                <button
+                  className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "System" ? "bg-select-color" : ""}`}
+                  onClick={() => {
+                    setTheme("System");
+                  }}
+                >
                   <MdComputer />
                   <p>System</p>
                 </button>
@@ -76,10 +93,20 @@ function Setting() {
             <div className="flex justify-between">
               <p>Language</p>
               <div className="flex gap-1">
-                <button className="px-2 py-1 rounded-[2rem] bg-select-color">
+                <button
+                  className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language == "English" ? "bg-select-color" : ""}`}
+                  onClick={() => {
+                    setLanguage("English");
+                  }}
+                >
                   English
                 </button>
-                <button className="px-2 py-1 rounded-[2rem] bg-select-color">
+                <button
+                  className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language == "Persian" ? "bg-select-color" : ""}`}
+                  onClick={() => {
+                    setLanguage("Persian");
+                  }}
+                >
                   Persian
                 </button>
               </div>
