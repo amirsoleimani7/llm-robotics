@@ -4,11 +4,20 @@ import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { BsPinAngle } from "react-icons/bs";
+import { RiUnpinLine } from "react-icons/ri";
+import { LuPinOff } from "react-icons/lu";
+import { LuPin } from "react-icons/lu";
+
 import { RiShareForwardLine } from "react-icons/ri";
 import { MdDeleteOutline } from "react-icons/md";
-import {update_conversations} from "../SideBar/Side"
+import Side, { update_conversations } from "../SideBar/Side";
 
-export default function Chats({ conversation_id, created_date, last_edited }) {
+export default function Chats({
+  conversation_id,
+  created_date,
+  last_edited,
+  is_pinned,
+}) {
   const handler = useGlobalContext();
   const [show_more, setShowMore] = useState(false);
   const more_ref = useRef(null);
@@ -27,9 +36,35 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
     }
   }, [show_more]);
 
-  
+  const handle_unpin = async (e) => {
+    const { conversationId, createdDate, lastEdited } = e.currentTarget.dataset;
+
+    const res = await axios.put(
+      `http://127.0.0.1:8000/update_conversation/${conversationId}`,
+      {
+        command: "unpin-conversation",
+      },
+    );
+
+    await update_conversations(handler);
+  };
+
+  const handle_pin = async (e) => {
+    const { conversationId, createdDate, lastEdited } = e.currentTarget.dataset;
+
+    const res = await axios.put(
+      `http://127.0.0.1:8000/update_conversation/${conversationId}`,
+      {
+        command: "pin-conversation",
+      },
+    );
+
+    await update_conversations(handler);
+  };
+
   const go_to_chat_detail = async (e) => {
     const { conversationId, createdDate, lastEdited } = e.currentTarget.dataset;
+
     handler.setcurrentconversation({
       conversation_id: conversationId,
       created_at: createdDate,
@@ -49,18 +84,16 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
     const { conversationId } = e.currentTarget.dataset;
     setShowMore(!show_more);
     console.log(conversationId);
-    
   };
 
   const handle_delete = (e) => {
-    const {conversationId} = e.currentTarget.dataset;
+    const { conversationId } = e.currentTarget.dataset;
     handler.setChangeConv(conversationId);
     handler.setShowConfirm(true);
-    
-    // update the list of conversations
-  }
 
-  
+    // update the list of conversations
+  };
+
   return (
     <>
       <div
@@ -81,7 +114,7 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
             onClick={handle_more}
             ref={more_ref}
           >
-            <FiMoreHorizontal className="pointer-events-none"/>
+            <FiMoreHorizontal className="pointer-events-none" />
           </button>
         </div>
         <div
@@ -95,17 +128,33 @@ export default function Chats({ conversation_id, created_date, last_edited }) {
             <MdDriveFileRenameOutline size={20} className="w-1/4" />
             <p className="w-3/4 text-left">Rename</p>
           </button>
-          <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2">
-            <BsPinAngle size={20} className="w-1/4" />{" "}
-            <p className="w-3/4 text-left">Pin</p>
-          </button>
+          {!is_pinned ? (
+            <button
+              className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2"
+              onClick={handle_pin}
+              data-conversation-id={conversation_id}
+            >
+              <LuPin size={20} className="w-1/4" />{" "}
+              <p className="w-3/4 text-left">Pin</p>
+            </button>
+          ) : (
+            <button
+              className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2"
+              onClick={handle_unpin}
+              data-conversation-id={conversation_id}
+            >
+              <LuPinOff size={20} className="w-1/4" />{" "}
+              <p className="w-3/4 text-left">unPin</p>
+            </button>
+          )}{" "}
           <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2">
             <RiShareForwardLine size={20} className="w-1/4" />{" "}
             <p className="w-3/4 text-left">Share</p>
           </button>
-          <button className="flex items-center gap-1  h-[40px] hover:bg-red-950 text-red-500 rounded-xl px-2"
-          onClick={handle_delete}
-          data-conversation-id={conversation_id}
+          <button
+            className="flex items-center gap-1  h-[40px] hover:bg-red-950 text-red-500 rounded-xl px-2"
+            onClick={handle_delete}
+            data-conversation-id={conversation_id}
           >
             <MdDeleteOutline size={20} className="w-1/4" />{" "}
             <p className="w-3/4 text-left">Delete</p>

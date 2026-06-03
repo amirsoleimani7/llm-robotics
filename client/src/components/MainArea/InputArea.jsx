@@ -3,6 +3,7 @@ import { IoSend } from "react-icons/io5";
 import { LuBrain } from "react-icons/lu";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
 import { useGlobalContext } from "../contextHandle/Context";
+import { update_conversations } from "../SideBar/Side";
 import axios, { isCancel, AxiosError } from "axios";
 
 function InputArea() {
@@ -27,7 +28,8 @@ function InputArea() {
     if (input.length > 0) {
       try {
         const conv = global_handler.current_conversation;
-        if (Object.keys(conv).length != 0) {
+        console.log(conv);
+        if (Object.keys(conv).length !== 0) {
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
             command: "new_message",
             conversaion: global_handler.current_conversation,
@@ -42,7 +44,8 @@ function InputArea() {
           });
 
           await global_handler.setcurrentconversation(response.data);
-
+          await update_conversations(global_handler);
+          
           const response_msg = await axios.post(
             `http://127.0.0.1:8000/make_chat`,
             {
@@ -59,7 +62,7 @@ function InputArea() {
       }
     }
   };
-  
+
   return (
     <>
       <form

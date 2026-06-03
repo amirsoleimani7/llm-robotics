@@ -21,6 +21,10 @@ function Confirmation() {
     console.log(res);
 
     await update_conversations(handle);
+    
+    console.log("Removing ...");
+    handle.setcurrentconversation({});
+    handle.setMessages([]);
   };
 
   return (

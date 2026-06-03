@@ -18,7 +18,7 @@ export const update_conversations = async (handler) => {
     },
   });
   handler.setConversations(res.data);
-  console.log("sidebar conversations updated!");
+  console.log(handler.conversations);
 };
 
 function Side() {
@@ -123,26 +123,55 @@ function Side() {
           <p>New Chat</p>
         </button>
 
-        <div className="side-section flex flex-col gap-1  h-full ">
+        <div className="side-section flex flex-col gap-1">
+          <h1 className="text-sm font-bold text-second-color-3">Pinned</h1>
           {global_handlers.conversations.map((conv) => {
-            return (
-              <Chats
-                key={conv.conversation_id}
-                conversation_id={conv.conversation_id}
-                created_date={conv.created_at}
-                last_edited={conv.lastedited_at}
-              />
-            );
+            console.log(conv.is_pinned);
+            {
+              return conv.is_pinned ? (
+                <Chats
+                  key={conv.conversation_id}
+                  conversation_id={conv.conversation_id}
+                  created_date={conv.created_at}
+                  last_edited={conv.lastedited_at}
+                  is_pinned={conv.is_pinned}
+                />
+              ) : (
+                <></>
+              );
+            }
           })}
         </div>
-        <div className="flex items-center w-full rounded-xl p-2 justify-between mt-auto mb-2">
-          <div className="flex items-center gap-1">
+
+        <div className="side-section flex flex-col gap-1  h-full ">
+          <h1 className="text-sm font-bold text-second-color-3">Other</h1>
+          {global_handlers.conversations.map((conv) => {
+            console.log(conv.is_pinned);
+            {
+              return !conv.is_pinned ? (
+                <Chats
+                  key={conv.conversation_id}
+                  conversation_id={conv.conversation_id}
+                  created_date={conv.created_at}
+                  last_edited={conv.lastedited_at}
+                  is_pinned={conv.is_pinned}
+                />
+              ) : (
+                <></>
+              );
+            }
+          })}
+        </div>
+        <div
+          className="flex items-center w-full bg-main-color-2 cursor-pointer rounded-xl p-2  mt-auto mb-2"
+          onClick={() => {
+            global_handlers.setShowSetting(true);
+          }}
+        >
+          <div className="flex items-center gap-1 justify-around w-full">
             <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500" />
             <p className="text-sm">AmirHossein Soleimani</p>
           </div>
-          <button>
-            <CgMore />
-          </button>
         </div>
       </div>
     </>

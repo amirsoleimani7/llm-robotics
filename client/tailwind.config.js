@@ -10,12 +10,13 @@ module.exports = {
         "main-color-3": "#454648",
 
         "second-color": "#2c2c2e",
+        
         "second-color-1": "#363738",
         "second-color-2": "#43454a",
-
+        "seocnd-color-3":"#93989c",
+          
         "scroll-color": "#3c3c3d",
       },
-
       // TODO : fix the animation
       keyframes: {
         typing: {
