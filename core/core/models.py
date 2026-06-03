@@ -35,8 +35,13 @@ class Message(models.Model):
         return f"{self.content[:20]}"
 
 
+
 class User(models.Model):
     name = models.CharField()
-    
+    profile_picture = models.ImageField()
+
+    def __str__(self):
+        return f"{self.name}"
+        
     
     
