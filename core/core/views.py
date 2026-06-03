@@ -22,6 +22,7 @@ def get_converastions(request):
 @api_view(['GET'])
 def get_conversation_chats(request, pk):
     if request.method == 'GET':
+        print(f"primary key is : {pk}")
         try:
             query_conv = Conversation.objects.get(conversation_id=pk)
             messages = Message.objects.filter(conversation=query_conv)
