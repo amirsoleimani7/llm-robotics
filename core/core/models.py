@@ -34,4 +34,9 @@ class Message(models.Model):
     def generate_title(self):
         return f"{self.content[:20]}"
 
+
+class User(models.Model):
+    name = models.CharField()
+    
+    
     

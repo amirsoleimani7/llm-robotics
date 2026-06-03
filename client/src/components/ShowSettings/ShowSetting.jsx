@@ -57,61 +57,80 @@ function Setting() {
               <p>Profile</p>
             </button>
           </div>
-          <div className="w-[75%] flex flex-col gap-8">
-            <div className="flex flex-col gap-3">
-              <h1>Theme</h1>
-              <div className="flex gap-2 ">
-                <button
-                  className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Light" ? "bg-select-color" : ""}`}
-                  onClick={() => {
-                    setTheme("Light");
-                  }}
-                >
-                  <MdOutlineLightMode />
-                  <p>Light</p>
-                </button>
-                <button
-                  className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Dark" ? "bg-select-color" : ""}`}
-                  onClick={() => {
-                    setTheme("Dark");
-                  }}
-                >
-                  <MdOutlineDarkMode />
-                  <p>Dark</p>
-                </button>
-                <button
-                  className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "System" ? "bg-select-color" : ""}`}
-                  onClick={() => {
-                    setTheme("System");
-                  }}
-                >
-                  <MdComputer />
-                  <p>System</p>
-                </button>
+          {tab === "general" ? (
+            <div className="w-[75%] flex flex-col gap-8">
+              <div className="flex flex-col gap-3">
+                <h1>Theme</h1>
+                <div className="flex gap-2 ">
+                  <button
+                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Light" ? "bg-select-color" : ""}`}
+                    onClick={() => {
+                      setTheme("Light");
+                    }}
+                  >
+                    <MdOutlineLightMode />
+                    <p>Light</p>
+                  </button>
+                  <button
+                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Dark" ? "bg-select-color" : ""}`}
+                    onClick={() => {
+                      setTheme("Dark");
+                    }}
+                  >
+                    <MdOutlineDarkMode />
+                    <p>Dark</p>
+                  </button>
+                  <button
+                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "System" ? "bg-select-color" : ""}`}
+                    onClick={() => {
+                      setTheme("System");
+                    }}
+                  >
+                    <MdComputer />
+                    <p>System</p>
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <p>Language</p>
+                <div className="flex gap-1">
+                  <button
+                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language == "English" ? "bg-select-color" : ""}`}
+                    onClick={() => {
+                      setLanguage("English");
+                    }}
+                  >
+                    English
+                  </button>
+                  <button
+                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language == "Persian" ? "bg-select-color" : ""}`}
+                    onClick={() => {
+                      setLanguage("Persian");
+                    }}
+                  >
+                    Persian
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="flex justify-between">
-              <p>Language</p>
-              <div className="flex gap-1">
-                <button
-                  className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language == "English" ? "bg-select-color" : ""}`}
-                  onClick={() => {
-                    setLanguage("English");
-                  }}
-                >
-                  English
-                </button>
-                <button
-                  className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language == "Persian" ? "bg-select-color" : ""}`}
-                  onClick={() => {
-                    setLanguage("Persian");
-                  }}
-                >
-                  Persian
-                </button>
+          ) : (
+            <div className="flex flex-col w-[75%] items-center gap-4">
+              <div className="flex justify-between items-center w-[100%]">
+                <h1>Name</h1>
+                <input
+                  type="text"
+                  className="bg-second-color-1 rounded-lg p-2 focus:outline-1 focus:outline-white"
+                />
+              </div>
+              <div className=" bg-red-100 border-b w-full border-gray-700"></div>
+              <div className="flex justify-between items-center w-[100%]">
+                <h1>Profile picture</h1>
+                <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center">
+                  <input type="file" className="scale-[300%]" />
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
