@@ -30,7 +30,7 @@ def get_conversation_chats(request, pk):
         except ObjectDoesNotExist:
             print("object does not exist!")
             Response("object does not exist", status=status.HTTP_404_NOT_FOUND)
-
+            
         return Response("somehing", status=status.HTTP_200_OK)
 
 
