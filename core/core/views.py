@@ -30,8 +30,22 @@ def get_conversation_chats(request, pk):
         except ObjectDoesNotExist:
             print("object does not exist!")
             Response("object does not exist", status=status.HTTP_404_NOT_FOUND)
-            
+
         return Response("somehing", status=status.HTTP_200_OK)
+
+
+@api_view(['PUT', 'PATCH'])
+def update_conversation(request, conversation_id):
+    if request.method == "PUT" or request.method == "PATCH":
+        try:
+            to_pin_conversation = Conversation.objects.get(
+                conversation_id=conversation_id)
+            to_pin_conversation.is_pinned = True
+            to_pin_conversation.save()
+            return Response("", status=status.HTTP_200_OK)
+       
+        except ObjectDoesNotExist:
+            return Response("", status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['POST'])
@@ -42,25 +56,26 @@ def add_new_chat(request):
         created_conversation.save()
         serialized_conv = ConversationSerilizer(created_conversation)
         return Response(serialized_conv.data, status=status.HTTP_201_CREATED)
-    
 
     if request.method == 'POST' and request.data['command'] == "new_message":
         print(request.data)
-        current_conv = Conversation.objects.get(conversation_id=request.data['conversaion']['conversation_id'])
-        new_msg = Message(conversation=current_conv,role=request.data['role'],content=request.data['content'])
+        current_conv = Conversation.objects.get(
+            conversation_id=request.data['conversaion']['conversation_id'])
+        new_msg = Message(conversation=current_conv,
+                          role=request.data['role'], content=request.data['content'])
         new_msg.save()
-        msg_serial =  MessageSerializer(new_msg);
-         
-        
+        msg_serial = MessageSerializer(new_msg)
+
         return Response(msg_serial.data, status=status.HTTP_201_CREATED)
-    
+
+
 @api_view(['DELETE'])
 def delete_conversation(request, conversation_id):
     if request.method == 'DELETE':
-        try :
-            query_delete = Conversation.objects.get(conversation_id=conversation_id)
+        try:
+            query_delete = Conversation.objects.get(
+                conversation_id=conversation_id)
             query_delete.delete()
             return Response("ok nigga im gonna remove this object", status=status.HTTP_204_NO_CONTENT)
         except:
             return Response("some error", status=status.HTTP_404_NOT_FOUND)
-            

@@ -5,6 +5,7 @@ class Conversation(models.Model):
     conversation_id = models.AutoField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
     lastedited_at = models.DateTimeField(auto_now=True)
+    is_pinned = models.BooleanField(default=False)
     
     def __str__(self):
         return f"conv {self.conversation_id} created at {self.created_at}"
