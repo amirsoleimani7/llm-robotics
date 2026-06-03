@@ -15,6 +15,7 @@ def get_converastions(request):
     if request.method == 'GET' and request.query_params.get("commnad") == "get_conversations":
         all_conversations = Conversation.objects.all()
         serializers = ConversationSerilizer(all_conversations, many=True)
+        print(serializers)
         return JsonResponse(serializers.data, safe=False)
 
 
@@ -36,16 +37,28 @@ def get_conversation_chats(request, pk):
 
 @api_view(['PUT', 'PATCH'])
 def update_conversation(request, conversation_id):
-    if request.method == "PUT" or request.method == "PATCH":
+    if request.method == "PUT" and request.data['command'] == 'pin-conversation':
         try:
             to_pin_conversation = Conversation.objects.get(
                 conversation_id=conversation_id)
             to_pin_conversation.is_pinned = True
             to_pin_conversation.save()
             return Response("", status=status.HTTP_200_OK)
-       
+
         except ObjectDoesNotExist:
             return Response("", status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "PUT" and request.data['command'] == 'unpin-conversation':
+        try:
+            to_pin_conversation = Conversation.objects.get(
+                conversation_id=conversation_id)
+            to_pin_conversation.is_pinned = False
+            to_pin_conversation.save()
+            return Response("", status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist:
+            return Response("", status=status.HTTP_404_NOT_FOUND)
+
 
 
 @api_view(['POST'])
