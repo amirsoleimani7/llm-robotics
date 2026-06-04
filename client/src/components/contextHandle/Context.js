@@ -12,7 +12,8 @@ const AppProvider = ({ children }) => {
   const [show_confim, setShowConfirm] = useState(false);
   const [show_settings , setShowSetting] = useState(false);
   const [change_operation, setChangeOperation] = useState();
-
+  const [is_loading, setIsLoading] = useState(false);
+  
   // add User Prompt
   const addUserMessage = (user_prompt) => {
     setMessages((prev) => [...prev, user_prompt]);
@@ -47,7 +48,9 @@ const AppProvider = ({ children }) => {
         pinned_conversations,
         setPinConversation,
         show_settings,
-        setShowSetting
+        setShowSetting,
+        is_loading,
+        setIsLoading
       }}
     >
       {children}

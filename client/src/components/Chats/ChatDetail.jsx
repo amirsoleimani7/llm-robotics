@@ -33,6 +33,9 @@ export default function ChatDetail() {
           )}
         </>
       ))}
+      {
+        handler.is_loading ? <>loading ...</> : <></>
+      }
     </>
   );
 }

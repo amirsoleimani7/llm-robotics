@@ -12,7 +12,6 @@ function InputArea() {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
   const [high_len, setHighlen] = useState(false);
-  const [is_loading,  setIsLoading] = useState(false);
 
   const handle_user_input = async (e) => {
     const input = e.target.value;
@@ -37,11 +36,12 @@ function InputArea() {
             role: "user",
             content: input,
           });
-          
+          console.log("response");
           console.log(response.data);
+          console.log("response endd");
           global_handler.addUserMessage(response.data);
-          console.log("before ok response");
-          // we need to get the resualt here
+          
+          global_handler.setIsLoading(true);
           const prompt_response = await axios.post(
             `http://127.0.0.1:8000/handle_prompt`,
             {
@@ -50,17 +50,19 @@ function InputArea() {
               content: input,
             },
           );
-          console.log(prompt_response);
+
+          console.log("got the reponse");
+          global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
-          
         } else {
           // make a conversation and put the messages in it
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
             command: "new_chat",
           });
 
-          await global_handler.setcurrentconversation(response.data);
-          await update_conversations(global_handler);
+          console.log(response);
+          global_handler.setcurrentconversation(response.data);
+          await update_conversations(response.data);
 
           const response_msg = await axios.post(
             `http://127.0.0.1:8000/make_chat`,
@@ -74,7 +76,10 @@ function InputArea() {
           global_handler.addUserMessage(response_msg.data);
 
           console.log("before ok response");
-          // we need to get the resualt here
+          global_handler.setIsLoading(true);
+          console.log(global_handler.current_conversation);
+          console.log(`input is : ${input}`)
+          
           const prompt_response = await axios.post(
             `http://127.0.0.1:8000/handle_prompt`,
             {
@@ -83,10 +88,11 @@ function InputArea() {
               content: input,
             },
           );
+          console.log(prompt_response.data);
           
-          console.log(prompt_response);
+          global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
-          
+
           // we need to ge the reasult here
         }
       } catch (error) {
