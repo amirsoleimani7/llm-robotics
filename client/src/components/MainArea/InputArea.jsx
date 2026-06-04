@@ -12,6 +12,7 @@ function InputArea() {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
   const [high_len, setHighlen] = useState(false);
+  const [is_loading,  setIsLoading] = useState(false);
 
   const handle_user_input = async (e) => {
     const input = e.target.value;
@@ -36,7 +37,8 @@ function InputArea() {
             role: "user",
             content: input,
           });
-
+          
+          console.log(response.data);
           global_handler.addUserMessage(response.data);
           console.log("before ok response");
           // we need to get the resualt here
@@ -49,6 +51,8 @@ function InputArea() {
             },
           );
           console.log(prompt_response);
+          global_handler.addLLMResponse(prompt_response.data);
+          
         } else {
           // make a conversation and put the messages in it
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
@@ -79,7 +83,10 @@ function InputArea() {
               content: input,
             },
           );
+          
           console.log(prompt_response);
+          global_handler.addLLMResponse(prompt_response.data);
+          
           // we need to ge the reasult here
         }
       } catch (error) {

@@ -5,25 +5,30 @@ from rest_framework import status
 from .models import Conversation, Message
 from .serializers import ConversationSerilizer, MessageSerializer
 from rest_framework.decorators import api_view
+from .utils.create_llm import agent
 
-# from .utils.create_llm import agent
 
-
-@api_view(['GET','POST'])
+@api_view(['GET', 'POST'])
 def handle_prompt(request):
     if request.method == 'POST':
-        prompt_conversation = Conversation.objects.get(conversation_id=request.data['conversation']['conversation_id'])
-        print(prompt_conversation)
-        
-        # print(request.data['conversation']['conversation_id'])
-        
-        # msg_user = MessageSerializer(request.data)
-        
-        return Response("ok response" , status=status.HTTP_200_OK)
-    
+        try:
+
+            prompt_conversation = Conversation.objects.get(
+                conversation_id=request.data['conversation']['conversation_id'])
+            prompt = request.data['content']
+            llm_response = agent.process_command(prompt)
+            new_response = Message(conversation=prompt_conversation ,role="assistant",content=llm_response)
+            new_response.save()
+            
+
+            # converting and sending the created message to the reactapp 
+            serialized_response = MessageSerializer(new_response)            
+            return Response(serialized_response.data, status=status.HTTP_200_OK)
+
+        except:
+            return Response("error", status=status.HTTP_204_NO_CONTENT)
 
 
-        
 @api_view(['GET', 'POST'])
 def get_converastions(request):
     # this functions will handle differnet kinds of GETs (based on )
@@ -74,7 +79,6 @@ def update_conversation(request, conversation_id):
 
         except ObjectDoesNotExist:
             return Response("", status=status.HTTP_404_NOT_FOUND)
-
 
 
 @api_view(['POST'])

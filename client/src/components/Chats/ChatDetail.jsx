@@ -26,7 +26,7 @@ export default function ChatDetail() {
                   <React.Fragment key={index}>
                     {line}
                     {index < m.content.split("\n").length - 1 && <br />}
-                  </React.Fragment>
+                  </React.Fragment> 
                 ))}
               </p>
             </div>
