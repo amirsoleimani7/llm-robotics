@@ -40,7 +40,7 @@ function InputArea() {
           console.log(response.data);
           console.log("response endd");
           global_handler.addUserMessage(response.data);
-          
+
           global_handler.setIsLoading(true);
           const prompt_response = await axios.post(
             `http://127.0.0.1:8000/handle_prompt`,
@@ -62,6 +62,7 @@ function InputArea() {
 
           console.log(response);
           global_handler.setcurrentconversation(response.data);
+
           await update_conversations(global_handler);
 
           const response_msg = await axios.post(
@@ -75,11 +76,8 @@ function InputArea() {
           );
           global_handler.addUserMessage(response_msg.data);
 
-          console.log("before ok response");
           global_handler.setIsLoading(true);
-          console.log(global_handler.current_conversation);
-          console.log(`input is : ${input}`)
-          
+
           const prompt_response = await axios.post(
             `http://127.0.0.1:8000/handle_prompt`,
             {
@@ -89,10 +87,9 @@ function InputArea() {
             },
           );
           console.log(prompt_response.data);
-          
+
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
-
         }
       } catch (error) {
         console.error("Error:", error);
@@ -121,16 +118,22 @@ function InputArea() {
             <p>Model</p>
           </button>
           <button
-            className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-700 duration-300 ease-in-out"
+            className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-700 duration-300 w-10 h-10 aspect-square ease-in-out"
             style={{
               background: `${!is_voice ? "gray" : ""}`,
             }}
             onClick={handle_input}
           >
-            {is_voice ? (
-              <MdOutlineKeyboardVoice></MdOutlineKeyboardVoice>
+            {global_handler.is_loading ? (
+              <div class="loader1"></div>
             ) : (
-              <IoSend></IoSend>
+              <div>
+                {is_voice ? (
+                  <MdOutlineKeyboardVoice></MdOutlineKeyboardVoice>
+                ) : (
+                  <IoSend></IoSend>
+                )}
+              </div>
             )}
           </button>
         </div>

@@ -12,20 +12,21 @@ from .utils.create_llm import agent
 def handle_prompt(request):
     if request.method == 'POST':
         try:
-
+            print("we are in the main")
             prompt_conversation = Conversation.objects.get(
                 conversation_id=request.data['conversation']['conversation_id'])
             prompt = request.data['content']
             llm_response = agent.process_command(prompt)
-            new_response = Message(conversation=prompt_conversation ,role="assistant",content=llm_response)
+            new_response = Message(
+                conversation=prompt_conversation, role="assistant", content=llm_response)
             new_response.save()
-            
 
-            # converting and sending the created message to the reactapp 
-            serialized_response = MessageSerializer(new_response)            
+            # converting and sending the created message to the reactapp
+            serialized_response = MessageSerializer(new_response)
             return Response(serialized_response.data, status=status.HTTP_200_OK)
 
-        except:
+        except Exception as e:
+            print(f"we are in the exception : " , e)
             return Response("error", status=status.HTTP_204_NO_CONTENT)
 
 

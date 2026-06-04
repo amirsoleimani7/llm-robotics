@@ -39,9 +39,8 @@ class RobotController:
 
     def process_command(self, user_input, max_retries=2):
         self.chat_history.append({"role": "user", "content": user_input})
-        
-        print(f"current chat history is : {self.chat_history}")
-        
+
+                
         retries = 0
         while retries <= max_retries:
             
@@ -51,7 +50,7 @@ class RobotController:
                 add_generation_prompt=True
             )
             
-            print(f"prompt is : {prompt}")
+            print(f"prompt is : {user_input}")
 
             outputs = self.pipe(
                 prompt,
@@ -62,12 +61,14 @@ class RobotController:
                 generation_config=None
             )
             
-            print(f"\nraw output is : {outputs} \n")
             
             raw_output = outputs[0]['generated_text']
 
             processed_output = post_process_output(raw_output)
-
+            
+            print(f"proccessed output is {processed_output}")
+            
+            
             if processed_output:
                 self.chat_history.append(
                     {"role": "assistant", "content": processed_output})

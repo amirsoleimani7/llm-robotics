@@ -146,7 +146,7 @@ step 1 : open_gripper()
 step 1 : move_to_position(50, -30, 100)
 
 REMEMBER: Output ONLY the function calls. No explanations, no additional text. No comments on the commands at all 
-Dont't randomnly use the gripper"""
+Dont't randomnly use the gripper, don't use the grippers until there is an object to grap or the user specifies that you open or close your gripper"""
     
 
 # def get_system_prompt(current_position=None) -> str:

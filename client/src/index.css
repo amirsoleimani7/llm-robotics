@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import url("./components/Chats/loader_style.css");
+@import url("./components/MainArea/loading_style.css");
 
 body,
 html {

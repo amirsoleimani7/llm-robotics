@@ -125,11 +125,11 @@ function Side() {
 
         <div className="side-section flex flex-col gap-1">
           <h1 className="text-sm font-bold text-second-color-3">Pinned</h1>
-          {global_handlers.conversations.map((conv) => {
+          {global_handlers.conversations.map((conv, index) => {
             {
               return conv.is_pinned ? (
                 <Chats
-                  key={conv.conversation_id}
+                  key={index}
                   conversation_id={conv.conversation_id}
                   created_date={conv.created_at}
                   last_edited={conv.lastedited_at}
@@ -144,11 +144,11 @@ function Side() {
 
         <div className="side-section flex flex-col gap-1  h-full ">
           <h1 className="text-sm font-bold text-second-color-3">Other</h1>
-          {global_handlers.conversations.map((conv) => {
+          {global_handlers.conversations.map((conv,index) => {
             {
               return !conv.is_pinned ? (
                 <Chats
-                  key={conv.conversation_id}
+                  key={index}
                   conversation_id={conv.conversation_id}
                   created_date={conv.created_at}
                   last_edited={conv.lastedited_at}
