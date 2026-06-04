@@ -61,8 +61,8 @@ function InputArea() {
           });
 
           console.log(response);
-          await global_handler.setcurrentconversation(response.data);
-          await update_conversations(response.data);
+          global_handler.setcurrentconversation(response.data);
+          await update_conversations(global_handler);
 
           const response_msg = await axios.post(
             `http://127.0.0.1:8000/make_chat`,
