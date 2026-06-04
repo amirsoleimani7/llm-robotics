@@ -36,7 +36,19 @@ function InputArea() {
             role: "user",
             content: input,
           });
+
           global_handler.addUserMessage(response.data);
+          console.log("before ok response");
+          // we need to get the resualt here
+          const prompt_response = await axios.post(
+            `http://127.0.0.1:8000/handle_prompt`,
+            {
+              commnad: "handle_prompt",
+              conversation: global_handler.current_conversation,
+              content: input,
+            },
+          );
+          console.log(prompt_response);
         } else {
           // make a conversation and put the messages in it
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
@@ -45,7 +57,7 @@ function InputArea() {
 
           await global_handler.setcurrentconversation(response.data);
           await update_conversations(global_handler);
-          
+
           const response_msg = await axios.post(
             `http://127.0.0.1:8000/make_chat`,
             {
@@ -56,6 +68,19 @@ function InputArea() {
             },
           );
           global_handler.addUserMessage(response_msg.data);
+
+          console.log("before ok response");
+          // we need to get the resualt here
+          const prompt_response = await axios.post(
+            `http://127.0.0.1:8000/handle_prompt`,
+            {
+              commnad: "handle_prompt",
+              conversation: global_handler.current_conversation,
+              content: input,
+            },
+          );
+          console.log(prompt_response);
+          // we need to ge the reasult here
         }
       } catch (error) {
         console.error("Error:", error);

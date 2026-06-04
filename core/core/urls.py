@@ -8,6 +8,7 @@ urlpatterns = [
     path("make_chat", views.add_new_chat),
     path("get_conversation/<int:pk>", views.get_conversation_chats),
     path("delete_conversation/<int:conversation_id>", views.delete_conversation),
-    path("update_conversation/<int:conversation_id>", views.update_conversation)
+    path("update_conversation/<int:conversation_id>", views.update_conversation),
+    path("handle_prompt" ,views.handle_prompt)
 ]
 

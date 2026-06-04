@@ -48,7 +48,7 @@ function Setting() {
               <p>General</p>
             </button>
             <button
-              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab == "profile" ? "bg-select-color" : ""}  `}
+              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "profile" ? "bg-select-color" : ""}  `}
               onClick={() => {
                 setTab("profile");
               }}
@@ -95,7 +95,7 @@ function Setting() {
                 <p>Language</p>
                 <div className="flex gap-1">
                   <button
-                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language == "English" ? "bg-select-color" : ""}`}
+                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language === "English" ? "bg-select-color" : ""}`}
                     onClick={() => {
                       setLanguage("English");
                     }}
@@ -103,7 +103,7 @@ function Setting() {
                     English
                   </button>
                   <button
-                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language == "Persian" ? "bg-select-color" : ""}`}
+                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language === "Persian" ? "bg-select-color" : ""}`}
                     onClick={() => {
                       setLanguage("Persian");
                     }}

@@ -9,6 +9,21 @@ from rest_framework.decorators import api_view
 # from .utils.create_llm import agent
 
 
+@api_view(['GET','POST'])
+def handle_prompt(request):
+    if request.method == 'POST':
+        prompt_conversation = Conversation.objects.get(conversation_id=request.data['conversation']['conversation_id'])
+        print(prompt_conversation)
+        
+        # print(request.data['conversation']['conversation_id'])
+        
+        # msg_user = MessageSerializer(request.data)
+        
+        return Response("ok response" , status=status.HTTP_200_OK)
+    
+
+
+        
 @api_view(['GET', 'POST'])
 def get_converastions(request):
     # this functions will handle differnet kinds of GETs (based on )

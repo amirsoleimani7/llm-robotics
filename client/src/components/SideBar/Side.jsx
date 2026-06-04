@@ -18,7 +18,7 @@ export const update_conversations = async (handler) => {
     },
   });
   handler.setConversations(res.data);
-  console.log(handler.conversations);
+  // console.log(handler.conversations);
 };
 
 function Side() {
@@ -126,7 +126,6 @@ function Side() {
         <div className="side-section flex flex-col gap-1">
           <h1 className="text-sm font-bold text-second-color-3">Pinned</h1>
           {global_handlers.conversations.map((conv) => {
-            console.log(conv.is_pinned);
             {
               return conv.is_pinned ? (
                 <Chats
@@ -146,7 +145,6 @@ function Side() {
         <div className="side-section flex flex-col gap-1  h-full ">
           <h1 className="text-sm font-bold text-second-color-3">Other</h1>
           {global_handlers.conversations.map((conv) => {
-            console.log(conv.is_pinned);
             {
               return !conv.is_pinned ? (
                 <Chats
