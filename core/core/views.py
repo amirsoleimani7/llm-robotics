@@ -6,6 +6,7 @@ from .models import Conversation, Message
 from .serializers import ConversationSerilizer, MessageSerializer
 from rest_framework.decorators import api_view
 from .utils.create_llm import agent
+from .utils.socket_client import send_commands_to_socket
 
 
 @api_view(['GET', 'POST'])
@@ -17,13 +18,35 @@ def handle_prompt(request):
                 conversation_id=request.data['conversation']['conversation_id'])
             prompt = request.data['content']
             llm_response = agent.process_command(prompt)
+
+            if not llm_response or llm_response.startswith("System Error"):
+                return Response(
+                    {"detail": "LLM did not return a valid robot command.", "llm_response": llm_response},
+                    status=status.HTTP_502_BAD_GATEWAY,
+                )
+
             new_response = Message(
                 conversation=prompt_conversation, role="assistant", content=llm_response)
             new_response.save()
 
+            try:
+                robot_execution = send_commands_to_socket(llm_response)
+                execution_payload = {
+                    "status": "success",
+                    "commands": robot_execution,
+                }
+            except Exception as socket_error:
+                print(f"Robot socket execution failed: {socket_error}")
+                execution_payload = {
+                    "status": "error",
+                    "detail": str(socket_error),
+                }
+
             # converting and sending the created message to the reactapp
             serialized_response = MessageSerializer(new_response)
-            return Response(serialized_response.data, status=status.HTTP_200_OK)
+            payload = dict(serialized_response.data)
+            payload["robot_execution"] = execution_payload
+            return Response(payload, status=status.HTTP_200_OK)
 
         except Exception as e:
             print(f"we are in the exception : " , e)
