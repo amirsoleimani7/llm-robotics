@@ -1,0 +1,8 @@
+# Run your controller in 3 steps:
+# 1. Start Webots simulation
+# 2. In terminal:
+
+export WEBOTS_HOME=/usr/local/webots
+export PYTHONPATH=$WEBOTS_HOME/lib/controller/python  
+export WEBOTS_CONTROLLER_URL="ipc://1234/ScaraT6"
+python3 my_scara_controller.py
