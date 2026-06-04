@@ -27,20 +27,34 @@ def handle_prompt(request):
 
             new_response = Message(
                 conversation=prompt_conversation, role="assistant", content=llm_response)
-            new_response.save()
 
+            # send commands to robot and capture returned video basename (if any)
             try:
                 robot_execution = send_commands_to_socket(llm_response)
                 execution_payload = {
                     "status": "success",
                     "commands": robot_execution,
                 }
+
+                # parse first command response for video filename format 'OK|basename'
+                try:
+                    if robot_execution and isinstance(robot_execution, list) and len(robot_execution) > 0:
+                        first_resp = robot_execution[0].get('response', '')
+                        if isinstance(first_resp, str) and '|' in first_resp:
+                            parts = first_resp.split('|', 1)
+                            if parts[0] == 'OK' and parts[1]:
+                                new_response.video_url = parts[1]
+                except Exception:
+                    pass
+
             except Exception as socket_error:
                 print(f"Robot socket execution failed: {socket_error}")
                 execution_payload = {
                     "status": "error",
                     "detail": str(socket_error),
                 }
+
+            new_response.save()
 
             # converting and sending the created message to the reactapp
             serialized_response = MessageSerializer(new_response)

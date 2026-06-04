@@ -27,9 +27,10 @@ class Message(models.Model):
     role = models.CharField(choices=ROLES)
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField()
+    video_url = models.CharField(max_length=255, null=True, blank=True)
     
     def __str__(self):
-        return f"{self.content[:20]}"
+        return f"{self.content[:20]} from =>  {self.conversation.conversation_id}"
     
     def generate_title(self):
         return f"{self.content[:20]}"

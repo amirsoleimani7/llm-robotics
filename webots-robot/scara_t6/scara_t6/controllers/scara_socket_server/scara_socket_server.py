@@ -5,6 +5,7 @@ import sys
 import cmd
 import socket
 import threading
+import re
 
 # Cross-platform readline handling
 try:
@@ -17,6 +18,8 @@ except ImportError:
         readline = None
 
 from controller import Robot, Supervisor
+import os
+import datetime
 
 
 class SCARAT6Controller:
@@ -68,6 +71,12 @@ class SCARAT6Controller:
         self.verbose_level = 1
         self.running = True
         self.attached_object = None
+        # recording folder for command videos
+        try:
+            self.recordings_dir = os.path.join(os.getcwd(), "webots_recordings")
+            os.makedirs(self.recordings_dir, exist_ok=True)
+        except Exception:
+            self.recordings_dir = None
         
     def _init_suction_cup(self):
         """Initialize the suction cup tool."""
@@ -87,6 +96,35 @@ class SCARAT6Controller:
                     print("Warning: No suction cup found. Grip commands will be simulated.")
         except Exception as e:
             print(f"Warning: Could not initialize suction cup: {e}")
+
+    def start_recording(self, filename: str, width: int = 640, height: int = 480):
+        """Start movie recording using Supervisor.movieStart.
+
+        Returns the absolute path used (or None on failure).
+        """
+        if not self.supervisor:
+            return None
+
+        if not self.recordings_dir:
+            return None
+
+        filepath = os.path.join(self.recordings_dir, filename)
+        try:
+            # Webots expects a filename; record as mpeg/mp4
+            # quality 100, no caption
+            self.supervisor.movieStart(filepath, width, height, "mp4", 100, False)
+            return filepath
+        except Exception as e:
+            if self.verbose_level >= 1:
+                print(f"Warning: movieStart failed: {e}")
+            return None
+
+    def stop_recording(self):
+        try:
+            self.supervisor.movieStop()
+        except Exception as e:
+            if self.verbose_level >= 1:
+                print(f"Warning: movieStop failed: {e}")
     
     def get_joint_positions(self):
         """Get current positions of all joints."""
@@ -470,10 +508,46 @@ class SCARATerminal(cmd.Cmd):
                                 cmd_str = cmd_str.strip()
                                 if cmd_str:
                                     print(f"\n[Remote] {cmd_str}")
-                                    self.onecmd(cmd_str)
-                                    # Send an acknowledgment back to client
+                                    # prepare recording filename
+                                    video_basename = None
                                     try:
-                                        conn.sendall(b"OK\n")
+                                        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+                                        safe_cmd = re.sub(r'[^A-Za-z0-9_\-]', '_', cmd_str)[:80]
+                                        video_basename = f"{timestamp}_{safe_cmd}.mp4"
+                                    except Exception:
+                                        video_basename = None
+
+                                    video_path = None
+                                    if hasattr(self, 'controller') and self.controller and video_basename:
+                                        try:
+                                            video_path = self.controller.start_recording(video_basename)
+                                        except Exception:
+                                            video_path = None
+
+                                    # execute command
+                                    self.onecmd(cmd_str)
+
+                                    # allow simulation to run briefly to capture motion
+                                    try:
+                                        if hasattr(self, 'controller') and self.controller:
+                                            self.controller.step_simulation(100)
+                                    except Exception:
+                                        pass
+
+                                    # stop recording (if started)
+                                    if hasattr(self, 'controller') and self.controller and video_path:
+                                        try:
+                                            self.controller.stop_recording()
+                                        except Exception:
+                                            pass
+
+                                    # Send an acknowledgment back to client including video filename if present
+                                    try:
+                                        if video_path:
+                                            # send only basename so clients can reference via known folder
+                                            conn.sendall(f"OK|{os.path.basename(video_path)}\n".encode('utf-8'))
+                                        else:
+                                            conn.sendall(b"OK\n")
                                     except:
                                         pass
                                     print(self.prompt, end='', flush=True)
