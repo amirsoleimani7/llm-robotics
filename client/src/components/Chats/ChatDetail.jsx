@@ -15,12 +15,12 @@ export default function ChatDetail() {
     <>
       {messages.map((m, index) => (
         <>
-          {m.role === "user" ? (
+          {m.role === "user" && m.content !== "" ? (
             <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words" key={index}>
               {m.content}
             </div>
           ) : (
-            <div className="w-full break-words" key={index}>
+            <div className="w-full break-words font-bold" key={index}>
               <p>
                 {m.content.split("\n").map((line, index) => (
                   <React.Fragment key={index}>
@@ -34,7 +34,7 @@ export default function ChatDetail() {
         </>
       ))}
       {
-        handler.is_loading ? <>loading ...</> : <></>
+        handler.is_loading ? <div className="flex gap-2 items-center scale-[.90] mr-auto"><div class="loader"></div> <p className="font-bold">Planning Actions</p></div> : <></>
       }
     </>
   );

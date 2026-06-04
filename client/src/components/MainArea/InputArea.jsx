@@ -61,7 +61,7 @@ function InputArea() {
           });
 
           console.log(response);
-          global_handler.setcurrentconversation(response.data);
+          await global_handler.setcurrentconversation(response.data);
           await update_conversations(response.data);
 
           const response_msg = await axios.post(
@@ -93,7 +93,6 @@ function InputArea() {
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
 
-          // we need to ge the reasult here
         }
       } catch (error) {
         console.error("Error:", error);
