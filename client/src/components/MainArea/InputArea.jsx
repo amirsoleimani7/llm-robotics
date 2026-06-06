@@ -12,13 +12,12 @@ function InputArea() {
   const global_handler = useGlobalContext();
   const [is_voice, SetIsVoice] = useState(true);
   const [input, setInput] = useState("");
-  const [response, setResponse] = useState("");
   const [high_len, setHighlen] = useState(false);
 
   const handle_user_input = async (e) => {
     const input = e.target.value;
-
-    // checks for the the string
+    
+    // checks
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
 
@@ -27,10 +26,12 @@ function InputArea() {
 
   const handle_input = async (e) => {
     e.preventDefault();
+    
     if (input.length > 0) {
       try {
+    
         const conv = global_handler.current_conversation;
-        console.log(conv);
+        
         if (Object.keys(conv).length !== 0) {
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
             command: "new_message",
@@ -38,12 +39,10 @@ function InputArea() {
             role: "user",
             content: input,
           });
-          console.log("response");
-          console.log(response.data);
-          console.log("response endd");
-          global_handler.addUserMessage(response.data);
 
+          global_handler.addUserMessage(response.data);
           global_handler.setIsLoading(true);
+          
           const prompt_response = await axios.post(
             `http://127.0.0.1:8000/handle_prompt`,
             {
@@ -53,20 +52,18 @@ function InputArea() {
             },
           );
 
-          console.log("got the reponse");
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
         } else {
+          
           // make a conversation and put the messages in it
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
             command: "new_chat",
           });
 
-          console.log(response);
           global_handler.setcurrentconversation(response.data);
-
           await update_conversations(global_handler);
-
+          
           const response_msg = await axios.post(
             `http://127.0.0.1:8000/make_chat`,
             {
@@ -77,21 +74,20 @@ function InputArea() {
             },
           );
           global_handler.addUserMessage(response_msg.data);
-
           global_handler.setIsLoading(true);
-
+          
           const prompt_response = await axios.post(
             `http://127.0.0.1:8000/handle_prompt`,
             {
               commnad: "handle_prompt",
-              conversation: global_handler.current_conversation,
+              conversation: response.data,
               content: input,
             },
           );
-          console.log(prompt_response.data);
-
+                    
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
+          
         }
       } catch (error) {
         console.error("Error:", error);
