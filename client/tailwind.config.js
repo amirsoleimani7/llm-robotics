@@ -16,8 +16,10 @@ module.exports = {
         "seocnd-color-3":"#93989c",
           
         "scroll-color": "#3c3c3d",
-        "select-color" : "#404247"
-        },
+        "select-color" : "#404247",
+        "black-rgba" : "rgba(13, 17, 23, .95)"
+      },
+      
       // TODO : fix the animation
       keyframes: {
         typing: {

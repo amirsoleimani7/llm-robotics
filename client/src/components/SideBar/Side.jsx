@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { topButtons } from "./buttons";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { CgMore, CgSidebar } from "react-icons/cg";
+import { CgSidebar } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
 import { RiChatNewFill } from "react-icons/ri";
 import axios from "axios";
 import Chats from "../Chats/Chats";
-import { IoConstructOutline } from "react-icons/io5";
 import { useGlobalContext } from "../contextHandle/Context";
-import { BsCloudFog } from "react-icons/bs";
 
-// load he
+// load the covnersations
 export const update_conversations = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/get_converastions", {
     params: {
@@ -18,8 +16,8 @@ export const update_conversations = async (handler) => {
     },
   });
   handler.setConversations(res.data);
-  // console.log(handler.conversations);
 };
+
 
 function Side() {
   const global_handlers = useGlobalContext();
@@ -27,10 +25,8 @@ function Side() {
 
   const handle_sidebar = async (e) => {
     setIs_open(!is_open);
-    console.log(e.currentTarget);
-    console.log("we are in the hadnle sidesection!");
 
-    // when ever it opense we can update the data
+    // when ever it opens we can update the data(current conversations of the user)
     await update_conversations(global_handlers);
   };
 
@@ -65,7 +61,7 @@ function Side() {
 
   return (
     <>
-      <div className="fixed top-2 w-[170px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 -left-full">
+      <div className="fixed top-2 w-[170px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start max-md:bg-black-rgba max-md:top-0 max-md:h-16 -left-full">
         <button
           onClick={handle_sidebar}
           className="aspect-square p-3 rounded-[2rem] flex items-center justify-center hover:bg-main-color-3 duration-200 ease-in-out"
