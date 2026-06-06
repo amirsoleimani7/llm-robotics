@@ -13,7 +13,6 @@ from .utils.socket_client import send_commands_to_socket
 def handle_prompt(request):
     if request.method == 'POST':
         try:
-            print("we are in the main")
             prompt_conversation = Conversation.objects.get(
                 conversation_id=request.data['conversation']['conversation_id'])
             prompt = request.data['content']
@@ -48,7 +47,6 @@ def handle_prompt(request):
                     pass
 
             except Exception as socket_error:
-                print(f"Robot socket execution failed: {socket_error}")
                 execution_payload = {
                     "status": "error",
                     "detail": str(socket_error),
