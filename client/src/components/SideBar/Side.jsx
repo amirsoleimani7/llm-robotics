@@ -177,7 +177,6 @@ function Side() {
           </div>
         </div>
       </div>
-      <More />
     </>
   );
 }

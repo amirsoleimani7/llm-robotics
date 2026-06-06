@@ -1,7 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useGlobalContext } from "../contextHandle/Context";
 import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
+import More from "../more/More";
+
 export default function Chats({
   conversation_id,
   created_date,
@@ -11,6 +13,13 @@ export default function Chats({
   
   const handler = useGlobalContext();
   const [show_more, setShowMore] = useState(false);
+  const [position, setPosition] = useState({
+    top: 0,
+    left : 0,
+    bottom : 0,
+  })
+  
+
   const more_ref = useRef(null);
 
   useEffect(() => {
@@ -26,7 +35,6 @@ export default function Chats({
         document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [show_more]);
-
 
   const go_to_chat_detail = async (e) => {
     const { conversationId, createdDate, lastEdited } = e.currentTarget.dataset;
@@ -48,17 +56,19 @@ export default function Chats({
   const handle_more = (e) => {
     // reading conversationId for the more option
     const { conversationId } = e.currentTarget.dataset;
+    const rect = e.currentTarget.getBoundingClientRect();
+    console.log(`top : ${rect.top}\nleft: ${rect.left}\nbottom ${rect.bottom}`);
+    
+    setPosition({
+      top : rect.top,
+      left : rect.left,
+      bottom : rect.bottom,
+    })
+    
     setShowMore(!show_more);
     console.log(conversationId);
   };
 
-  const handle_delete = (e) => {
-    const { conversationId } = e.currentTarget.dataset;
-    handler.setChangeConv(conversationId);
-    handler.setShowConfirm(true);
-
-    // update the list of conversations
-  };
 
   return (
     <>
@@ -83,9 +93,9 @@ export default function Chats({
             <FiMoreHorizontal className="pointer-events-none" />
           </button>
         </div>
-        
+
+      <More showMore={show_more} positions={position} />
       </div>
-      
     </>
   );
 }

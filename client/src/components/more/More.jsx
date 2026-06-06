@@ -9,11 +9,13 @@ import { MdDeleteOutline } from "react-icons/md";
 import { update_conversations } from "../SideBar/Side";
 import axios from "axios";
 import { useGlobalContext } from "../contextHandle/Context";
+import { createPortal } from "react-dom";
 
-function More() {
+function More({ showMore, positions }) {
   const handler = useGlobalContext();
   const [show_more, setShowMore] = useState(false);
   const more_ref = useRef(null);
+  let is_pinned = false;
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -28,6 +30,14 @@ function More() {
         document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [show_more]);
+
+  const handle_delete = (e) => {
+    const { conversationId } = e.currentTarget.dataset;
+    handler.setChangeConv(conversationId);
+    handler.setShowConfirm(true);
+
+    // update the list of conversations
+  };
 
   const handle_unpin = async (e) => {
     const { conversationId, createdDate, lastEdited } = e.currentTarget.dataset;
@@ -55,16 +65,17 @@ function More() {
     await update_conversations(handler);
   };
 
-  return (
+  return createPortal(
     <div
-      className="flex z-50  bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-xl top-10 -right-[35%] p-1 shadow-lg"
+      className="flex z-50 text-white bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-xl top-10 -right-[35%] p-1 shadow-lg"
       style={{
-        display: `${show_more ? "flex" : "none"}`,
+        display: `${showMore ? "flex" : "none"}`,
+        top: `${positions.top}px`,
+        left: `${positions.left}px`,
       }}
       ref={more_ref}
     >
-        
-      {/* <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2">
+      <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2">
         <MdDriveFileRenameOutline size={20} className="w-1/4" />
         <p className="w-3/4 text-left">Rename</p>
       </button>
@@ -72,7 +83,7 @@ function More() {
         <button
           className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2"
           onClick={handle_pin}
-          data-conversation-id={conversation_id}
+          //data-conversation-id={conversation_id}
         >
           <LuPin size={20} className="w-1/4" />{" "}
           <p className="w-3/4 text-left">Pin</p>
@@ -81,7 +92,7 @@ function More() {
         <button
           className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2"
           onClick={handle_unpin}
-          data-conversation-id={conversation_id}
+          //data-conversation-id={conversation_id}
         >
           <LuPinOff size={20} className="w-1/4" />{" "}
           <p className="w-3/4 text-left">unPin</p>
@@ -94,12 +105,13 @@ function More() {
       <button
         className="flex items-center gap-1  h-[40px] hover:bg-red-950 text-red-500 rounded-xl px-2"
         onClick={handle_delete}
-        data-conversation-id={conversation_id}
+        //data-conversation-id={conversation_id}
       >
         <MdDeleteOutline size={20} className="w-1/4" />{" "}
         <p className="w-3/4 text-left">Delete</p>
-      </button> */}
-    </div>
+      </button>
+    </div>,
+    document.getElementById("portal"),
   );
 }
 
