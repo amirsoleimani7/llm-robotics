@@ -6,6 +6,8 @@ import { useGlobalContext } from "../contextHandle/Context";
 import { update_conversations } from "../SideBar/Side";
 import axios, { isCancel, AxiosError } from "axios";
 
+
+
 function InputArea() {
   const global_handler = useGlobalContext();
   const [is_voice, SetIsVoice] = useState(true);

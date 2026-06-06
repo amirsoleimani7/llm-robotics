@@ -25,8 +25,11 @@ function Side() {
   const global_handlers = useGlobalContext();
   const [is_open, setIs_open] = useState(false);
 
-  const handle_sidebar = async () => {
+  const handle_sidebar = async (e) => {
     setIs_open(!is_open);
+    console.log(e.currentTarget);
+    console.log("we are in the hadnle sidesection!");
+
     // when ever it opense we can update the data
     await update_conversations(global_handlers);
   };
@@ -62,15 +65,17 @@ function Side() {
 
   return (
     <>
-      <div className="fixed top-2 w-[150px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 -left-full">
+      <div className="fixed top-2 w-[170px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 -left-full">
         <button
           onClick={handle_sidebar}
-          className="w-[20px] h-full aspect-square"
+          className="aspect-square p-3 rounded-[2rem] flex items-center justify-center hover:bg-main-color-3 duration-200 ease-in-out"
         >
-          <RxHamburgerMenu className="pointer-events-none" />
+          <RxHamburgerMenu />
         </button>
+
         <p className="font-bold text-2xl">Robo Talk</p>
       </div>
+
       <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[200px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all">
         <div className="bg-red-100 w-1/4  h-full rounded-full aspect-square"></div>
         <div className="flex w-3/4 p-1 gap-1  bg-main-color-2 rounded-[2rem] border border-gray-700">
@@ -90,9 +95,10 @@ function Side() {
       </div>
 
       <div
-        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0 z-40 flex-none  bg-main-color-1 px-2 flex flex-col gap-3"
+        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0  flex-none  bg-main-color-1 px-2 flex flex-col gap-3"
         style={{
           width: `${is_open ? "270px" : "0px"}`,
+          zIndex: `${is_open ? "40" : "-10"}`,
           opacity: `${is_open ? "100" : "0"}`,
           borderRight: `${is_open ? "1px solid rgb(55 65 81 / var(--tw-border-opacity, 1)" : ""}`,
         }}
@@ -144,7 +150,7 @@ function Side() {
 
         <div className="side-section flex flex-col gap-1  h-full ">
           <h1 className="text-sm font-bold text-second-color-3">Other</h1>
-          {global_handlers.conversations.map((conv,index) => {
+          {global_handlers.conversations.map((conv, index) => {
             {
               return !conv.is_pinned ? (
                 <Chats

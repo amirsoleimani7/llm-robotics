@@ -27,7 +27,7 @@ class SCARAT6Controller:
     
     # Joint limits based on SCARA T6 specifications
     JOINT_LIMITS = {
-        'base': {'min': -1.57, 'max': 1.57, 'unit': 'rad'},
+        'base': {'min': -3.14159, 'max': 3.14159, 'unit': 'rad'},
         'arm': {'min': -1.50, 'max': 1.50, 'unit': 'rad'},
         'shaft': {'min': -0.15, 'max': 0.0, 'unit': 'm'}
     }
@@ -222,7 +222,8 @@ class SCARAT6Controller:
         """Calculate joint angles from end effector position."""
         # Handle shaft (z-axis) separately
         if z < self.JOINT_LIMITS['shaft']['min'] or z > self.JOINT_LIMITS['shaft']['max']:
-            return None, f"Z position {z:.4f} m out of range [{self.JOINT_LIMITS['shaft']['min']:.4f}, {self.JOINT_LIMITS['shaft']['max']:.4f}]"
+            return None, f"Z position {z:.4f} m out of range [{self.
+            JOINT_LIMITS['shaft']['min']:.4f}, {self.JOINT_LIMITS['shaft']['max']:.4f}]"
         
         # Calculate theta2 using cosine law
         cos_theta2 = (x**2 + y**2 - self.L1**2 - self.L2**2) / (2 * self.L1 * self.L2)

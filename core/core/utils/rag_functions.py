@@ -7,9 +7,11 @@ from typing import Dict, List, Optional, Tuple
 AVAILABLE_FUNCTIONS = {
     "home": {"params": [], "ranges": {}, "aliases": ["move_home"]},
     "park": {"params": [], "ranges": {}, "aliases": []},
-    "base": {"params": ["angle"], "ranges": {"angle": (-1.57, 1.57)}, "aliases": []},
+   
+    "base": {"params": ["angle"], "ranges": {"angle": (-3.14159, 3.14159)}, "aliases": []},
     "arm": {"params": ["angle"], "ranges": {"angle": (-1.50, 1.50)}, "aliases": []},
     "shaft": {"params": ["position"], "ranges": {"position": (-0.15, 0.0)}, "aliases": []},
+   
     "base_rel": {"params": ["delta"], "ranges": {"delta": (-1.57, 1.57)}, "aliases": []},
     "arm_rel": {"params": ["delta"], "ranges": {"delta": (-1.50, 1.50)}, "aliases": []},
     "shaft_rel": {"params": ["delta"], "ranges": {"delta": (-0.15, 0.15)}, "aliases": []},
@@ -219,7 +221,6 @@ def post_process_output(raw_output: str) -> str:
 
     return ""
 
-
 def get_system_prompt() -> str:
     """Get the system prompt with available socket commands."""
     command_lines = []
@@ -258,7 +259,7 @@ CRITICAL RULES:
 5. Keep numeric values within valid ranges.
 
 VALID RANGES:
-- base: [-1.57, 1.57]
+- base: [-3.14159, 3.14159]
 - arm: [-1.50, 1.50]
 - shaft: [-0.15, 0.00]
 - move_to: x/y roughly within [-0.60, 0.60], z within [-0.15, 0.00]

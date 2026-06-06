@@ -24,7 +24,7 @@ def handle_prompt(request):
                     {"detail": "LLM did not return a valid robot command.", "llm_response": llm_response},
                     status=status.HTTP_502_BAD_GATEWAY,
                 )
-
+            
             new_response = Message(
                 conversation=prompt_conversation, role="assistant", content=llm_response)
 

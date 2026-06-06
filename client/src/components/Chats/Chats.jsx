@@ -21,7 +21,7 @@ export default function Chats({
   const handler = useGlobalContext();
   const [show_more, setShowMore] = useState(false);
   const more_ref = useRef(null);
-
+  
   useEffect(() => {
     function handleClickOutside(event) {
       if (more_ref.current && !more_ref.current.contains(event.target)) {
