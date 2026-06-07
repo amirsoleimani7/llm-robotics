@@ -155,12 +155,13 @@ def delete_conversation(request, conversation_id):
 def update_user(request):
     if request.method == "PUT" and request.data['command'] == "change_name":
         try : 
-            user_object = User.objects.get(name=request.data['new_name'])
-            user_object.name = "mmd"
+            
+            user_object = User.objects.get(user_id="user")
+            user_object.name = request.data['new_name']
             user_object.save()
             
-            return Response("", status=status.HTTP_204_NO_CONTENT)
-
+            return Response("changed", status=status.HTTP_200_OK)
+        
         except ObjectDoesNotExist:
             # we gotta make one
             return Response("error", status=status.HTTP_204_NO_CONTENT)
@@ -170,4 +171,10 @@ def update_user(request):
 
 @api_view(['GET'])
 def get_user(request):
-    return Response('' , status=status.HTTP_204_NO_CONTENT)
+    if request.method == "GET":
+        user = User.objects.get(user_id="user")
+        print(f"user is : {user}")
+        userSerialized = UserSerializer(user)
+        print(userSerialized)
+        return Response(userSerialized.data, status=status.HTTP_200_OK)
+        

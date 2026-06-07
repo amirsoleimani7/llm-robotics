@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useFormState } from "react-dom";
 
 const AppContext = React.createContext();
 
@@ -10,10 +11,11 @@ const AppProvider = ({ children }) => {
   const [current_conversation, setcurrentconversation] = useState({});
   const [change_conv, setChangeConv] = useState();
   const [show_confim, setShowConfirm] = useState(false);
-  const [show_settings , setShowSetting] = useState(false);
+  const [show_settings, setShowSetting] = useState(false);
+  const [user, setUser] = useState({});
   const [change_operation, setChangeOperation] = useState();
   const [is_loading, setIsLoading] = useState(false);
-  
+
   // add User Prompt
   const addUserMessage = (user_prompt) => {
     setMessages((prev) => [...prev, user_prompt]);
@@ -50,7 +52,9 @@ const AppProvider = ({ children }) => {
         show_settings,
         setShowSetting,
         is_loading,
-        setIsLoading
+        setIsLoading,
+        user,
+        setUser,
       }}
     >
       {children}

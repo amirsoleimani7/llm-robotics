@@ -4,32 +4,47 @@ import { IoClose } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import { IoCheckmarkOutline } from "react-icons/io5";
-
+import { update_user } from "../SideBar/Side";
 import {
   MdOutlineDarkMode,
   MdOutlineLightMode,
   MdComputer,
 } from "react-icons/md";
+import axios from "axios";
 
 function Setting() {
   const [tab, setTab] = useState("general");
   const [theme, setTheme] = useState("System");
   const [Language, setLanguage] = useState("English");
-  const [show_ok , setShowOk] = useState(false);
-  console.log(show_ok);
+  const [show_ok, setShowOk] = useState(false);
+  const [query_name, setQueryname] = useState("");
+
   const handle = useGlobalContext();
 
-
-  const handle_username = (e) => {  
+  const handle_username = (e) => {
     const query_name = e.currentTarget.value;
-    console.log(`the thing is : ${query_name === ''}`);
-    query_name === '' ? setShowOk(false) : setShowOk(true);
-  }
-  
-  const handle_change_name = () => {
-    console.log("sending the change name");  
-  }
 
+    query_name === "" ? setShowOk(false) : setShowOk(true);
+    if (query_name !== "") {
+      setQueryname(query_name);
+    }
+  };
+
+  const handle_change_name =  async () => {
+    
+    const res = await axios.put("http://127.0.0.1:8000/update_user",{
+      command : "change_name",
+      new_name : query_name
+    })
+    
+    
+    // udpate user
+    await update_user(handle);
+  
+    // reset the input area 
+    document.getElementById('user-name-change').value = "";
+    setShowOk(false);  
+  };
 
 
   return (
@@ -39,7 +54,6 @@ function Setting() {
         display: `${handle.show_settings ? "flex" : "none"}`,
       }}
     >
-      
       <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color ">
         <div className="flex justify-between font-bold">
           <h1>Settings</h1>
@@ -137,14 +151,15 @@ function Setting() {
                 <input
                   onChange={handle_username}
                   type="text"
-                  className="bg-second-color-1 rounded-lg p-2 focus:outline-1 focus:outline-white"
+                  id="user-name-change"
+                  placeholder={handle.user.name}
+                  className="bg-second-color-1 rounded-lg p-2 border-none outline-none focus:outline-1 focus:outline-sky-50"
                 />
-                <button className="absolute right-2 p-1 rounded-lg hover:bg-seocnd-color-3"
-                  style={{
-                    display: `${show_ok ? "block" : "none"}`
-                  }}
-                onClick={handle_change_name}>
-                  <IoCheckmarkOutline size={18}/>
+                <button
+                  className={`translate-x-10 absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100" : "opacity-0 pointer-events-none"} duration-100 transition-all`}
+                  onClick={handle_change_name}
+                >
+                  <IoCheckmarkOutline size={18} />
                 </button>
               </div>
               <div className=" bg-red-100 border-b w-full border-gray-700"></div>

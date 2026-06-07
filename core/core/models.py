@@ -40,7 +40,7 @@ class Message(models.Model):
 
 
 class User(models.Model):
-    id = models.AutoField(primary_key=True)
+    user_id = models.CharField(default="user")
     name = models.CharField()
     profile_picture = models.ImageField(upload_to="./storage")
     

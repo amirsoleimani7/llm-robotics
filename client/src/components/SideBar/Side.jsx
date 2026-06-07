@@ -19,7 +19,13 @@ export const update_conversations = async (handler) => {
   handler.setConversations(res.data);
 };
 
+export const update_user = async (handler) => {
+  const res = await axios.get("http://127.0.0.1:8000/get_user");
+  handler.setUser(res.data);  
+}
+
 function Side() {
+
   const global_handlers = useGlobalContext();
   const [is_open, setIs_open] = useState(false);
 
@@ -28,6 +34,7 @@ function Side() {
 
     // when ever it opens we can update the data(current conversations of the user)
     await update_conversations(global_handlers);
+    await update_user(global_handlers);
   };
 
   const handle_newChat = async () => {
@@ -125,7 +132,7 @@ function Side() {
           <RiChatNewFill />
           <p>New Chat</p>
         </button>
-
+        
         <div className="side-section h-full overflow-y-scroll">
           <div className="flex flex-col gap-1">
             <h1 className="text-sm font-bold text-second-color-3">Pinned</h1>
@@ -173,7 +180,7 @@ function Side() {
         >
           <div className="flex items-center gap-1 justify-around w-full">
             <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500" />
-            <p className="text-sm">AmirHossein Soleimani</p>
+            <p className="text-sm">{global_handlers.user.name}</p>
           </div>
         </div>
       </div>
