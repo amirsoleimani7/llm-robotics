@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Conversation, Message
-from .serializers import ConversationSerilizer, MessageSerializer
+from .models import Conversation, Message , User
+from .serializers import ConversationSerilizer, MessageSerializer,UserSerializer
 from rest_framework.decorators import api_view
 # from .utils.create_llm import agent
 from .utils.socket_client import send_commands_to_socket
@@ -151,10 +151,23 @@ def delete_conversation(request, conversation_id):
 
 
 # user codesc
-@api_view(['POST' ,'UPDATE'])
+@api_view(['POST' ,'PUT'])
 def update_user(request):
-    if request.method == "POST":
-        print("connection test!")
-        return Response("", status=status.HTTP_204_NO_CONTENT)
+    if request.method == "PUT" and request.data['command'] == "change_name":
+        try : 
+            user_object = User.objects.get(name=request.data['new_name'])
+            user_object.name = "mmd"
+            user_object.save()
+            
+            return Response("", status=status.HTTP_204_NO_CONTENT)
+
+        except ObjectDoesNotExist:
+            # we gotta make one
+            return Response("error", status=status.HTTP_204_NO_CONTENT)
+            
+
     
-    
+
+@api_view(['GET'])
+def get_user(request):
+    return Response('' , status=status.HTTP_204_NO_CONTENT)
