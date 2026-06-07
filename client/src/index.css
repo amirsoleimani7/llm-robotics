@@ -34,13 +34,11 @@ textarea {
 .side-section {
   scrollbar-width: thin;
   scrollbar-color: #3c3c3d #1b1b1c;
-  overflow-y: auto;
-  overflow-x: visible  !important;
   position: relative;  
 }
 
 #portal{
-  
+
   background-color: red;
   pointer-events: all;
 }

@@ -123,7 +123,7 @@ function InputArea() {
             onClick={handle_input}
           >
             {global_handler.is_loading ? (
-              <div className="loader1"></div>
+              <div className="w-[50%] h-[50%] bg-main-color-1"></div>
             ) : (
               <div>
                 {is_voice ? (
