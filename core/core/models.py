@@ -38,6 +38,7 @@ class Message(models.Model):
 
 
 
+
 class User(models.Model):
     name = models.CharField()
     profile_picture = models.ImageField(upload_to="./storage")

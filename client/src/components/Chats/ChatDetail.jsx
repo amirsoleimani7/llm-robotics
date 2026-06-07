@@ -1,7 +1,7 @@
 import { useGlobalContext } from "../contextHandle/Context";
 import React, { useEffect } from "react";
 
-export default function ChatDetail() {
+export default function ChatDetail({covnersation_id}) {
   const handler = useGlobalContext();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function ChatDetail() {
           ) : null}
         </React.Fragment>
       ))}
-      {handler.is_loading ? (
+      {handler.is_loading? (
         <div
           className={`flex gap-2 items-center scale-[.90] mr-auto  duration-100`}
         >

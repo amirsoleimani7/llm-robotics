@@ -15,7 +15,7 @@ function App() {
       
       <div className="w-[800px] px-2 shrink flex flex-col justify-center mx-auto tranistion-all ease-in-out duration-300 mb-4">
         <div className="chat-section w-full h-full  flex flex-col gap-2 py-12 overflow-scroll overflow-x-hidden">
-          <ChatDetail />
+          <ChatDetail  />
         </div>
         <InputArea />
       </div>

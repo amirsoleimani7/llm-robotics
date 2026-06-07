@@ -3,6 +3,8 @@ import { useGlobalContext } from "../contextHandle/Context";
 import { IoClose } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
+import { IoCheckmarkOutline } from "react-icons/io5";
+
 import {
   MdOutlineDarkMode,
   MdOutlineLightMode,
@@ -13,8 +15,22 @@ function Setting() {
   const [tab, setTab] = useState("general");
   const [theme, setTheme] = useState("System");
   const [Language, setLanguage] = useState("English");
-
+  const [show_ok , setShowOk] = useState(false);
+  console.log(show_ok);
   const handle = useGlobalContext();
+
+
+  const handle_username = (e) => {  
+    const query_name = e.currentTarget.value;
+    console.log(`the thing is : ${query_name === ''}`);
+    query_name === '' ? setShowOk(false) : setShowOk(true);
+  }
+  
+  const handle_change_name = () => {
+    console.log("sending the change name");  
+  }
+
+
 
   return (
     <div
@@ -116,12 +132,20 @@ function Setting() {
             </div>
           ) : (
             <div className="flex flex-col w-[75%] items-center gap-4">
-              <div className="flex justify-between items-center w-[100%]">
+              <div className="flex justify-between items-center w-[100%] relative">
                 <h1>Name</h1>
                 <input
+                  onChange={handle_username}
                   type="text"
                   className="bg-second-color-1 rounded-lg p-2 focus:outline-1 focus:outline-white"
                 />
+                <button className="absolute right-2 p-1 rounded-lg hover:bg-seocnd-color-3"
+                  style={{
+                    display: `${show_ok ? "block" : "none"}`
+                  }}
+                onClick={handle_change_name}>
+                  <IoCheckmarkOutline size={18}/>
+                </button>
               </div>
               <div className=" bg-red-100 border-b w-full border-gray-700"></div>
               <div className="flex justify-between items-center w-[100%]">
