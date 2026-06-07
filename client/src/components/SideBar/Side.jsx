@@ -58,10 +58,10 @@ function Side() {
     handle_sidebar,
     handle_newChat,
   };
-
+  
   return (
     <>
-      <div className="fixed top-2 w-[170px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start max-md:bg-black-rgba max-md:top-0 max-md:h-16 -left-full">
+      <div className="fixed top-2 w-[170px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start max-md:bg-black-rgba max-md:top-0 max-md:h-12 -left-full">
         <button
           onClick={handle_sidebar}
           className="aspect-square p-3 rounded-[2rem] flex items-center justify-center hover:bg-main-color-3 duration-200 ease-in-out"

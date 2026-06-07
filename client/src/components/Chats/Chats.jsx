@@ -10,15 +10,13 @@ export default function Chats({
   last_edited,
   is_pinned,
 }) {
-  
   const handler = useGlobalContext();
   const [show_more, setShowMore] = useState(false);
   const [position, setPosition] = useState({
     top: 0,
-    left : 0,
-    bottom : 0,
-  })
-  
+    left: 0,
+    bottom: 0,
+  });
 
   const more_ref = useRef(null);
 
@@ -57,18 +55,16 @@ export default function Chats({
     // reading conversationId for the more option
     const { conversationId } = e.currentTarget.dataset;
     const rect = e.currentTarget.getBoundingClientRect();
-    console.log(`top : ${rect.top}\nleft: ${rect.left}\nbottom ${rect.bottom}`);
-    
-    setPosition({
-      top : rect.top,
-      left : rect.left,
-      bottom : rect.bottom,
-    })
-    
-    setShowMore(!show_more);
-    console.log(conversationId);
-  };
 
+    setPosition({
+      top: rect.top,
+      left: rect.left,
+      bottom: rect.bottom,
+    });
+
+    setShowMore(!show_more);
+    console.log(`conversation id is : ${conversationId}`);
+  };
 
   return (
     <>
@@ -93,9 +89,14 @@ export default function Chats({
             <FiMoreHorizontal className="pointer-events-none" />
           </button>
         </div>
-
-      <More showMore={show_more} positions={position} is_pinned={is_pinned}/>
       </div>
+      <More
+        showMore={show_more}
+        positions={position}
+        is_pinned={is_pinned}
+        conversation_id={conversation_id}
+        more_ref={more_ref}
+      />
     </>
   );
 }
