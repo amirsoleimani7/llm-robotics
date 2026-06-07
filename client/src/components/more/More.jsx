@@ -14,20 +14,17 @@ import { createPortal } from "react-dom";
 function More({ showMore, positions, is_pinned, conversation_id ,more_ref}) {
   const handler = useGlobalContext();
 
-  console.log("rerender", conversation_id);
   const handle_delete = (e) => {
     e.stopPropagation();
     const { conversationId } = e.currentTarget.dataset;
-    console.log("we are in delete");
     handler.setChangeConv(conversationId);
     handler.setShowConfirm(true);
     // update the list of conversations
   };
-
+  
   const handle_unpin = async (e) => {
     e.stopPropagation();
     const { conversationId } = e.currentTarget.dataset;
-    console.log("we are in the unpin section");
 
     const res = await axios.put(
       `http://127.0.0.1:8000/update_conversation/${conversationId}`,
@@ -42,7 +39,6 @@ function More({ showMore, positions, is_pinned, conversation_id ,more_ref}) {
   const handle_pin = async (e) => {
     e.stopPropagation();
     const { conversationId } = e.currentTarget.dataset;
-    console.log("we are in the pin section");
 
     const res = await axios.put(
       `http://127.0.0.1:8000/update_conversation/${conversationId}`,

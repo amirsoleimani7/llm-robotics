@@ -52,6 +52,7 @@ export default function Chats({
   };
 
   const handle_more = (e) => {
+    e.stopPropagation();
     // reading conversationId for the more option
     const { conversationId } = e.currentTarget.dataset;
     const rect = e.currentTarget.getBoundingClientRect();
