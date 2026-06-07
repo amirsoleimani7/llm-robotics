@@ -11,25 +11,10 @@ import axios from "axios";
 import { useGlobalContext } from "../contextHandle/Context";
 import { createPortal } from "react-dom";
 
-function More({ showMore, positions }) {
+// TODO : transition the more sectionc
+
+function More({ showMore, positions, is_pinned }) {
   const handler = useGlobalContext();
-  const [show_more, setShowMore] = useState(false);
-  const more_ref = useRef(null);
-  let is_pinned = false;
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (more_ref.current && !more_ref.current.contains(event.target)) {
-        setShowMore(false);
-      }
-    }
-
-    if (show_more) {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
-    }
-  }, [show_more]);
 
   const handle_delete = (e) => {
     const { conversationId } = e.currentTarget.dataset;
@@ -67,13 +52,13 @@ function More({ showMore, positions }) {
 
   return createPortal(
     <div
-      className="flex z-50 text-white bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-xl top-10 -right-[35%] p-1 shadow-lg"
+      className="flex z-50 text-white  bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-xl top-10 -right-[35%] p-1 shadow-lg"
+      id="more-div"
       style={{
         display: `${showMore ? "flex" : "none"}`,
-        top: `${positions.top}px`,
+        top: `${positions.top >= 790 ? positions.top - 160 : positions.top}px`,
         left: `${positions.left}px`,
       }}
-      ref={more_ref}
     >
       <button className="flex items-center gap-1  h-[40px] hover:bg-second-color-2 rounded-xl px-2">
         <MdDriveFileRenameOutline size={20} className="w-1/4" />

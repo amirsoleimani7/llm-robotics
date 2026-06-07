@@ -94,7 +94,7 @@ export default function Chats({
           </button>
         </div>
 
-      <More showMore={show_more} positions={position} />
+      <More showMore={show_more} positions={position} is_pinned={is_pinned}/>
       </div>
     </>
   );
