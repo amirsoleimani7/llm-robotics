@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Toaster, toast } from 'sonner';
 import { useGlobalContext } from "../contextHandle/Context";
 import { IoClose } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
@@ -44,7 +45,9 @@ function Setting() {
     // reset the input area 
     document.getElementById('user-name-change').value = "";
     setShowOk(false);  
-  };
+      toast.success("name changed!" , {duration : 1500})
+
+    };
 
 
   return (
@@ -54,7 +57,16 @@ function Setting() {
         display: `${handle.show_settings ? "flex" : "none"}`,
       }}
     >
-      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color ">
+      <Toaster ani position="top-center" toastOptions={{
+        style:{
+          background : "#353638",
+          color : "white",
+          width : "200px",
+          display : "flex",
+          justifyContent  : "center"
+        }
+      }}/>
+        <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color ">
         <div className="flex justify-between font-bold">
           <h1>Settings</h1>
           <button
