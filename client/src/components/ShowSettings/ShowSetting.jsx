@@ -54,7 +54,6 @@ function Setting() {
       }}
     >
       <Toaster
-        ani
         position="top-center"
         toastOptions={{
           style: {
@@ -66,7 +65,7 @@ function Setting() {
           },
         }}
       />
-      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto rounded-b-none">
+      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none">
         <div className="flex justify-between font-bold">
           <h1>Settings</h1>
           <button
@@ -80,9 +79,9 @@ function Setting() {
         </div>
 
         <div className="flex mt-3 gap-3 max-md:flex-col">
-          <div className="flex flex-col w-[25%] gap-1 max-md:flex-row">
+          <div className="flex flex-col w-[30%] gap-1 max-md:flex-row max-md:w-full ">
             <button
-              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "general" ? "bg-select-color" : ""} transition-all duration-100`}
+              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "general" ? "bg-select-color" : ""} transition-all duration-100 max-md:px-4`}
               onClick={() => {
                 setTab("general");
               }}
@@ -91,7 +90,7 @@ function Setting() {
               <p>General</p>
             </button>
             <button
-              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "profile" ? "bg-select-color" : ""}  transition-all duration-100`}
+              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "profile" ? "bg-select-color" : ""}  transition-all duration-100 max-md:px-4`}
               onClick={() => {
                 setTab("profile");
               }}
