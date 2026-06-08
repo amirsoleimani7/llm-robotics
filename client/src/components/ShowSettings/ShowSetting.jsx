@@ -66,7 +66,7 @@ function Setting() {
           },
         }}
       />
-      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color max-md:w-full">
+      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto rounded-b-none">
         <div className="flex justify-between font-bold">
           <h1>Settings</h1>
           <button
@@ -79,8 +79,8 @@ function Setting() {
           </button>
         </div>
 
-        <div className="flex mt-3 gap-3">
-          <div className="flex flex-col w-[25%] gap-1">
+        <div className="flex mt-3 gap-3 max-md:flex-col">
+          <div className="flex flex-col w-[25%] gap-1 max-md:flex-row">
             <button
               className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "general" ? "bg-select-color" : ""} transition-all duration-100`}
               onClick={() => {
@@ -101,8 +101,8 @@ function Setting() {
             </button>
           </div>
           {tab === "general" ? (
-            <div className="w-[75%] flex flex-col gap-8">
-              <div className="flex flex-col gap-3">
+            <div className="w-[75%] flex flex-col gap-8 max-md:flex-col max-md:w-full">
+              <div className="flex flex-col gap-3 ">
                 <h1>Theme</h1>
                 <div className="flex gap-2 ">
                   <button
@@ -157,7 +157,7 @@ function Setting() {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col w-[75%]  gap-4 ">
+            <div className="flex flex-col w-[75%]  gap-4 max-md:w-full">
               <div className="flex justify-between items-center w-[100%] relative">
                 <h1>Name</h1>
                 <input
