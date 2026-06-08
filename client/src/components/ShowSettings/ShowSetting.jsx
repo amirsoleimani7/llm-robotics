@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Toaster, toast } from 'sonner';
+import { Toaster, toast } from "sonner";
 import { useGlobalContext } from "../contextHandle/Context";
 import { IoClose } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
@@ -31,24 +31,20 @@ function Setting() {
     }
   };
 
-  const handle_change_name =  async () => {
-    
-    const res = await axios.put("http://127.0.0.1:8000/update_user",{
-      command : "change_name",
-      new_name : query_name
-    })
-    
-    
+  const handle_change_name = async () => {
+    const res = await axios.put("http://127.0.0.1:8000/update_user", {
+      command: "change_name",
+      new_name: query_name,
+    });
+
     // udpate user
     await update_user(handle);
-  
-    // reset the input area 
-    document.getElementById('user-name-change').value = "";
-    setShowOk(false);  
-      toast.success("name changed!" , {duration : 1500})
 
-    };
-
+    // reset the input area
+    document.getElementById("user-name-change").value = "";
+    setShowOk(false);
+    toast.success("name changed!", { duration: 1500 });
+  };
 
   return (
     <div
@@ -57,16 +53,20 @@ function Setting() {
         display: `${handle.show_settings ? "flex" : "none"}`,
       }}
     >
-      <Toaster ani position="top-center" toastOptions={{
-        style:{
-          background : "#353638",
-          color : "white",
-          width : "200px",
-          display : "flex",
-          justifyContent  : "center"
-        }
-      }}/>
-        <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color ">
+      <Toaster
+        ani
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: "#353638",
+            color: "white",
+            width: "200px",
+            display: "flex",
+            justifyContent: "center",
+          },
+        }}
+      />
+      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color max-md:w-full">
         <div className="flex justify-between font-bold">
           <h1>Settings</h1>
           <button
@@ -157,7 +157,7 @@ function Setting() {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col w-[75%] items-center gap-4">
+            <div className="flex flex-col w-[75%]  gap-4 ">
               <div className="flex justify-between items-center w-[100%] relative">
                 <h1>Name</h1>
                 <input
@@ -165,17 +165,18 @@ function Setting() {
                   type="text"
                   id="user-name-change"
                   placeholder={handle.user.name}
+                  maxLength={25}
                   className="bg-second-color-1 rounded-lg p-2 border-none outline-none focus:outline-1 focus:outline-sky-50"
                 />
-                <button
-                  className={`translate-x-10 absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100" : "opacity-0 pointer-events-none"} duration-100 transition-all`}
+                <button                
+                  className={`translate-x-10 absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100 scale-100 visible" : "invisible pointer-events-none scale-0"} duration-100 transition-all`}
                   onClick={handle_change_name}
                 >
                   <IoCheckmarkOutline size={18} />
                 </button>
               </div>
               <div className=" bg-red-100 border-b w-full border-gray-700"></div>
-              <div className="flex justify-between items-center w-[100%]">
+              <div className="flex justify-between items-center">
                 <h1>Profile picture</h1>
                 <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center">
                   <input type="file" className="scale-[300%]" />

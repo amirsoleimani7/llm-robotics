@@ -178,7 +178,7 @@ function Side() {
             global_handlers.setShowSetting(true);
           }}
         >
-          <div className="flex items-center gap-1 justify-around w-full">
+          <div className="flex items-center gap-5 justify-start w-full">
             <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500" />
             <p className="text-sm">{global_handlers.user.name}</p>
           </div>
