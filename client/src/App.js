@@ -21,7 +21,10 @@ function App() {
             <div className="w-[50px] h-[50px]">
               <SVGComponent/>
             </div>
-            <h1 className="text-4xl font-bold max-md:text-4xl">Start Chatting with RoboTalk</h1>
+            <div className="flex gap-2">
+              <h1 className="text-3xl  max-md:text-4xl ">Start Chatting with</h1>
+              <h1 className="text-3xl font-extrabold">RoboTalk</h1>
+            </div>
           </div>
         </> 
         : <></>}

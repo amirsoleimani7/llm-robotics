@@ -166,7 +166,6 @@ def update_user(request):
                 return Response("changed", status=status.HTTP_200_OK)
 
             except ObjectDoesNotExist:
-
                 # make the default user, the user will be using that for the rest of time
                 return Response("error", status=status.HTTP_204_NO_CONTENT)
 
@@ -177,26 +176,48 @@ def update_user(request):
                 user_object.profile_picture = query_image
                 user_object.save()
                 serialized_user = UserSerializer(user_object)
-                
-                return Response(serialized_user.data ,status=status.HTTP_200_OK)
+
+                return Response(serialized_user.data, status=status.HTTP_200_OK)
             except Exception as e:
                 return Response("something went wrong", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET'])
 def get_user(request):
+    
     if request.method == "GET":
-        user = User.objects.get(user_id="user")        
-        with user.profile_picture.open('rb') as image_file:
-            encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
 
-        format = user.profile_picture.name.split('.')[-1].lower()
-        
-        # handle the checks on the other side
-        return Response({
-            'image': encoded_string,
-            'name' : user.name,
-            'format': format,
-            'data_url': f'data:image/{format};base64,{encoded_string}'
-        })
-       
+        if User.objects.get(user_id="user"):
+            user = User.objects.get(user_id="user")
+            with user.profile_picture.open('rb') as image_file:
+                encoded_string = base64.b64encode(
+                    image_file.read()).decode('utf-8')
+
+            format = user.profile_picture.name.split('.')[-1].lower()
+
+            # handle the checks on the other side
+            return Response({
+                'image': encoded_string,
+                'name': user.name,
+                'format': format,
+                'data_url': f'data:image/{format};base64,{encoded_string}'
+            })
+
+        else:
+            print("we a")
+            # we need to make the user and and then return the default parameters
+            made_user = User(user_id="user", name="change this",
+                             profile_picture=None)
+
+            with made_user.profile_picture.open('rb') as image_file:
+                encoded_string = base64.b64encode(
+                    image_file.read()).decode('utf-8')
+
+            format = user.profile_picture.name.split('.')[-1].lower()
+
+            return Response({
+                'image': encoded_string,
+                'name': user.name,
+                'format': format,
+                'data_url': f'data:image/{format};base64,{encoded_string}'
+            })

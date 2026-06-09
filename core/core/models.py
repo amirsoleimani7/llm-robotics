@@ -37,8 +37,6 @@ class Message(models.Model):
         return f"{self.content[:20]}"
 
 
-
-
 class User(models.Model):
     user_id = models.CharField(default="user")
     name = models.CharField()

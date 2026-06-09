@@ -8,8 +8,10 @@ import axios from "axios";
 import Chats from "../Chats/Chats";
 import { useGlobalContext } from "../contextHandle/Context";
 import More from "../more/More";
-import SVGComponent from "../../logo"
+import SVGComponent from "../../logo";
 
+// for default profile => delet this later
+import { CgProfile } from "react-icons/cg";
 
 // load the covnersations
 export const update_conversations = async (handler) => {
@@ -24,6 +26,7 @@ export const update_conversations = async (handler) => {
 export const update_user = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/get_user");
   handler.setUser(res.data);
+  console.log(res.data);
 };
 
 function Side() {
@@ -69,7 +72,7 @@ function Side() {
 
   return (
     <>
-      <div className="fixed top-2 w-[170px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start max-md:bg-black-rgba max-md:top-0 max-md:h-12 -left-full">
+      <div className="fixed top-2 w-[170px]  gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start max-md:bg-black-rgba max-md:top-0 max-md:h-12 -left-full">
         <button
           onClick={handle_sidebar}
           className="aspect-square p-3 rounded-[2rem] flex items-center justify-center hover:bg-main-color-3 duration-200 ease-in-out"
@@ -80,8 +83,8 @@ function Side() {
         <p className="font-bold text-2xl">Robo Talk</p>
       </div>
 
-      <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[200px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all">
-        <div className="w-[40px] h-[40px]">
+      <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[180px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all ">
+        <div className="w-[35px] h-[35px]">
           <SVGComponent />
         </div>
         <div className="flex w-3/4 p-1 gap-1  bg-main-color-2 rounded-[2rem] border border-gray-700">
@@ -112,7 +115,7 @@ function Side() {
         <div className="h-10 bg flex justify-between items-center mt-4">
           <div className="flex gap-1 items-center w-full">
             <div className="w-[40px] h-[40px]">
-              <SVGComponent/>
+              <SVGComponent />
             </div>
             <h1 className="font-bold text-lg">RoboTalk</h1>
           </div>

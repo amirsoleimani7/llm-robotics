@@ -16,7 +16,7 @@ const SVGComponent = (props,color) => (
         <circle cx={82} cy={65} r={6} fill="black" />
       </mask>
     </defs>
-    <g fill="white" mask="url(#dot-cutout)">
+    <g fill="#0096FF" mask="url(#dot-cutout)">
       <circle cx={60} cy={20} r={8} />
       <rect x={56} y={28} width={8} height={12} />
       <rect x={15} y={40} width={90} height={50} rx={12} ry={12} />
