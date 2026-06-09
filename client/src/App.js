@@ -8,6 +8,7 @@ function App() {
   
 
   return (
+    
     <div className="bg-main-color text-white w-full h-screen flex justify-between">
       <Confirmation/>
       <Side />

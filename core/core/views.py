@@ -168,7 +168,6 @@ def update_user(request):
             
 
     
-
 @api_view(['GET'])
 def get_user(request):
     if request.method == "GET":
@@ -176,5 +175,4 @@ def get_user(request):
         print(f"user is : {user}")
         userSerialized = UserSerializer(user)
         print(userSerialized)
-        return Response(userSerialized.data, status=status.HTTP_200_OK)
-        
+        return Response(userSerialized.data, status=status.HTTP_200_OK)    

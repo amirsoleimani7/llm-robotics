@@ -12,15 +12,31 @@ import {
   MdComputer,
 } from "react-icons/md";
 import axios from "axios";
+import { CgCross } from "react-icons/cg";
 
 function Setting() {
   const [tab, setTab] = useState("general");
   const [theme, setTheme] = useState("System");
   const [Language, setLanguage] = useState("English");
   const [show_ok, setShowOk] = useState(false);
+  const [show_ok_image, setShowOkImage] = useState(false);
   const [query_name, setQueryname] = useState("");
+  const [current_image, setCurrentImage] = useState({});
 
   const handle = useGlobalContext();
+
+  const handle_set_image = (e) => {
+    const file = e.target.files[0];
+
+    if (file && file.type.startsWith("image/")) {
+      // making a url for the image
+      var url = URL.createObjectURL(file);
+      setCurrentImage(url);
+      setShowOkImage(true);
+    } else {
+      console.log("upload an image");
+    }
+  };
 
   const handle_username = (e) => {
     const query_name = e.currentTarget.value;
@@ -46,9 +62,18 @@ function Setting() {
     toast.success("name changed!", { duration: 1500 });
   };
 
+  const handle_change_image = (e) => {
+    const { changeStatus } = e.currentTarget.dataset;
+    if (changeStatus) {
+      // we need to send the image to the backend
+    } else {
+      // load the latest image from the backend
+    }
+  };
+
   return (
     <div
-      className="z-50 absolute w-screen h-screen  bg-[rgba(0,0,0,0.8)] flex justify-center items-center p-2 "
+      className="z-50 absolute w-screen h-screen  bg-[rgba(0,0,0,0.8)] flex justify-center items-center"
       style={{
         display: `${handle.show_settings ? "flex" : "none"}`,
       }}
@@ -167,8 +192,8 @@ function Setting() {
                   maxLength={25}
                   className="bg-second-color-1 rounded-lg p-2 border-none outline-none focus:outline-1 focus:outline-sky-50"
                 />
-                <button                
-                  className={`translate-x-10 absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100 scale-100 visible" : "invisible pointer-events-none scale-0"} duration-100 transition-all`}
+                <button
+                  className={` absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100 scale-100 " : " pointer-events-none scale-0"} duration-100 transition-all`}
                   onClick={handle_change_name}
                 >
                   <IoCheckmarkOutline size={18} />
@@ -176,9 +201,34 @@ function Setting() {
               </div>
               <div className=" bg-red-100 border-b w-full border-gray-700"></div>
               <div className="flex justify-between items-center">
-                <h1>Profile picture</h1>
-                <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center">
-                  <input type="file" className="scale-[300%]" />
+                <h1>Profile Picture</h1>
+                <div className="flex gap-2 items-center">
+                  <button
+                    className="p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center"
+                    onClick={handle_change_image}
+                    data-change-status={false}
+                  >
+                    <IoClose size={18} />
+                  </button>
+                  <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center relative">
+                    <input
+                      type="file"
+                      className="scale-[300%] cursor-pointer"
+                      onChange={handle_set_image}
+                    />
+                    <img
+                      src={current_image}
+                      alt=""
+                      className="absolute w-full h-full pointer-events-none"
+                    />
+                  </div>
+                  <button
+                    className="p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center"
+                    onClick={handle_change_image}
+                    data-change-status={true}
+                  >
+                    <IoCheckmarkOutline size={18} />
+                  </button>
                 </div>
               </div>
             </div>
