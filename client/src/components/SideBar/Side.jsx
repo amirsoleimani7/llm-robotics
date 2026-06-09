@@ -8,6 +8,8 @@ import axios from "axios";
 import Chats from "../Chats/Chats";
 import { useGlobalContext } from "../contextHandle/Context";
 import More from "../more/More";
+import SVGComponent from "../../logo"
+
 
 // load the covnersations
 export const update_conversations = async (handler) => {
@@ -21,11 +23,10 @@ export const update_conversations = async (handler) => {
 
 export const update_user = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/get_user");
-  handler.setUser(res.data);   
-}
+  handler.setUser(res.data);
+};
 
 function Side() {
-
   const global_handlers = useGlobalContext();
   const [is_open, setIs_open] = useState(false);
 
@@ -65,7 +66,7 @@ function Side() {
     handle_sidebar,
     handle_newChat,
   };
-  
+
   return (
     <>
       <div className="fixed top-2 w-[170px] gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start max-md:bg-black-rgba max-md:top-0 max-md:h-12 -left-full">
@@ -80,7 +81,9 @@ function Side() {
       </div>
 
       <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[200px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all">
-        <div className="bg-red-100 w-1/4  h-full rounded-full aspect-square"></div>
+        <div className="w-[40px] h-[40px]">
+          <SVGComponent />
+        </div>
         <div className="flex w-3/4 p-1 gap-1  bg-main-color-2 rounded-[2rem] border border-gray-700">
           {topButtons.map((btn) => {
             const Icon = btn.icon;
@@ -108,7 +111,9 @@ function Side() {
       >
         <div className="h-10 bg flex justify-between items-center mt-4">
           <div className="flex gap-1 items-center w-full">
-            <div className="bg-red-100 w-[40px] h-[40px] rounded-[2rem] aspect-square"></div>
+            <div className="w-[40px] h-[40px]">
+              <SVGComponent/>
+            </div>
             <h1 className="font-bold text-lg">RoboTalk</h1>
           </div>
 
@@ -132,7 +137,7 @@ function Side() {
           <RiChatNewFill />
           <p>New Chat</p>
         </button>
-        
+
         <div className="side-section h-full overflow-y-scroll">
           <div className="flex flex-col gap-1">
             <h1 className="text-sm font-bold text-second-color-3">Pinned</h1>
@@ -179,11 +184,14 @@ function Side() {
           }}
         >
           <div className="flex items-center gap-5 justify-start w-full">
-            <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500 overflow-hidden" >
-              <img src={global_handlers.user.data_url} alt="" className="w-full h-full object-conver "/>
+            <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500 overflow-hidden">
+              <img
+                src={global_handlers.user.data_url}
+                alt=""
+                className="w-full h-full object-conver "
+              />
             </div>
             <p className="text-sm">{global_handlers.user.name}</p>
-            
           </div>
         </div>
       </div>

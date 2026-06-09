@@ -8,7 +8,7 @@ export default function ChatDetail({covnersation_id}) {
   }, [handler.current_conversation]);
 
   const { messages } = useGlobalContext();
-
+  
   return (
     <>
       {messages.map((m, index) => (
@@ -30,7 +30,8 @@ export default function ChatDetail({covnersation_id}) {
             </div>
           ) : null}
         </React.Fragment>
-      ))}
+      ))
+      }
       {handler.is_loading? (
         <div
           className={`flex gap-2 items-center scale-[.90] mr-auto  duration-100`}

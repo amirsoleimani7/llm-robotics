@@ -72,7 +72,6 @@ function Setting() {
   const handle_change_image = async (e) => {
     // this return an string
     const { changeStatus } = e.currentTarget.dataset;
-
     if (changeStatus == "true") {
       // we need to change the user profile pictur and then return the image back to the client
       let data = new FormData();
