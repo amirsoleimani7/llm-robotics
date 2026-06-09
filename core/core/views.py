@@ -1,9 +1,11 @@
+import base64
 from django.http import JsonResponse
+from django.core.files.base import ContentFile
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Conversation, Message , User
-from .serializers import ConversationSerilizer, MessageSerializer,UserSerializer
+from .models import Conversation, Message, User
+from .serializers import ConversationSerilizer, MessageSerializer, UserSerializer
 from rest_framework.decorators import api_view
 # from .utils.create_llm import agent
 from .utils.socket_client import send_commands_to_socket
@@ -23,7 +25,7 @@ from .utils.socket_client import send_commands_to_socket
 #                     {"detail": "LLM did not return a valid robot command.", "llm_response": llm_response},
 #                     status=status.HTTP_502_BAD_GATEWAY,
 #                 )
-            
+
 #             new_response = Message(
 #                 conversation=prompt_conversation, role="assistant", content=llm_response)
 
@@ -151,28 +153,50 @@ def delete_conversation(request, conversation_id):
 
 
 # user codesc
-@api_view(['POST' ,'PUT'])
+@api_view(['POST', 'PUT'])
 def update_user(request):
-    if request.method == "PUT" and request.data['command'] == "change_name":
-        try : 
-            
-            user_object = User.objects.get(user_id="user")
-            user_object.name = request.data['new_name']
-            user_object.save()
-            
-            return Response("changed", status=status.HTTP_200_OK)
-        
-        except ObjectDoesNotExist:
-            # we gotta make one
-            return Response("error", status=status.HTTP_204_NO_CONTENT)
-            
 
-    
+    if request.method == "PUT":
+        if request.data['command'] == "change_name":
+            try:
+                user_object = User.objects.get(user_id="user")
+                user_object.name = request.data['new_name']
+                user_object.save()
+
+                return Response("changed", status=status.HTTP_200_OK)
+
+            except ObjectDoesNotExist:
+
+                # make the default user, the user will be using that for the rest of time
+                return Response("error", status=status.HTTP_204_NO_CONTENT)
+
+        if request.data['command'] == "change_profile":
+            try:
+                user_object = User.objects.get(user_id="user")
+                query_image = request.FILES['image']
+                user_object.profile_picture = query_image
+                user_object.save()
+                serialized_user = UserSerializer(user_object)
+                
+                return Response(serialized_user.data ,status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response("something went wrong", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 @api_view(['GET'])
 def get_user(request):
     if request.method == "GET":
-        user = User.objects.get(user_id="user")
-        print(f"user is : {user}")
-        userSerialized = UserSerializer(user)
-        print(userSerialized)
-        return Response(userSerialized.data, status=status.HTTP_200_OK)    
+        user = User.objects.get(user_id="user")        
+        with user.profile_picture.open('rb') as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+
+        format = user.profile_picture.name.split('.')[-1].lower()
+        
+        # handle the checks on the other side
+        return Response({
+            'image': encoded_string,
+            'name' : user.name,
+            'format': format,
+            'data_url': f'data:image/{format};base64,{encoded_string}'
+        })
+       

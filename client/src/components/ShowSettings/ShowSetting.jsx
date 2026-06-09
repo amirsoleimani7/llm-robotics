@@ -14,7 +14,11 @@ import {
 import axios from "axios";
 import { CgCross } from "react-icons/cg";
 
+// for sending image
+import FormData from "form-data";
+
 function Setting() {
+  
   const [tab, setTab] = useState("general");
   const [theme, setTheme] = useState("System");
   const [Language, setLanguage] = useState("English");
@@ -22,6 +26,7 @@ function Setting() {
   const [show_ok_image, setShowOkImage] = useState(false);
   const [query_name, setQueryname] = useState("");
   const [current_image, setCurrentImage] = useState({});
+  const [image, setImage] = useState(null);
 
   const handle = useGlobalContext();
 
@@ -32,7 +37,9 @@ function Setting() {
       // making a url for the image
       var url = URL.createObjectURL(file);
       setCurrentImage(url);
+      setImage(file);
       setShowOkImage(true);
+  
     } else {
       console.log("upload an image");
     }
@@ -62,15 +69,37 @@ function Setting() {
     toast.success("name changed!", { duration: 1500 });
   };
 
-  const handle_change_image = (e) => {
+  const handle_change_image = async (e) => {
+    // this return an string
     const { changeStatus } = e.currentTarget.dataset;
-    if (changeStatus) {
-      // we need to send the image to the backend
+
+    if (changeStatus == "true") {
+      // we need to change the user profile pictur and then return the image back to the client
+      let data = new FormData();
+
+      data.append("image", image);
+      data.append("command", "change_profile");
+
+      const res = await axios.put("http://127.0.0.1:8000/update_user", data, {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      });
+      
+
+      const user_updated = await axios.get("http://127.0.0.1:8000/get_user");
+      handle.setUser(user_updated.data);
+    
+      toast.success("profile changed!", { duration: 1500 });
+      setShowOkImage(false);
     } else {
-      // load the latest image from the backend
+      // get the lastest image from the server
+      setCurrentImage(handle.user.data_url);
+      setShowOkImage(false);
     }
   };
-
+  
+  
   return (
     <div
       className="z-50 absolute w-screen h-screen  bg-[rgba(0,0,0,0.8)] flex justify-center items-center"
@@ -202,13 +231,20 @@ function Setting() {
               <div className=" bg-red-100 border-b w-full border-gray-700"></div>
               <div className="flex justify-between items-center">
                 <h1>Profile Picture</h1>
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center justify-end transition-all duration-100">
                   <button
-                    className="p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center"
+                    className={`p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center ${show_ok_image ? "scale-100 opacity-100" : "scale-0 opacity-0 hidden"} transition-all duration-100`}
                     onClick={handle_change_image}
                     data-change-status={false}
                   >
                     <IoClose size={18} />
+                  </button>
+                  <button
+                    className={`p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center ${show_ok_image ? "scale-100 opacity-100" : "scale-0 opacity-0 hidden"} transition-all duration-100`}
+                    onClick={handle_change_image}
+                    data-change-status={true}
+                  >
+                    <IoCheckmarkOutline size={18} />
                   </button>
                   <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center relative">
                     <input
@@ -222,13 +258,6 @@ function Setting() {
                       className="absolute w-full h-full pointer-events-none"
                     />
                   </div>
-                  <button
-                    className="p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center"
-                    onClick={handle_change_image}
-                    data-change-status={true}
-                  >
-                    <IoCheckmarkOutline size={18} />
-                  </button>
                 </div>
               </div>
             </div>

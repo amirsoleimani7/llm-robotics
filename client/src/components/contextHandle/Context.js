@@ -13,9 +13,9 @@ const AppProvider = ({ children }) => {
   const [show_confim, setShowConfirm] = useState(false);
   const [show_settings, setShowSetting] = useState(false);
   const [user, setUser] = useState({});
-  const [change_operation, setChangeOperation] = useState();
   const [is_loading, setIsLoading] = useState(false);
-
+  const [change_operation, setChangeOperation] = useState();
+  
   // add User Prompt
   const addUserMessage = (user_prompt) => {
     setMessages((prev) => [...prev, user_prompt]);

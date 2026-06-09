@@ -13,4 +13,3 @@ urlpatterns = [
     path("get_user" , views.get_user),
     # path("handle_prompt" ,views.handle_prompt)
 ]
-

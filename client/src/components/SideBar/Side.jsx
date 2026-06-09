@@ -21,7 +21,7 @@ export const update_conversations = async (handler) => {
 
 export const update_user = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/get_user");
-  handler.setUser(res.data);  
+  handler.setUser(res.data);   
 }
 
 function Side() {
@@ -179,8 +179,11 @@ function Side() {
           }}
         >
           <div className="flex items-center gap-5 justify-start w-full">
-            <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500" />
+            <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500 overflow-hidden" >
+              <img src={global_handlers.user.data_url} alt="" className="w-full h-full object-conver "/>
+            </div>
             <p className="text-sm">{global_handlers.user.name}</p>
+            
           </div>
         </div>
       </div>
