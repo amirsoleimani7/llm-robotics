@@ -27,6 +27,7 @@ export const update_user = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/get_user");
   handler.setUser(res.data);
   console.log(res.data);
+  
 };
 
 function Side() {

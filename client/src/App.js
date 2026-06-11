@@ -22,7 +22,7 @@ function App() {
               <SVGComponent/>
             </div>
             <div className="flex gap-2">
-              <h1 className="text-3xl  max-md:text-4xl ">Start Chatting with</h1>
+              <h1 className="text-3xl max-md:text-4xl ">Start Chatting with</h1>
               <h1 className="text-3xl font-extrabold">RoboTalk</h1>
             </div>
           </div>

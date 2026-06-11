@@ -98,6 +98,7 @@ function Setting() {
     }
   };
   
+  console.log(Object.keys(current_image).length == 0);
   
   return (
     <div
@@ -245,16 +246,17 @@ function Setting() {
                   >
                     <IoCheckmarkOutline size={18} />
                   </button>
-                  <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center relative">
+                  <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center relative border-gray-500 border">
                     <input
                       type="file"
                       className="scale-[300%] cursor-pointer"
                       onChange={handle_set_image}
                     />
+
                     <img
-                      src={current_image}
+                      src={Object.keys(current_image).length == 0 ? handle.user.data_url:current_image}
                       alt=""
-                      className="absolute w-full h-full pointer-events-none"
+                      className="absolute w-full h-full pointer-events-none bg-gray-800"                      
                     />
                   </div>
                 </div>
