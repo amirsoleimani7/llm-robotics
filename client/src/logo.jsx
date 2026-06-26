@@ -24,4 +24,5 @@ const SVGComponent = (props,color) => (
     </g>
   </svg>
 );
+
 export default SVGComponent;
