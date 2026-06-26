@@ -4,9 +4,8 @@ import { LuBrain } from "react-icons/lu";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
 import { useGlobalContext } from "../contextHandle/Context";
 import { update_conversations } from "../SideBar/Side";
-import axios, { isCancel, AxiosError } from "axios";
-
-
+import axios from "axios";
+import { Tooltip } from "antd";
 
 function InputArea() {
   const global_handler = useGlobalContext();
@@ -16,7 +15,7 @@ function InputArea() {
 
   const handle_user_input = async (e) => {
     const input = e.target.value;
-    
+
     // checks
     input !== "" ? SetIsVoice(false) : SetIsVoice(true);
     input.length > 148 ? setHighlen(true) : setHighlen(false);
@@ -26,12 +25,11 @@ function InputArea() {
 
   const handle_input = async (e) => {
     e.preventDefault();
-    
+
     if (input.length > 0) {
       try {
-    
         const conv = global_handler.current_conversation;
-        
+
         if (Object.keys(conv).length !== 0) {
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
             command: "new_message",
@@ -42,7 +40,7 @@ function InputArea() {
 
           global_handler.addUserMessage(response.data);
           global_handler.setIsLoading(true);
-          
+
           const prompt_response = await axios.post(
             `http://127.0.0.1:8000/handle_prompt`,
             {
@@ -55,7 +53,6 @@ function InputArea() {
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
         } else {
-          
           // make a conversation and put the messages in it
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
             command: "new_chat",
@@ -63,7 +60,7 @@ function InputArea() {
 
           global_handler.setcurrentconversation(response.data);
           await update_conversations(global_handler);
-          
+
           const response_msg = await axios.post(
             `http://127.0.0.1:8000/make_chat`,
             {
@@ -75,7 +72,7 @@ function InputArea() {
           );
           global_handler.addUserMessage(response_msg.data);
           global_handler.setIsLoading(true);
-          
+
           const prompt_response = await axios.post(
             `http://127.0.0.1:8000/handle_prompt`,
             {
@@ -84,10 +81,9 @@ function InputArea() {
               content: input,
             },
           );
-                    
+
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
-          
         }
       } catch (error) {
         console.error("Error:", error);
@@ -111,29 +107,45 @@ function InputArea() {
           className="bg-transparent focus:outline-none w-full h-[80%] resize-none text-white "
         />
         <div className="flex justify-between mt-auto w-full">
-          <button className="flex items-center justify-center gap-1 border px-2 border-gray-700 rounded-[2rem] text-sm ">
-            <LuBrain></LuBrain>
-            <p>Model</p>
-          </button>
-          <button
-            className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-700 duration-300 w-10 h-10 aspect-square ease-in-out"
-            style={{
-              background: `${!is_voice ? "gray" : ""}`,
-            }}
-            onClick={handle_input}
+          <Tooltip
+            title={"change model"}
+            color={"white"}
+            mouseEnterDelay={0}
+            mouseLeaveDelay={0}
+            className="font-bold"
           >
-            {global_handler.is_loading ? (
-              <div className="w-[50%] h-[50%] bg-main-color-1"></div>
-            ) : (
-              <div>
-                {is_voice ? (
-                  <MdOutlineKeyboardVoice></MdOutlineKeyboardVoice>
-                ) : (
-                  <IoSend></IoSend>
-                )}
-              </div>
-            )}
-          </button>
+            <button className="flex items-center justify-center gap-1 border px-2 border-gray-700 rounded-[2rem] text-sm ">
+              <LuBrain></LuBrain>
+              <p>Model</p>
+            </button>
+          </Tooltip>
+          <Tooltip
+            title={!is_voice ? "send command" : "use voice mode"}
+            color={"white"}
+            mouseEnterDelay={0}
+            mouseLeaveDelay={0}
+            className="font-bold"
+          >
+            <button
+              className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-700 duration-300 w-10 h-10 aspect-square ease-in-out"
+              style={{
+                background: `${!is_voice ? "gray" : ""}`,
+              }}
+              onClick={handle_input}
+            >
+              {global_handler.is_loading ? (
+                <div className="w-[50%] h-[50%] bg-main-color-1"></div>
+              ) : (
+                <div>
+                  {is_voice ? (
+                    <MdOutlineKeyboardVoice></MdOutlineKeyboardVoice>
+                  ) : (
+                    <IoSend></IoSend>
+                  )}
+                </div>
+              )}
+            </button>
+          </Tooltip>
         </div>
       </form>
     </>

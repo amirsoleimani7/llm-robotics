@@ -7,11 +7,8 @@ import { RiChatNewFill } from "react-icons/ri";
 import axios from "axios";
 import Chats from "../Chats/Chats";
 import { useGlobalContext } from "../contextHandle/Context";
-import More from "../more/More";
 import SVGComponent from "../../logo";
 
-// for default profile => delet this later
-import { CgProfile } from "react-icons/cg";
 
 // load the covnersations
 export const update_conversations = async (handler) => {
@@ -27,7 +24,6 @@ export const update_user = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/get_user");
   handler.setUser(res.data);
   console.log(res.data);
-  
 };
 
 function Side() {
@@ -133,7 +129,7 @@ function Side() {
             </button>
           </div>
         </div>
-
+        
         <button
           className="flex justify-center items-center w-full p-2 rounded-3xl bg-second-color-2 border-y border-gray-500 gap-1 "
           onClick={handle_newChat}

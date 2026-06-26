@@ -14,8 +14,8 @@ function App() {
       <Confirmation/>
       <Side />
       <Setting/>
-      <div className={`w-[800px] px-2 shrink flex flex-col ${handler.messages.length == 0 ? "justify-center" : "justify-between"}  mx-auto tranistion-all ease-in-out  mb-4`}>
-        {handler.messages.length == 0 ? 
+      <div className={`w-[800px] px-2 shrink flex flex-col ${handler.messages.length === 0 ? "justify-center" : "justify-between"}  mx-auto tranistion-all ease-in-out  mb-4`}>
+        {handler.messages.length === 0 ? 
         <>
           <div className="w-[100%] h-[50px] text-center flex items-center justify-center gap-5">
             <div className="w-[50px] h-[50px]">
@@ -28,7 +28,7 @@ function App() {
           </div>
         </> 
         : <></>}
-        <div className={`chat-section w-full  flex flex-col gap-2 py-12  ${handler.messages.length == 0 ? "" : "overflow-scroll h-full"} overflow-x-hidden duration-300 transition-all`}>
+        <div className={`chat-section w-full  flex flex-col gap-2 py-12  ${handler.messages.length === 0 ? "" : "overflow-scroll h-full"} overflow-x-hidden duration-300 transition-all`}>
           <ChatDetail  />
         </div>
         <InputArea />
