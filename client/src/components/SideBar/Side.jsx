@@ -159,48 +159,45 @@ function Side() {
         </div>
 
         <button
-          className="flex justify-center items-center w-full p-2 rounded-3xl bg-second-color-2 border-y border-gray-500 gap-1 "
+          className="flex justify-center items-center w-full p-2 rounded-3xl bg-second-color-2 border-y border-gray-500 gap-2
+          "
           onClick={handle_newChat}
         >
           <RiChatNewFill />
-          <p>New Chat</p>
+          <p className="text-sm font-semibold">New Chat</p>
         </button>
 
         <div className="side-section h-full overflow-y-scroll">
           <div className="flex flex-col gap-1">
-            <h1 className="text-sm font-bold text-second-color-3">Pinned</h1>
+            <h1 className="text-sm  text-second-color-3 ml-2">Pinned</h1>
             {global_handlers.conversations.map((conv, index) => {
-              {
-                return conv.is_pinned ? (
-                  <Chats
-                    key={index}
-                    conversation_id={conv.conversation_id}
-                    created_date={conv.created_at}
-                    last_edited={conv.lastedited_at}
-                    is_pinned={conv.is_pinned}
-                  />
-                ) : (
-                  <></>
-                );
-              }
+              return conv.is_pinned ? (
+                <Chats
+                  key={index}
+                  conversation_id={conv.conversation_id}
+                  created_date={conv.created_at}
+                  last_edited={conv.lastedited_at}
+                  is_pinned={conv.is_pinned}
+                />
+              ) : (
+                <></>
+              );
             })}
           </div>
           <div className=" flex flex-col gap-1 h-full">
-            <h1 className="text-sm font-bold text-second-color-3">Other</h1>
+            <h1 className="text-sm  text-second-color-3 ml-2 ">Other</h1>
             {global_handlers.conversations.map((conv, index) => {
-              {
-                return !conv.is_pinned ? (
-                  <Chats
-                    key={index}
-                    conversation_id={conv.conversation_id}
-                    created_date={conv.created_at}
-                    last_edited={conv.lastedited_at}
-                    is_pinned={conv.is_pinned}
-                  />
-                ) : (
-                  <></>
-                );
-              }
+              return !conv.is_pinned ? (
+                <Chats
+                  key={index}
+                  conversation_id={conv.conversation_id}
+                  created_date={conv.created_at}
+                  last_edited={conv.lastedited_at}
+                  is_pinned={conv.is_pinned}
+                />
+              ) : (
+                <></>
+              );
             })}
           </div>
         </div>

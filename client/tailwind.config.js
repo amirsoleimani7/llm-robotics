@@ -13,7 +13,7 @@ module.exports = {
         
         "second-color-1": "#363738",
         "second-color-2": "#43454a",
-        "seocnd-color-3":"#93989c",
+        "seocnd-color-3":"#abb0b6",
           
         "scroll-color": "#3c3c3d",
         "select-color" : "#404247",

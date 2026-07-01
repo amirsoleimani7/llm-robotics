@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Toaster, toast } from "sonner";
 import { useGlobalContext } from "../contextHandle/Context";
 import { IoClose } from "react-icons/io5";
@@ -12,13 +12,11 @@ import {
   MdComputer,
 } from "react-icons/md";
 import axios from "axios";
-import { CgCross } from "react-icons/cg";
 
 // for sending image
 import FormData from "form-data";
 
 function Setting() {
-  
   const [tab, setTab] = useState("general");
   const [theme, setTheme] = useState("System");
   const [Language, setLanguage] = useState("English");
@@ -39,7 +37,6 @@ function Setting() {
       setCurrentImage(url);
       setImage(file);
       setShowOkImage(true);
-  
     } else {
       console.log("upload an image");
     }
@@ -55,7 +52,7 @@ function Setting() {
   };
 
   const handle_change_name = async () => {
-    const res = await axios.put("http://127.0.0.1:8000/update_user", {
+    await axios.put("http://127.0.0.1:8000/update_user", {
       command: "change_name",
       new_name: query_name,
     });
@@ -72,23 +69,22 @@ function Setting() {
   const handle_change_image = async (e) => {
     // this return an string
     const { changeStatus } = e.currentTarget.dataset;
-    if (changeStatus == "true") {
+    if (changeStatus === "true") {
       // we need to change the user profile pictur and then return the image back to the client
       let data = new FormData();
 
       data.append("image", image);
       data.append("command", "change_profile");
 
-      const res = await axios.put("http://127.0.0.1:8000/update_user", data, {
+      await axios.put("http://127.0.0.1:8000/update_user", data, {
         headers: {
           "Content-type": "multipart/form-data",
         },
       });
-      
 
       const user_updated = await axios.get("http://127.0.0.1:8000/get_user");
       handle.setUser(user_updated.data);
-    
+
       toast.success("profile changed!", { duration: 1500 });
       setShowOkImage(false);
     } else {
@@ -97,9 +93,9 @@ function Setting() {
       setShowOkImage(false);
     }
   };
-  
-  console.log(Object.keys(current_image).length == 0);
-  
+
+  console.log(Object.keys(current_image).length === 0);
+
   return (
     <div
       className="z-50 absolute w-screen h-screen  bg-[rgba(0,0,0,0.8)] flex justify-center items-center"
@@ -254,9 +250,13 @@ function Setting() {
                     />
 
                     <img
-                      src={Object.keys(current_image).length == 0 ? handle.user.data_url:current_image}
+                      src={
+                        Object.keys(current_image).length === 0
+                          ? handle.user.data_url
+                          : current_image
+                      }
                       alt=""
-                      className="absolute w-full h-full pointer-events-none bg-gray-800"                      
+                      className="absolute w-full h-full pointer-events-none bg-gray-800"
                     />
                   </div>
                 </div>

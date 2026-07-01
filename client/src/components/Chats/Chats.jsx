@@ -70,13 +70,13 @@ export default function Chats({
   return (
     <>
       <div
-        className="group w-full p-2 rounded-xl duration-75 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer  relative"
+        className="group w-full p-2  rounded-xl duration-75 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer  relative"
         onClick={go_to_chat_detail}
         data-conversation-id={conversation_id}
         data-created-date={created_date}
         data-last-edited={last_edited}
         style={{
-          backgroundColor: `${conversation_id == handler.current_conversation.conversation_id ? "#363738" : ""}`,
+          backgroundColor: `${conversation_id === handler.current_conversation.conversation_id ? "#363738" : ""}`,
         }}
       >
         {conversation_id}

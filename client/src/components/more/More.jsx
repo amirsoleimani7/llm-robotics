@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useRef, useEffect } from "react";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { LuPinOff } from "react-icons/lu";
 import { LuPin } from "react-icons/lu";
@@ -11,7 +10,7 @@ import axios from "axios";
 import { useGlobalContext } from "../contextHandle/Context";
 import { createPortal } from "react-dom";
 
-function More({ showMore, positions, is_pinned, conversation_id ,more_ref}) {
+function More({ showMore, positions, is_pinned, conversation_id, more_ref }) {
   const handler = useGlobalContext();
 
   const handle_delete = (e) => {
@@ -21,12 +20,12 @@ function More({ showMore, positions, is_pinned, conversation_id ,more_ref}) {
     handler.setShowConfirm(true);
     // update the list of conversations
   };
-  
+
   const handle_unpin = async (e) => {
     e.stopPropagation();
     const { conversationId } = e.currentTarget.dataset;
 
-    const res = await axios.put(
+    await axios.put(
       `http://127.0.0.1:8000/update_conversation/${conversationId}`,
       {
         command: "unpin-conversation",
@@ -40,7 +39,7 @@ function More({ showMore, positions, is_pinned, conversation_id ,more_ref}) {
     e.stopPropagation();
     const { conversationId } = e.currentTarget.dataset;
 
-    const res = await axios.put(
+    await axios.put(
       `http://127.0.0.1:8000/update_conversation/${conversationId}`,
       {
         command: "pin-conversation",
