@@ -8,7 +8,7 @@ import axios from "axios";
 import Chats from "../Chats/Chats";
 import { useGlobalContext } from "../contextHandle/Context";
 import SVGComponent from "../../logo";
-
+import { Tooltip } from "antd";
 
 // load the covnersations
 export const update_conversations = async (handler) => {
@@ -84,17 +84,26 @@ function Side() {
         <div className="w-[35px] h-[35px]">
           <SVGComponent />
         </div>
+
         <div className="flex w-3/4 p-1 gap-1  bg-main-color-2 rounded-[2rem] border border-gray-700">
           {topButtons.map((btn) => {
             const Icon = btn.icon;
             return (
-              <button
-                key={btn.id}
-                className="w-full aspect-square p-1 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]"
-                onClick={handlers[btn.onClick]}
+              <Tooltip
+                title={btn.label}
+                color={"#353638"}
+                mouseEnterDelay={0}
+                mouseLeaveDelay={0}
+                arrow={true}
               >
-                <Icon className="scale-105" />
-              </button>
+                <button
+                  key={btn.id}
+                  className="w-full aspect-square p-1 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]"
+                  onClick={handlers[btn.onClick]}
+                >
+                  <Icon className="scale-105" />
+                </button>
+              </Tooltip>
             );
           })}
         </div>
@@ -129,7 +138,7 @@ function Side() {
             </button>
           </div>
         </div>
-        
+
         <button
           className="flex justify-center items-center w-full p-2 rounded-3xl bg-second-color-2 border-y border-gray-500 gap-1 "
           onClick={handle_newChat}
