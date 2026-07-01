@@ -118,12 +118,13 @@ function InputArea() {
           onChange={handle_user_input}
           className="bg-transparent focus:outline-none w-full h-[80%] resize-none text-white "
           onKeyDown={(e) => {
-            // e.preventDefault();
             if (e.key === "Enter") {
+              e.preventDefault();
               handle_input();
             }
           }}
         />
+        
         <div className="flex justify-between mt-auto w-full">
           <Tooltip
             title={"change model"}
