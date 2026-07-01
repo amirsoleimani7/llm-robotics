@@ -81,7 +81,10 @@ function Side() {
       </div>
 
       <div className="flex items-center gap-1 p-1 rounded-[2rem] absolute w-[180px] top-2 left-2 max-md:-translate-x-full max-md:left-0 duration-300 ease-in-out transition-all ">
-        <div className="w-[35px] h-[35px]">
+        <div
+          className="w-[35px] h-[35px] cursor-pointer"
+          onClick={handle_sidebar}
+        >
           <SVGComponent />
         </div>
 
