@@ -7,7 +7,7 @@ import { update_conversations } from "../SideBar/Side";
 import axios from "axios";
 import { Tooltip } from "antd";
 
-function moveToBottom() {
+export function moveToBottom() {
   setTimeout(() => {
     const container = document.getElementById("chatDetailContainer");
     if (container) {
@@ -15,7 +15,6 @@ function moveToBottom() {
     }
   }, 100); 
 }
-
 
 
 function InputArea() {

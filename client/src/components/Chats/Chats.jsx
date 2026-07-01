@@ -3,6 +3,7 @@ import { useGlobalContext } from "../contextHandle/Context";
 import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
 import More from "../more/More";
+import { moveToBottom } from "../MainArea/InputArea";
 
 export default function Chats({
   conversation_id,
@@ -49,6 +50,7 @@ export default function Chats({
 
     // loading initial data
     handler.setMessages(res.data);
+    moveToBottom();
   };
 
   const handle_more = (e) => {
