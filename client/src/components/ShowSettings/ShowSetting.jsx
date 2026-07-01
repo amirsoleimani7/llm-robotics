@@ -11,8 +11,8 @@ import {
   MdOutlineLightMode,
   MdComputer,
 } from "react-icons/md";
-import axios from "axios";
 
+import axios from "axios";
 // for sending image
 import FormData from "form-data";
 

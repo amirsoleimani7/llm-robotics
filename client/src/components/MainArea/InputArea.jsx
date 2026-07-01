@@ -23,11 +23,19 @@ function InputArea() {
     setInput(input);
   };
 
+  console.log(
+    "cursor position is : " +
+      document.getElementById("user-input").selectionStart,
+  );
+
   const handle_input = async (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
 
     // clearing the input field after submitsion
     document.getElementById("user-input").value = "";
+    document.getElementById("user-input").selectionStart = 0;
 
     if (input.length > 0) {
       try {
@@ -109,6 +117,12 @@ function InputArea() {
           placeholder="Message to Robot"
           onChange={handle_user_input}
           className="bg-transparent focus:outline-none w-full h-[80%] resize-none text-white "
+          onKeyDown={(e) => {
+            // e.preventDefault();
+            if (e.key === "Enter") {
+              handle_input();
+            }
+          }}
         />
         <div className="flex justify-between mt-auto w-full">
           <Tooltip
@@ -123,7 +137,13 @@ function InputArea() {
             </button>
           </Tooltip>
           <Tooltip
-            title={!is_voice ? "send command" : "use voice mode"}
+            title={
+              global_handler.is_loading
+                ? "stop"
+                : !is_voice
+                  ? "send command"
+                  : "use voice mode"
+            }
             color={"#353638"}
             mouseEnterDelay={0}
             mouseLeaveDelay={0}
