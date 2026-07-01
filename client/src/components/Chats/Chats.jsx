@@ -80,7 +80,7 @@ export default function Chats({
         }}
       >
         {conversation_id}
-        <div className="z-10 absolute right-1 top-1 aspect-square rounded-full flex group-hover:opacity-100 opacity-0 justify-center items-center p-2  hover:bg-second-color-1 outline-gray-700 hover:outline hover:outline-1">
+        <div className="z-10 absolute right-1 top-1 aspect-square rounded-full flex group-hover:opacity-100 opacity-0 justify-center items-center p-2  hover:bg-second-color-2 outline-gray-700 hover:outline hover:outline-1 transition-all duration-100 ease-in-out">
           <button
             className="relative"
             data-conversation-id={conversation_id}
@@ -91,6 +91,7 @@ export default function Chats({
           </button>
         </div>
       </div>
+      
       <More
         showMore={show_more}
         positions={position}
@@ -98,6 +99,7 @@ export default function Chats({
         conversation_id={conversation_id}
         more_ref={more_ref}
       />
+      
     </>
   );
 }

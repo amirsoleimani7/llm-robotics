@@ -130,15 +130,31 @@ function Side() {
           </div>
 
           <div className="flex gap-2">
-            <button className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]">
-              <FaSearch />
-            </button>
-            <button
-              onClick={handle_sidebar}
-              className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]"
+            <Tooltip
+              title={"Search"}
+              color={"#353638"}
+              mouseEnterDelay={0}
+              mouseLeaveDelay={0}
+              arrow={true}
             >
-              <CgSidebar />
-            </button>
+              <button className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]">
+                <FaSearch />
+              </button>
+            </Tooltip>
+            <Tooltip
+              title={"Toggle Sidebar"}
+              color={"#353638"}
+              mouseEnterDelay={0}
+              mouseLeaveDelay={0}
+              arrow={true}
+            >
+              <button
+                onClick={handle_sidebar}
+                className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]"
+              >
+                <CgSidebar />
+              </button>
+            </Tooltip>
           </div>
         </div>
 
