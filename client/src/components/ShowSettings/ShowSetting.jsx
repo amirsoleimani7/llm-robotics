@@ -94,8 +94,6 @@ function Setting() {
     }
   };
 
-  console.log(Object.keys(current_image).length === 0);
-
   return (
     <div
       className="z-50 absolute w-screen h-screen  bg-[rgba(0,0,0,0.8)] flex justify-center items-center"

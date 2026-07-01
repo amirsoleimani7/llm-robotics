@@ -1,11 +1,12 @@
 import { useGlobalContext } from "../contextHandle/Context";
 import React, { useEffect } from "react";
+import Typewriter from "./typewriter";
 
 export default function ChatDetail({ covnersation_id }) {
   const handler = useGlobalContext();
 
   useEffect(() => {}, [handler.current_conversation]);
-
+  
   const { messages } = useGlobalContext();
 
   return (
@@ -34,9 +35,9 @@ export default function ChatDetail({ covnersation_id }) {
         <div
           className={`flex gap-1 items-center scale-[.90] mr-auto  duration-100`}
         >
-          {/* add the animation for Planning Actions text */}
-          <div className="loader"></div>
-          <p className="font-bold text-sm">Planning Actions ...</p>
+          <div className="loader left-0 right-auto"> </div>
+          <Typewriter text="Planning Actions ..." speed={150} 
+          className={"text-sm w-[200px] font-semibold"}/>
         </div>
       ) : null}
     </div>

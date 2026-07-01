@@ -10,14 +10,17 @@
   background-size: 10px 10px;
   position: relative;
   animation: l23-0 1.5s linear infinite;
+
 }
 .loader:before {
   content: "";
   position: absolute;
   height: 10px;
-  aspect-ratio: 1;
+  aspect-ratio: 1;  ;
+
   border-radius: 50%;
   background: white;
+
   left:0;
   top:0;
   animation: 

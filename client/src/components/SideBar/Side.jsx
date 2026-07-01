@@ -98,6 +98,7 @@ function Side() {
                 mouseEnterDelay={0}
                 mouseLeaveDelay={0}
                 arrow={true}
+                key={btn.id}
               >
                 <button
                   key={btn.id}
@@ -173,11 +174,12 @@ function Side() {
             {global_handlers.conversations.map((conv, index) => {
               return conv.is_pinned ? (
                 <Chats
-                  key={index}
+                  key={conv.conversation_id}
                   conversation_id={conv.conversation_id}
                   created_date={conv.created_at}
                   last_edited={conv.lastedited_at}
                   is_pinned={conv.is_pinned}
+                  
                 />
               ) : (
                 <></>
