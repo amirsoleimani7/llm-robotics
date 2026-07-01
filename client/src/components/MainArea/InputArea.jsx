@@ -25,11 +25,10 @@ function InputArea() {
 
   const handle_input = async (e) => {
     e.preventDefault();
-   
-    // clearing the input field after submitsion 
-    document.getElementById("user-input").value = "";    
-    
-    
+
+    // clearing the input field after submitsion
+    document.getElementById("user-input").value = "";
+
     if (input.length > 0) {
       try {
         const conv = global_handler.current_conversation;
@@ -114,10 +113,9 @@ function InputArea() {
         <div className="flex justify-between mt-auto w-full">
           <Tooltip
             title={"change model"}
-            color={"white"}
+            color={"#353638"}
             mouseEnterDelay={0}
             mouseLeaveDelay={0}
-            className="font-bold"
           >
             <button className="flex items-center justify-center gap-1 border px-2 border-gray-700 rounded-[2rem] text-sm ">
               <LuBrain></LuBrain>
@@ -126,10 +124,9 @@ function InputArea() {
           </Tooltip>
           <Tooltip
             title={!is_voice ? "send command" : "use voice mode"}
-            color={"white"}
+            color={"#353638"}
             mouseEnterDelay={0}
             mouseLeaveDelay={0}
-            className="font-bold"
           >
             <button
               className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-700 duration-300 w-10 h-10 aspect-square ease-in-out"
