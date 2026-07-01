@@ -2,6 +2,7 @@
 .loader {
   width: 40px;
   height: 20px;
+  scale: .6;
   --_g: no-repeat radial-gradient(farthest-side,white 94%,#0000);
   background:
     var(--_g) 50%  0,

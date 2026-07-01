@@ -23,11 +23,6 @@ function InputArea() {
     setInput(input);
   };
 
-  console.log(
-    "cursor position is : " +
-      document.getElementById("user-input").selectionStart,
-  );
-
   const handle_input = async (e) => {
     if (e) {
       e.preventDefault();
@@ -36,6 +31,10 @@ function InputArea() {
     // clearing the input field after submitsion
     document.getElementById("user-input").value = "";
     document.getElementById("user-input").selectionStart = 0;
+
+    // we need to auto scroll as well
+    document.getElementById("chatDetailContainer").scrollTop =
+      document.getElementById("chatDetailContainer").scrollHeight + 200;
 
     if (input.length > 0) {
       try {
@@ -63,6 +62,8 @@ function InputArea() {
 
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
+          document.getElementById("chatDetailContainer").scrollTop =
+            document.getElementById("chatDetailContainer").scrollHeight;
         } else {
           // make a conversation and put the messages in it
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
@@ -81,6 +82,7 @@ function InputArea() {
               content: input,
             },
           );
+          
           global_handler.addUserMessage(response_msg.data);
           global_handler.setIsLoading(true);
 
@@ -95,11 +97,16 @@ function InputArea() {
 
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
+          document.getElementById("chatDetailContainer").scrollTop =
+            document.getElementById("chatDetailContainer").scrollHeight;
         }
       } catch (error) {
         console.error("Error:", error);
       }
     }
+    
+    document.getElementById("chatDetailContainer").scrollTop =
+      document.getElementById("chatDetailContainer").scrollHeight;
   };
 
   return (
@@ -124,7 +131,7 @@ function InputArea() {
             }
           }}
         />
-        
+
         <div className="flex justify-between mt-auto w-full">
           <Tooltip
             title={"change model"}

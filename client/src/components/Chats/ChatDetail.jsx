@@ -34,10 +34,10 @@ export default function ChatDetail({covnersation_id}) {
       }
       {handler.is_loading? (
         <div
-          className={`flex gap-2 items-center scale-[.90] mr-auto  duration-100`}
+          className={`flex gap-1 items-center scale-[.90] mr-auto  duration-100`}
         >
           <div className="loader"></div>
-          <p className="font-bold">Planning Actions ...</p>
+          <p className="font-bold text-sm">Planning Actions ...</p>
         </div>
       ) : null}
     </>
