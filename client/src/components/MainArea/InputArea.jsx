@@ -25,7 +25,11 @@ function InputArea() {
 
   const handle_input = async (e) => {
     e.preventDefault();
-
+   
+    // clearing the input field after submitsion 
+    document.getElementById("user-input").value = "";    
+    
+    
     if (input.length > 0) {
       try {
         const conv = global_handler.current_conversation;
@@ -101,6 +105,7 @@ function InputArea() {
         }}
       >
         <textarea
+          id="user-input"
           type="text"
           placeholder="Message to Robot"
           onChange={handle_user_input}
