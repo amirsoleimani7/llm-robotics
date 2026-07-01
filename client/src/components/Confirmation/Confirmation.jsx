@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../contextHandle/Context";
-import { IoSearch } from "react-icons/io5";
 import axios from "axios";
 import { update_conversations } from "../SideBar/Side";
 

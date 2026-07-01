@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useFormState } from "react-dom";
 
 const AppContext = React.createContext();
 
@@ -14,7 +13,6 @@ const AppProvider = ({ children }) => {
   const [show_settings, setShowSetting] = useState(false);
   const [user, setUser] = useState({});
   const [is_loading, setIsLoading] = useState(false);
-  const [change_operation, setChangeOperation] = useState();
   
   // add User Prompt
   const addUserMessage = (user_prompt) => {

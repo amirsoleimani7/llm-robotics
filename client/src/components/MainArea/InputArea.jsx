@@ -7,6 +7,17 @@ import { update_conversations } from "../SideBar/Side";
 import axios from "axios";
 import { Tooltip } from "antd";
 
+function moveToBottom() {
+  setTimeout(() => {
+    const container = document.getElementById("chatDetailContainer");
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, 100); 
+}
+
+
+
 function InputArea() {
   const global_handler = useGlobalContext();
   const [is_voice, SetIsVoice] = useState(true);
@@ -32,9 +43,7 @@ function InputArea() {
     document.getElementById("user-input").value = "";
     document.getElementById("user-input").selectionStart = 0;
 
-    // we need to auto scroll as well
-    document.getElementById("chatDetailContainer").scrollTop =
-      document.getElementById("chatDetailContainer").scrollHeight + 200;
+    moveToBottom();
 
     if (input.length > 0) {
       try {
@@ -62,8 +71,8 @@ function InputArea() {
 
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
-          document.getElementById("chatDetailContainer").scrollTop =
-            document.getElementById("chatDetailContainer").scrollHeight;
+
+          moveToBottom();
         } else {
           // make a conversation and put the messages in it
           const response = await axios.post(`http://127.0.0.1:8000/make_chat`, {
@@ -82,7 +91,7 @@ function InputArea() {
               content: input,
             },
           );
-          
+
           global_handler.addUserMessage(response_msg.data);
           global_handler.setIsLoading(true);
 
@@ -97,16 +106,12 @@ function InputArea() {
 
           global_handler.setIsLoading(false);
           global_handler.addLLMResponse(prompt_response.data);
-          document.getElementById("chatDetailContainer").scrollTop =
-            document.getElementById("chatDetailContainer").scrollHeight;
+          moveToBottom();
         }
       } catch (error) {
         console.error("Error:", error);
       }
     }
-    
-    document.getElementById("chatDetailContainer").scrollTop =
-      document.getElementById("chatDetailContainer").scrollHeight;
   };
 
   return (

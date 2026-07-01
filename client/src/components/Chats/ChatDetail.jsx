@@ -1,16 +1,15 @@
 import { useGlobalContext } from "../contextHandle/Context";
 import React, { useEffect } from "react";
 
-export default function ChatDetail({covnersation_id}) {
+export default function ChatDetail({ covnersation_id }) {
   const handler = useGlobalContext();
 
-  useEffect(() => {
-  }, [handler.current_conversation]);
+  useEffect(() => {}, [handler.current_conversation]);
 
   const { messages } = useGlobalContext();
-  
+
   return (
-    <>
+    <div className="w-full h-fit flex flex-col" id="detailDiv">
       {messages.map((m, index) => (
         <React.Fragment key={index}>
           {m.role === "user" && m.content && m.content !== "" ? (
@@ -30,16 +29,16 @@ export default function ChatDetail({covnersation_id}) {
             </div>
           ) : null}
         </React.Fragment>
-      ))
-      }
-      {handler.is_loading? (
+      ))}
+      {handler.is_loading ? (
         <div
           className={`flex gap-1 items-center scale-[.90] mr-auto  duration-100`}
         >
+          {/* add the animation for Planning Actions text */}
           <div className="loader"></div>
           <p className="font-bold text-sm">Planning Actions ...</p>
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
