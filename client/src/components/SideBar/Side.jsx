@@ -168,7 +168,7 @@ function Side() {
           <p className="text-sm font-semibold">New Chat</p>
         </button>
 
-        <div className="side-section h-full overflow-y-scroll">
+        <div className="h-full overflow-y-scroll scrollbar-thin dark:scrollbar-thumb-[#3c3c3d]  dark:scrollbar-track-[#1b1b1c] scrollbar-thumb-[#e6e8ea] scrollbar-track-white">
           <div className="flex flex-col gap-1">
             <h1 className="text-sm  text-second-color-3 ml-2">Pinned</h1>
             {global_handlers.conversations.map((conv, index) => {

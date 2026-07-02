@@ -161,14 +161,6 @@ function Setting() {
                       document
                         .querySelector("#main-page")
                         .classList.remove("dark");
-
-                      document
-                        .querySelector(".chat-section")
-                        .classList.add("light");
-
-                      document
-                        .querySelector(".side-section")
-                        .classList.add("light");
                     }}
                   >
                     <MdOutlineLightMode />
@@ -181,13 +173,6 @@ function Setting() {
                       document
                         .querySelector("#main-page")
                         .classList.add("dark");
-
-                      document
-                        .querySelector(".chat-section")
-                        .classList.remove("light");
-                      document
-                        .querySelector(".side-section")
-                        .classList.remove("light");
                     }}
                   >
                     <MdOutlineDarkMode />
@@ -228,15 +213,20 @@ function Setting() {
             </div>
           ) : (
             <div className="flex flex-col w-[75%]  gap-4 max-md:w-full">
-              <div className="flex justify-between items-center w-[100%] relative">
+              <div className="flex justify-between items-center w-[100%] relative ">
                 <h1>Name</h1>
                 <input
                   onChange={handle_username}
+                  onKeyDown={(e) => {
+                    if(e.key === "Enter"){
+                      handle_change_name();
+                    }
+                  }}
                   type="text"
                   id="user-name-change"
                   placeholder={handle.user.name}
                   maxLength={25}
-                  className="dark:bg-second-color-1 bg-select-light-mode rounded-lg p-2 border-none outline-none focus:outline-1 focus:outline-sky-50"
+                  className="dark:bg-second-color-1  bg-select-light-mode rounded-lg p-2 border-none outline-none focus:outline-1 dark:focus:outline-sky-50 focus:outline-gray-500 "
                 />
                 <button
                   className={` absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100 scale-100 " : " pointer-events-none scale-0"} duration-100 transition-all`}
@@ -269,7 +259,6 @@ function Setting() {
                       className="scale-[300%] cursor-pointer"
                       onChange={handle_set_image}
                     />
-
                     <img
                       src={
                         Object.keys(current_image).length === 0

@@ -12,7 +12,7 @@ export default function ChatDetail({ covnersation_id }) {
   const { messages } = useGlobalContext();
   
   return (
-    <div className="w-full h-fit flex flex-col" id="detailDiv">
+    <div className="w-full gap-1 h-fit flex flex-col" id="detailDiv">
       {messages.map((m, index) => (
         <React.Fragment key={index}>
           {m.role === "user" && m.content && m.content !== "" ? (
