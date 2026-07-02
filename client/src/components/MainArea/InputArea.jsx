@@ -116,7 +116,7 @@ function InputArea() {
   return (
     <>
       <form
-        className="flex flex-col bg-second-color w-full h-36 p-6 rounded-[2rem]  mb-2 duration-500 ease-in-out transition-all border border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4"
+        className="flex flex-col bg-white  dark:bg-second-color w-full h-36 p-6 rounded-[2rem]  mb-2 duration-500 ease-in-out transition-all border border-gray-300  dark:border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4 shadow-md"
         
         style={{
           height: `${high_len ? "230px" : ""}`,
@@ -127,7 +127,7 @@ function InputArea() {
           type="text"
           placeholder="Message to Robot"
           onChange={handle_user_input}
-          className="bg-transparent focus:outline-none w-full h-[80%] resize-none text-white "
+          className="bg-transparent focus:outline-none w-full h-[80%] resize-none dark:text-white text-black"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -143,7 +143,7 @@ function InputArea() {
             mouseEnterDelay={0}
             mouseLeaveDelay={0}
           >
-            <button className="flex items-center justify-center gap-1 border px-2 border-gray-700 rounded-[2rem] text-sm ">
+            <button className="flex items-center justify-center gap-1 border px-2 border-gray-300 dark:border-gray-700 rounded-[2rem] text-sm hover:bg-select-light-mode">
               <LuBrain></LuBrain>
               <p>Model</p>
             </button>
@@ -161,9 +161,10 @@ function InputArea() {
             mouseLeaveDelay={0}
           >
             <button
-              className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-700 duration-300 w-10 h-10 aspect-square ease-in-out"
+              className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-300 dark:border-gray-700 duration-200 w-10 h-10 aspect-square ease-in-out hover:bg-select-side-light-mode transition-all dark:text-white"
               style={{
-                background: `${!is_voice ? "gray" : ""}`,
+                background: `${!is_voice ? "#3964fe" : ""}`,
+                color: `${!is_voice ? "white" : ""}`,
               }}
               onClick={handle_input}
             >
@@ -182,7 +183,7 @@ function InputArea() {
           </Tooltip>
         </div>
       </form>
-    </>
+    </> 
   );
 }
 

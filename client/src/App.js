@@ -6,6 +6,7 @@ import Setting from "./components/ShowSettings/ShowSetting";
 import Side from "./components/SideBar/Side";
 import SVGComponent from "./logo";
 
+
 function App() {
   const handler = useGlobalContext();
   
@@ -14,6 +15,7 @@ function App() {
       <Confirmation/>
       <Side />
       <Setting/>
+
       <div className={`w-[800px] px-2 shrink flex flex-col ${handler.messages.length === 0 ? "justify-center" : "justify-between"}  mx-auto tranistion-all ease-in-out  mb-4`}>
         {handler.messages.length === 0 ? 
         <>
@@ -28,7 +30,7 @@ function App() {
           </div>
         </> 
         : <></>}
-        <div className={`chat-section w-full transition-all duration-200 ease-in-out  flex flex-col gap-2 py-12  ${handler.messages.length === 0 ? "" : "overflow-scroll h-full"} overflow-x-hidden duration-300 transition-all scroll-smooth`}
+        <div className={`chat-section w-full transition-all duration-200 ease-in-out  flex flex-col gap-2 py-12  ${handler.messages.length === 0 ? "" : "overflow-scroll h-full"} overflow-x-hidden duration-300 transition-all scroll-smooth test`}
         id="chatDetailContainer">
           <ChatDetail  />
         </div>

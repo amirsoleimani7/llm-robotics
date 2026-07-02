@@ -101,7 +101,6 @@ function Setting() {
         display: `${handle.show_settings ? "flex" : "none"}`,
       }}
     >
-      
       <Toaster
         position="top-center"
         toastOptions={{
@@ -114,7 +113,7 @@ function Setting() {
           },
         }}
       />
-      
+
       <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl bg-white  dark:bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none">
         <div className="flex justify-between font-bold ml-2">
           <h1>Settings</h1>
@@ -158,9 +157,18 @@ function Setting() {
                     className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Light" ? "dar:bg-select-color bg-select-light-mode" : ""}`}
                     onClick={() => {
                       setTheme("Light");
+
                       document
                         .querySelector("#main-page")
                         .classList.remove("dark");
+
+                      document
+                        .querySelector(".chat-section")
+                        .classList.add("light");
+
+                      document
+                        .querySelector(".side-section")
+                        .classList.add("light");
                     }}
                   >
                     <MdOutlineLightMode />
@@ -173,6 +181,13 @@ function Setting() {
                       document
                         .querySelector("#main-page")
                         .classList.add("dark");
+
+                      document
+                        .querySelector(".chat-section")
+                        .classList.remove("light");
+                      document
+                        .querySelector(".side-section")
+                        .classList.remove("light");
                     }}
                   >
                     <MdOutlineDarkMode />
@@ -182,7 +197,6 @@ function Setting() {
                     className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "System" ? "dark:bg-select-color bg-select-light-mode" : ""}`}
                     onClick={() => {
                       setTheme("System");
-                      
                     }}
                   >
                     <MdComputer />

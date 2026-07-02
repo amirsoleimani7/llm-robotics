@@ -22,6 +22,7 @@ module.exports = {
 
         "select-light-mode" : "#e6e8ea",
         "select-side-light-mode" : "#e4edfd",
+        "select-side-light-mode-2" : "#3964fe",
         "black-rgba" : "rgba(13, 17, 23, .95)"
       },
       

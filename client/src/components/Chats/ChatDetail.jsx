@@ -11,13 +11,12 @@ export default function ChatDetail({ covnersation_id }) {
   
   const { messages } = useGlobalContext();
   
-
   return (
     <div className="w-full h-fit flex flex-col" id="detailDiv">
       {messages.map((m, index) => (
         <React.Fragment key={index}>
           {m.role === "user" && m.content && m.content !== "" ? (
-            <div className="max-w-[80%] h-auto self-end p-4 bg-second-color rounded-[2rem] break-words">
+            <div className="max-w-[80%] h-auto self-end p-4 dark:bg-second-color bg-select-side-light-mode rounded-[2rem] break-words">
               {m.content}
             </div>
           ) : m.content ? (

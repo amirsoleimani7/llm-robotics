@@ -88,7 +88,7 @@ function Side() {
           <SVGComponent />
         </div>
 
-        <div className="flex w-3/4 p-1 gap-1 bg-white dark:bg-main-color-2 rounded-[2rem] border dark:border-gray-700 border-gray-300 shadow-sm">
+        <div className="flex w-3/4 p-1 gap-1  dark:bg-main-color-2 rounded-[2rem] border  dark:border-gray-700 border-gray-300 shadow-sm ">
           {topButtons.map((btn) => {
             const Icon = btn.icon;
             return (
@@ -114,12 +114,12 @@ function Side() {
       </div>
 
       <div
-        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0  flex-none bg-second-light-mode dark:bg-main-color-1 px-2 flex flex-col gap-3 "
+        className="duration-300 ease-in-out h-full  dark:border-gray-700 max-lg:fixed max-lg:left-0  flex-none bg-second-light-mode dark:bg-main-color-1 px-2 flex flex-col gap-3"
         style={{
           width: `${is_open ? "270px" : "0px"}`,
           zIndex: `${is_open ? "40" : "-10"}`,
           opacity: `${is_open ? "100" : "0"}`,
-          borderRight: `${is_open ? "1px solid rgb(55 65 81 / var(--tw-border-opacity, 1)" : ""}`,
+          borderRight: `${is_open ? `1px solid rgb(55 65 81 / var(--tw-border-opacity, 1)` : ""}`,
         }}
       >
         <div className="h-10 bg flex justify-between items-center mt-4">
@@ -205,7 +205,7 @@ function Side() {
         </div>
 
         <div
-          className="duration-300 transition-all ease-in-out flex items-center w-full  dark:bg-main-color-2 cursor-pointer rounded-xl p-2  mt-auto mb-2 hover:bg-select-light-mode"
+          className="duration-300 transition-all ease-in-out flex items-center w-full  dark:bg-main-color-2 cursor-pointer rounded-xl p-2  mt-auto mb-2 hover:bg-select-light-mode shadow-md"
           onClick={() => {
             global_handlers.setShowSetting(true);
           }}

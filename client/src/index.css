@@ -4,8 +4,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-
-
 @import url("./components/Chats/loader_style.css");
 @import url("./components/MainArea/loading_style.css");
 
@@ -23,7 +21,7 @@ html {
 
 code {
   font-family:
-  source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 textarea {
@@ -35,15 +33,22 @@ textarea {
   scrollbar-color: #3c3c3d #0d1117;
 }
 
+.chat-section.light {
+  scrollbar-width: thin;
+  scrollbar-color: #e6e8ea white;
+}
 
 .side-section {
   scrollbar-width: thin;
   scrollbar-color: #3c3c3d #1b1b1c;
-  position: relative;  
+  position: relative;
 }
 
-#portal{
-  background-color: red;
+.side-section.light {
+  scrollbar-width: thin;
+  scrollbar-color: #e6e8ea white;
+}
+
+#portal {
   pointer-events: all;
 }
-
