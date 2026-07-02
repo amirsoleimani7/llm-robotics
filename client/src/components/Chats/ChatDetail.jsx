@@ -2,12 +2,15 @@ import { useGlobalContext } from "../contextHandle/Context";
 import React, { useEffect } from "react";
 import Typewriter from "./typewriter";
 
-export default function ChatDetail({ covnersation_id }) {
-  const handler = useGlobalContext();
 
+export default function ChatDetail({ covnersation_id }) {
+
+  const handler = useGlobalContext();
+  
   useEffect(() => {}, [handler.current_conversation]);
   
   const { messages } = useGlobalContext();
+  
 
   return (
     <div className="w-full h-fit flex flex-col" id="detailDiv">

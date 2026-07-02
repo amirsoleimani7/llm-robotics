@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ChatDetail from "./components/Chats/ChatDetail";
 import Confirmation from "./components/Confirmation/Confirmation";
 import { useGlobalContext } from "./components/contextHandle/Context";
@@ -9,8 +10,9 @@ import SVGComponent from "./logo";
 function App() {
   const handler = useGlobalContext();
   
+  
   return (
-    <div className="bg-main-color text-white w-full h-screen flex justify-between">
+    <div className={`bg-main-color text-white w-full h-screen flex justify-between`}>
       <Confirmation/>
       <Side />
       <Setting/>

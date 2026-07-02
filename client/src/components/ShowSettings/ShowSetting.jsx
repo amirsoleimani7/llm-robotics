@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
 import { useGlobalContext } from "../contextHandle/Context";
 import { IoClose } from "react-icons/io5";
@@ -117,7 +117,7 @@ function Setting() {
         <div className="flex justify-between font-bold">
           <h1>Settings</h1>
           <button
-            className="flex items-center justify-center rounded-full aspect-square hover:bg-second-color-2 hover:rotate-90 transition-all duration-200"
+            className="flex items-center justify-center rounded-full aspect-square hover:bg-second-color-2  transition-all duration-200"
             onClick={() => {
               handle.setShowSetting(false);
             }}
@@ -156,6 +156,9 @@ function Setting() {
                     className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Light" ? "bg-select-color" : ""}`}
                     onClick={() => {
                       setTheme("Light");
+                      document
+                        .querySelector("#main-page")
+                        .classList.remove("dark");
                     }}
                   >
                     <MdOutlineLightMode />
@@ -165,6 +168,9 @@ function Setting() {
                     className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Dark" ? "bg-select-color" : ""}`}
                     onClick={() => {
                       setTheme("Dark");
+                      document
+                        .querySelector("#main-page")
+                        .classList.add("dark");
                     }}
                   >
                     <MdOutlineDarkMode />
@@ -174,6 +180,7 @@ function Setting() {
                     className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "System" ? "bg-select-color" : ""}`}
                     onClick={() => {
                       setTheme("System");
+                      
                     }}
                   >
                     <MdComputer />

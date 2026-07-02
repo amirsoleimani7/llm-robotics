@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
 @import url("./components/Chats/loader_style.css");
 @import url("./components/MainArea/loading_style.css");
 
@@ -38,7 +43,7 @@ textarea {
 }
 
 #portal{
-
   background-color: red;
   pointer-events: all;
 }
+
