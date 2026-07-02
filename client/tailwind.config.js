@@ -15,10 +15,13 @@ module.exports = {
         "second-color-1": "#363738",
         "second-color-2": "#43454a",
         "seocnd-color-3":"#abb0b6",
-          
+        "second-light-mode" : "#f9fafb",
+        
         "scroll-color": "#3c3c3d",
         "select-color" : "#404247",
+
         "select-light-mode" : "#e6e8ea",
+        "select-side-light-mode" : "#e4edfd",
         "black-rgba" : "rgba(13, 17, 23, .95)"
       },
       

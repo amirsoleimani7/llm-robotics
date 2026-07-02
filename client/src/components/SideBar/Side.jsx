@@ -69,10 +69,10 @@ function Side() {
 
   return (
     <>
-      <div className="fixed top-2 w-[170px]  gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start max-md:bg-black-rgba max-md:top-0 max-md:h-12 -left-full">
+      <div className="fixed top-2 w-[170px]  gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start dark:max-md:bg-black-rgba max-md:top-0 max-md:h-12 -left-full ">
         <button
           onClick={handle_sidebar}
-          className="aspect-square p-3 rounded-[2rem] flex items-center justify-center hover:bg-main-color-3 duration-200 ease-in-out"
+          className="aspect-square p-3 rounded-[2rem] flex items-center justify-center dark:hover:bg-main-color-3 hover:bg-select-light-mode duration-200 ease-in-out"
         >
           <RxHamburgerMenu />
         </button>
@@ -88,7 +88,7 @@ function Side() {
           <SVGComponent />
         </div>
 
-        <div className="flex w-3/4 p-1 gap-1  bg-main-color-2 rounded-[2rem] border border-gray-700">
+        <div className="flex w-3/4 p-1 gap-1 bg-white dark:bg-main-color-2 rounded-[2rem] border dark:border-gray-700 border-gray-300 shadow-sm">
           {topButtons.map((btn) => {
             const Icon = btn.icon;
             return (
@@ -102,7 +102,7 @@ function Side() {
               >
                 <button
                   key={btn.id}
-                  className="w-full aspect-square p-1 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]"
+                  className="w-full aspect-square p-1 rounded-[2rem] flex justify-center items-center dark:hover:bg-main-color-3 hover:bg-select-light-mode duration-200 ease-in-out active:*:scale-[1.10]"
                   onClick={handlers[btn.onClick]}
                 >
                   <Icon className="scale-105" />
@@ -114,7 +114,7 @@ function Side() {
       </div>
 
       <div
-        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0  flex-none  bg-main-color-1 px-2 flex flex-col gap-3"
+        className="duration-300 ease-in-out h-full border-gray-700 max-lg:fixed max-lg:left-0  flex-none bg-second-light-mode dark:bg-main-color-1 px-2 flex flex-col gap-3 "
         style={{
           width: `${is_open ? "270px" : "0px"}`,
           zIndex: `${is_open ? "40" : "-10"}`,
@@ -138,7 +138,7 @@ function Side() {
               mouseLeaveDelay={0}
               arrow={true}
             >
-              <button className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]">
+              <button className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center  dark:hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10] hover:bg-select-light-mode">
                 <FaSearch />
               </button>
             </Tooltip>
@@ -151,7 +151,7 @@ function Side() {
             >
               <button
                 onClick={handle_sidebar}
-                className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]"
+                className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center hover:bg-select-light-mode dark:hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10]"
               >
                 <CgSidebar />
               </button>
@@ -160,8 +160,8 @@ function Side() {
         </div>
 
         <button
-          className="flex justify-center items-center w-full p-2 rounded-3xl bg-second-color-2 border-y border-gray-500 gap-2
-          "
+          className="flex justify-center items-center w-full px-2 py-3  rounded-3xl dark:bg-second-color-2 bg-white shadow-sm border-y dark:border-gray-500 gap-2
+          hover:shadow-md transition-all duration-200 ease-in-out"
           onClick={handle_newChat}
         >
           <RiChatNewFill />
@@ -205,13 +205,13 @@ function Side() {
         </div>
 
         <div
-          className="flex items-center w-full bg-main-color-2 cursor-pointer rounded-xl p-2  mt-auto mb-2"
+          className="duration-300 transition-all ease-in-out flex items-center w-full  dark:bg-main-color-2 cursor-pointer rounded-xl p-2  mt-auto mb-2 hover:bg-select-light-mode"
           onClick={() => {
             global_handlers.setShowSetting(true);
           }}
         >
           <div className="flex items-center gap-5 justify-start w-full">
-            <div className="bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500 overflow-hidden">
+            <div className="dark:bg-gray-800 w-10 h-full rounded-full aspect-square border border-gray-500 overflow-hidden">
               <img
                 src={global_handlers.user.data_url}
                 alt=""
