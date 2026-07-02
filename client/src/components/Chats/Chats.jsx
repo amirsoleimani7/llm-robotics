@@ -73,7 +73,7 @@ export default function Chats({
   return (
     <>
       <div
-        className="group w-full p-2  rounded-xl duration-75 ease-in-out transition-all hover:bg-second-color-1 hover:cursor-pointer  relative"
+        className="group w-full p-2  rounded-xl duration-75 ease-in-out transition-all dark:hover:bg-second-color-1 hover:bg-select-light-mode hover:cursor-pointer  relative"
         onClick={go_to_chat_detail}
         data-conversation-id={conversation_id}
         data-created-date={created_date}
@@ -83,7 +83,8 @@ export default function Chats({
         }}
       >
         {conversation_id}
-        <div className="z-10 absolute right-1 top-1 aspect-square rounded-full flex group-hover:opacity-100 opacity-0 justify-center items-center p-2  hover:bg-second-color-2 outline-gray-700 hover:outline hover:outline-1 transition-all duration-100 ease-in-out">
+        <div className="z-10 absolute right-1 top-1 aspect-square rounded-full flex group-hover:opacity-100 opacity-0 justify-center items-center p-2  dark:hover:bg-second-color-2 hover:bg-gray-300 dark:outline-gray-700 dark:hover:outline dark:hover:outline-1 transition-all duration-100 ease-in-out ">
+         
           <button
             className="relative"
             data-conversation-id={conversation_id}
