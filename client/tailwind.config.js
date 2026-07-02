@@ -18,6 +18,7 @@ module.exports = {
           
         "scroll-color": "#3c3c3d",
         "select-color" : "#404247",
+        "select-light-mode" : "#e6e8ea",
         "black-rgba" : "rgba(13, 17, 23, .95)"
       },
       

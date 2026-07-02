@@ -115,11 +115,11 @@ function Setting() {
         }}
       />
       
-      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none">
-        <div className="flex justify-between font-bold">
+      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl bg-white  dark:bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none">
+        <div className="flex justify-between font-bold ml-2">
           <h1>Settings</h1>
           <button
-            className="flex items-center justify-center rounded-full aspect-square hover:bg-second-color-2  transition-all duration-200"
+            className="flex items-center justify-center rounded-full aspect-square dark:hover:bg-second-color-2  hover:bg-select-light-mode  transition-all duration-200"
             onClick={() => {
               handle.setShowSetting(false);
             }}
@@ -131,7 +131,7 @@ function Setting() {
         <div className="flex mt-3 gap-3 max-md:flex-col">
           <div className="flex flex-col w-[30%] gap-1 max-md:flex-row max-md:w-full ">
             <button
-              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "general" ? "bg-select-color" : ""} transition-all duration-100 max-md:px-4`}
+              className={`text-md gap-1 flex justify-start rounded-lg p-2 items-center dark:hover:bg-select-color hover:bg-select-light-mode ${tab === "general" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100 max-md:px-4`}
               onClick={() => {
                 setTab("general");
               }}
@@ -140,7 +140,7 @@ function Setting() {
               <p>General</p>
             </button>
             <button
-              className={`text-md gap-1 flex justify-start rounded-lg px-1 py-2  items-center hover:bg-select-color ${tab === "profile" ? "bg-select-color" : ""}  transition-all duration-100 max-md:px-4`}
+              className={`text-md gap-1 flex justify-start rounded-lg p-2  items-center dark:hover:bg-select-color hover:bg-select-light-mode ${tab === "profile" ? "dark:bg-select-color bg-select-light-mode" : ""}  transition-all duration-100 max-md:px-4`}
               onClick={() => {
                 setTab("profile");
               }}
@@ -155,7 +155,7 @@ function Setting() {
                 <h1>Theme</h1>
                 <div className="flex gap-2 ">
                   <button
-                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Light" ? "bg-select-color" : ""}`}
+                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Light" ? "dar:bg-select-color bg-select-light-mode" : ""}`}
                     onClick={() => {
                       setTheme("Light");
                       document
@@ -167,7 +167,7 @@ function Setting() {
                     <p>Light</p>
                   </button>
                   <button
-                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "Dark" ? "bg-select-color" : ""}`}
+                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Dark" ? "dark:bg-select-color bg-select-light-mode" : ""}`}
                     onClick={() => {
                       setTheme("Dark");
                       document
@@ -179,7 +179,7 @@ function Setting() {
                     <p>Dark</p>
                   </button>
                   <button
-                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-color rounded-lg outline-1 outline outline-gray-600 ${theme === "System" ? "bg-select-color" : ""}`}
+                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "System" ? "dark:bg-select-color bg-select-light-mode" : ""}`}
                     onClick={() => {
                       setTheme("System");
                       
@@ -194,7 +194,7 @@ function Setting() {
                 <p>Language</p>
                 <div className="flex gap-1">
                   <button
-                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language === "English" ? "bg-select-color" : ""} transition-all duration-100`}
+                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-light-mode dark:hover:bg-select-color ${Language === "English" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100`}
                     onClick={() => {
                       setLanguage("English");
                     }}
@@ -202,7 +202,7 @@ function Setting() {
                     English
                   </button>
                   <button
-                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-color ${Language === "Persian" ? "bg-select-color" : ""} transition-all duration-100`}
+                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-light-mode dark:hover:bg-select-color ${Language === "Persian" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100`}
                     onClick={() => {
                       setLanguage("Persian");
                     }}
@@ -222,7 +222,7 @@ function Setting() {
                   id="user-name-change"
                   placeholder={handle.user.name}
                   maxLength={25}
-                  className="bg-second-color-1 rounded-lg p-2 border-none outline-none focus:outline-1 focus:outline-sky-50"
+                  className="dark:bg-second-color-1 bg-select-light-mode rounded-lg p-2 border-none outline-none focus:outline-1 focus:outline-sky-50"
                 />
                 <button
                   className={` absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100 scale-100 " : " pointer-events-none scale-0"} duration-100 transition-all`}
@@ -231,7 +231,7 @@ function Setting() {
                   <IoCheckmarkOutline size={18} />
                 </button>
               </div>
-              <div className=" bg-red-100 border-b w-full border-gray-700"></div>
+              <div className="border-b h-0 w-full border-gray-300 dark:border-gray-600"></div>
               <div className="flex justify-between items-center">
                 <h1>Profile Picture</h1>
                 <div className="flex gap-2 items-center justify-end transition-all duration-100">
@@ -249,7 +249,7 @@ function Setting() {
                   >
                     <IoCheckmarkOutline size={18} />
                   </button>
-                  <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center relative border-gray-500 border">
+                  <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center relative dark:border-gray-500 border-gray-300 border">
                     <input
                       type="file"
                       className="scale-[300%] cursor-pointer"
