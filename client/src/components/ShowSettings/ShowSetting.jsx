@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Toaster, toast } from "sonner";
 import { useGlobalContext } from "../contextHandle/Context";
 import { IoClose } from "react-icons/io5";
@@ -101,6 +101,7 @@ function Setting() {
         display: `${handle.show_settings ? "flex" : "none"}`,
       }}
     >
+      
       <Toaster
         position="top-center"
         toastOptions={{
@@ -113,6 +114,7 @@ function Setting() {
           },
         }}
       />
+      
       <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl  bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none">
         <div className="flex justify-between font-bold">
           <h1>Settings</h1>
