@@ -8,7 +8,7 @@ function Confirmation() {
   const handle_cancel = () => {
     handle.setShowConfirm(false);
   };
-  
+
   const handle_delete = async () => {
     handle.setShowConfirm(false);
     const conv_id = handle.change_conv;
@@ -19,7 +19,7 @@ function Confirmation() {
     console.log(res);
 
     await update_conversations(handle);
-    
+
     console.log("Removing ...");
     handle.setcurrentconversation({});
     handle.setMessages([]);
@@ -31,9 +31,20 @@ function Confirmation() {
       style={{
         display: `${handle.show_confim ? "flex" : "none"}`,
       }}
+      
+      tabIndex={0}
+    
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          handle_delete();
+        }
+      }}
+    
     >
       <div className="dark:bg-main-color-3 bg-white p-3 w-[320px] h-[120px] font-bold rounded-2xl flex flex-col left-[50%] top-[50%]">
+        
         <h1>This conversation can't be recovered.</h1>
+        
         <div className="w-[60%] flex font-bold text-sm gap-2 self-end mt-auto *:transition-all *:duration-200 *:ease-in-out">
           <button
             className="dark:bg-main-color-2  bg-white px-3 py-2 rounded-[2rem] flex justify-center items-center w-1/3 outline outline-1 outline-gray-600 dark:hover:bg-main-color-3 hover:bg-gray-200 "

@@ -243,7 +243,7 @@ function Setting() {
                     className={`p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center ${show_ok_image ? "scale-100 opacity-100" : "scale-0 opacity-0 hidden"} transition-all duration-100`}
                     onClick={handle_change_image}
                     data-change-status={false}
-                  >
+                  > 
                     <IoClose size={18} />
                   </button>
                   <button

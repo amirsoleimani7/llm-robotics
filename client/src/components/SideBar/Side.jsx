@@ -88,7 +88,7 @@ function Side() {
           <SVGComponent />
         </div>
 
-        <div className="flex w-3/4 p-1 gap-1  dark:bg-main-color-2 rounded-[2rem] border  dark:border-gray-700 border-gray-300 shadow-sm ">
+        <div className="flex w-3/4 p-1 gap-1  dark:bg-main-color-2 rounded-[2rem] border  dark:border-gray-700 border-gray-300 shadow-sm">
           {topButtons.map((btn) => {
             const Icon = btn.icon;
             return (
