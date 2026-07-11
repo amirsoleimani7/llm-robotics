@@ -4,6 +4,7 @@
   height: 20px;
   scale: .6;
   --_g: no-repeat radial-gradient(farthest-side,white 94%,#0000);
+  /* --_g : white; */
   background:
     var(--_g) 50%  0,
     var(--_g) 100% 0;
@@ -16,8 +17,7 @@
   content: "";
   position: absolute;
   height: 10px;
-  aspect-ratio: 1;  ;
-
+  aspect-ratio: 1;  
   border-radius: 50%;
   background: white;
 

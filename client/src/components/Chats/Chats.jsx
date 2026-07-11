@@ -79,7 +79,10 @@ export default function Chats({
         data-created-date={created_date}
         data-last-edited={last_edited}
         style={{
-          backgroundColor: `${conversation_id === handler.current_conversation.conversation_id ? "#363738" : ""}`,
+          
+          // TODO : fix the highlight of the selected chat
+          // backgroundColor: `${conversation_id === handler.current_conversation.conversation_id ? "#e4edfd" : ""}`,
+          // color: `${conversation_id === handler.current_conversation.conversation_id ? "#3964fe" : ""}`,          
         }}
       >
         {conversation_id}
