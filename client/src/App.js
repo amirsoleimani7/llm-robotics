@@ -11,7 +11,27 @@ function App() {
   const handler = useGlobalContext();
 
   useEffect(() => {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    const prefersLight = window.matchMedia(
+      "(prefers-color-scheme: light)",
+    ).matches;
+    const prefersNotSet = window.matchMedia(
+      "(prefers-color-scheme: no-preference)",
+    ).matches;
+
+
     const currentTheme = localStorage.getItem("theme");
+
+    if (currentTheme === null) {
+      prefersDark
+        ? document.querySelector("#main-page").classList.add("dark")
+        : document.querySelector("#main-page").classList.remove("dark");
+      return;
+    }
+
+
     if (currentTheme == "Dark") {
       document.querySelector("#main-page").classList.add("dark");
     } else {
