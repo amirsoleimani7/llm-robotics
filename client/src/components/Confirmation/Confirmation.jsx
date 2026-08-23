@@ -26,6 +26,7 @@ function Confirmation() {
   };
 
   return (
+    
     <div
       className="z-50 absolute w-screen h-screen  bg-[rgba(0,0,0,0.7)] flex justify-center items-center backdrop-blur-sm"
       style={{

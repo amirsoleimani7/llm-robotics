@@ -21,7 +21,6 @@ function App() {
       "(prefers-color-scheme: no-preference)",
     ).matches;
 
-
     const currentTheme = localStorage.getItem("theme");
 
     if (currentTheme === null) {
@@ -30,7 +29,6 @@ function App() {
         : document.querySelector("#main-page").classList.remove("dark");
       return;
     }
-
 
     if (currentTheme == "Dark") {
       document.querySelector("#main-page").classList.add("dark");
@@ -56,11 +54,11 @@ function App() {
               <div className="w-[50px] h-[50px]">
                 <SVGComponent />
               </div>
-              <div className="flex gap-2">
-                <h1 className="text-3xl max-md:text-4xl ">
+              <div className="flex gap-2 max-md:flex-col">
+                <h1 className="text-3xl max-md:text-2xl ">
                   Start Chatting with
                 </h1>
-                <h1 className="text-3xl font-extrabold">RoboTalk</h1>
+                <h1 className="text-3xl font-extrabold max-md:text-2xl">RoboTalk</h1>
               </div>
             </div>
           </>

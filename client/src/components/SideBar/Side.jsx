@@ -93,6 +93,8 @@ function Side() {
             const Icon = btn.icon;
             return (
               <Tooltip
+                fontFamily={"Geist"}
+                fontSize={10}
                 title={btn.label}
                 color={"#353638"}
                 mouseEnterDelay={0}

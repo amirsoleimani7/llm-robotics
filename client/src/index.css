@@ -7,21 +7,20 @@
 @import url("./components/Chats/loader_style.css");
 @import url("./components/MainArea/loading_style.css");
 
+@font-face {
+  font-family: "Geist";
+  src: url("../public/Geist/Geist-VariableFont_wght.ttf") format("truetype");
+}
+
 body,
 html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Geist";
 }
 
 code {
-  font-family:
-    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 textarea {
