@@ -143,7 +143,7 @@ function InputArea() {
             mouseEnterDelay={0}
             mouseLeaveDelay={0}
           >
-            <button className="flex items-center justify-center gap-1 border px-2 border-gray-300 dark:border-gray-700 rounded-[2rem] text-sm hover:bg-select-light-mode">
+            <button className="flex items-center justify-center gap-1 border dark:hover:bg-main-color-2 px-2 border-gray-300 dark:border-gray-700 rounded-[2rem] text-sm hover:bg-select-light-mode">
               <LuBrain></LuBrain>
               <p>Model</p>
             </button>
@@ -161,7 +161,7 @@ function InputArea() {
             mouseLeaveDelay={0}
           >
             <button
-              className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-300 dark:border-gray-700 duration-200 w-10 h-10 aspect-square ease-in-out hover:bg-select-side-light-mode transition-all dark:text-white"
+              className="ml-auto rounded-full p-2 flex justify-center items-center border border-gray-300 dark:border-gray-700 duration-200 w-10 h-10 aspect-square ease-in-out dark:hover:bg-main-color-2 hover:bg-select-side-light-mode transition-all dark:text-white"
               style={{
                 background: `${!is_voice ? "#3964fe" : ""}`,
                 color: `${!is_voice ? "white" : ""}`,
