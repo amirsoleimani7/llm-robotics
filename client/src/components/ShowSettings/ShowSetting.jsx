@@ -17,11 +17,6 @@ import axios from "axios";
 import FormData from "form-data";
 
 function Setting() {
-  console.log(
-    "classlist is : ",
-    document.querySelector("#main-page").classList,
-  );
-
   const [tab, setTab] = useState("general");
   const [theme, setTheme] = useState("System");
   const [Language, setLanguage] = useState("English");
