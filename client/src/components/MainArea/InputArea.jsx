@@ -17,8 +17,6 @@ export function moveToBottom() {
 }
 
 function InputArea() {
-  
-
   const global_handler = useGlobalContext();
   const [is_voice, SetIsVoice] = useState(true);
   const [input, setInput] = useState("");
@@ -127,7 +125,7 @@ function InputArea() {
           type="text"
           placeholder="Message to Robot"
           onChange={handle_user_input}
-          className="bg-transparent focus:outline-none w-full h-[80%] resize-none dark:text-white text-black"
+          className="bg-transparent focus:outline-none w-full h-[80%] resize-none dark:text-white text-black scrollbar-thin dark:scrollbar-thumb-[#3c3c3d]  dark:scrollbar-track-second-color scrollbar-thumb-[#e6e8ea] scrollbar-track-white "
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
