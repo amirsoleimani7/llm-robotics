@@ -17,6 +17,11 @@ import axios from "axios";
 import FormData from "form-data";
 
 function Setting() {
+  console.log(
+    "classlist is : ",
+    document.querySelector("#main-page").classList,
+  );
+
   const [tab, setTab] = useState("general");
   const [theme, setTheme] = useState("System");
   const [Language, setLanguage] = useState("English");
@@ -157,6 +162,7 @@ function Setting() {
                     className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Light" ? "dar:bg-select-color bg-select-light-mode" : ""}`}
                     onClick={() => {
                       setTheme("Light");
+                      localStorage.setItem("theme", "Light");
 
                       document
                         .querySelector("#main-page")
@@ -170,6 +176,8 @@ function Setting() {
                     className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Dark" ? "dark:bg-select-color bg-select-light-mode" : ""}`}
                     onClick={() => {
                       setTheme("Dark");
+
+                      localStorage.setItem("theme", "Dark");
                       document
                         .querySelector("#main-page")
                         .classList.add("dark");
@@ -218,7 +226,7 @@ function Setting() {
                 <input
                   onChange={handle_username}
                   onKeyDown={(e) => {
-                    if(e.key === "Enter"){
+                    if (e.key === "Enter") {
                       handle_change_name();
                     }
                   }}
@@ -243,7 +251,7 @@ function Setting() {
                     className={`p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center ${show_ok_image ? "scale-100 opacity-100" : "scale-0 opacity-0 hidden"} transition-all duration-100`}
                     onClick={handle_change_image}
                     data-change-status={false}
-                  > 
+                  >
                     <IoClose size={18} />
                   </button>
                   <button

@@ -13,11 +13,12 @@ export function moveToBottom() {
     if (container) {
       container.scrollTop = container.scrollHeight;
     }
-  }, 100); 
+  }, 100);
 }
 
-
 function InputArea() {
+  
+
   const global_handler = useGlobalContext();
   const [is_voice, SetIsVoice] = useState(true);
   const [input, setInput] = useState("");
@@ -117,7 +118,6 @@ function InputArea() {
     <>
       <form
         className="flex flex-col bg-white  dark:bg-second-color w-full h-36 p-6 rounded-[2rem]  mb-2 duration-500 ease-in-out transition-all border border-gray-300  dark:border-gray-700 max-md:h-28 max-md:text-sm max-md:p-4 shadow-md"
-        
         style={{
           height: `${high_len ? "230px" : ""}`,
         }}
@@ -183,7 +183,7 @@ function InputArea() {
           </Tooltip>
         </div>
       </form>
-    </> 
+    </>
   );
 }
 

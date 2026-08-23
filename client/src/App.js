@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ChatDetail from "./components/Chats/ChatDetail";
 import Confirmation from "./components/Confirmation/Confirmation";
 import { useGlobalContext } from "./components/contextHandle/Context";
@@ -8,6 +9,15 @@ import SVGComponent from "./logo";
 
 function App() {
   const handler = useGlobalContext();
+
+  useEffect(() => {
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme == "Dark") {
+      document.querySelector("#main-page").classList.add("dark");
+    } else {
+      document.querySelector("#main-page").classList.remove("dark");
+    }
+  }, []);
 
   return (
     <div
