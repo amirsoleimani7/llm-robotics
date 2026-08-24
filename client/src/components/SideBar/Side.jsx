@@ -9,6 +9,7 @@ import Chats from "../Chats/Chats";
 import { useGlobalContext } from "../contextHandle/Context";
 import SVGComponent from "../../logo";
 import { Tooltip } from "antd";
+import { moveToBottom } from "../MainArea/InputArea";
 
 // load the covnersations
 export const update_conversations = async (handler) => {
@@ -133,7 +134,7 @@ function Side() {
           </div>
 
           <div className="flex gap-2">
-            <Tooltip
+            {/* <Tooltip
               title={"Search"}
               color={"#353638"}
               mouseEnterDelay={0}
@@ -143,7 +144,7 @@ function Side() {
               <button className="w-full aspect-square p-3 rounded-[2rem] flex justify-center items-center  dark:hover:bg-main-color-3 duration-200 ease-in-out active:*:scale-[1.10] hover:bg-select-light-mode">
                 <FaSearch />
               </button>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip
               title={"Toggle Sidebar"}
               color={"#353638"}
@@ -174,6 +175,7 @@ function Side() {
           <div className="flex flex-col gap-1">
             <h1 className="text-sm  text-second-color-3 ml-2">Pinned</h1>
             {global_handlers.conversations.map((conv, index) => {
+              // console.log(`${global_handlers.current_conversation.conversation_id} ==? ${conv.conversation_id} , ${global_handlers.current_conversation.conversation_id === conv.conversation_id}`);
               return conv.is_pinned ? (
                 <Chats
                   key={conv.conversation_id}
@@ -181,6 +183,7 @@ function Side() {
                   created_date={conv.created_at}
                   last_edited={conv.lastedited_at}
                   is_pinned={conv.is_pinned}
+                  
                   
                 />
               ) : (
@@ -198,6 +201,7 @@ function Side() {
                   created_date={conv.created_at}
                   last_edited={conv.lastedited_at}
                   is_pinned={conv.is_pinned}
+                  
                 />
               ) : (
                 <></>

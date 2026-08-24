@@ -13,8 +13,10 @@ import {
 } from "react-icons/md";
 
 import axios from "axios";
+
 // for sending image
 import FormData from "form-data";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Setting() {
   const [tab, setTab] = useState("general");
@@ -113,193 +115,198 @@ function Setting() {
   }, [SettingsRef, handle]);
 
   return (
-    <div
-      className="z-50  absolute w-screen h-screen bg-[rgba(0,0,0,0.7)] flex justify-center items-center backdrop-blur-sm"
-      style={{
-        display: `${handle.show_settings ? "flex" : "none"}`,
-      }}
-    >
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: "#353638",
-            color: "white",
-            width: "200px",
-            display: "flex",
-            justifyContent: "center",
-          },
-        }}
-      />
-
-      <div
-        className="p-4 flex flex-col w-[700px] h-[500px]  rounded-2xl bg-white  dark:bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none"
-        ref={SettingsRef}
-      >
-        <div className="flex justify-between font-bold ml-2">
-          <h1>Settings</h1>
-          <button
-            className="flex items-center justify-center rounded-full aspect-square dark:hover:bg-second-color-2  hover:bg-select-light-mode  transition-all duration-200"
-            onClick={() => {
-              handle.setShowSetting(false);
+    <AnimatePresence>
+      {handle.show_settings && (
+        <div
+          className="z-50 flex  absolute w-screen h-screen bg-[rgba(0,0,0,0.7)]  justify-center items-center backdrop-blur-sm"
+        >
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              style: {
+                background: "#353638",
+                color: "white",
+                width: "200px",
+                display: "flex",
+                justifyContent: "center",
+              },
             }}
+          />
+
+          <motion.div
+            initial={{opacity : 0, y: 10 }}
+            animate={{opacity : 1, y: 0 }}
+            exit={{opacity : 0 , y: 10 }}
+            transition={{  duration: 0.1 }}
+            className="p-4 flex flex-col w-[700px] h-[500px]  rounded-2xl bg-white  dark:bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none"
+            ref={SettingsRef}
           >
-            <IoClose />
-          </button>
-        </div>
-
-        <div className="flex mt-3 gap-3 max-md:flex-col">
-          <div className="flex flex-col w-[30%] gap-1 max-md:flex-row max-md:w-full ">
-            <button
-              className={`text-md gap-1 flex justify-start rounded-lg p-2 items-center dark:hover:bg-select-color hover:bg-select-light-mode ${tab === "general" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100 max-md:px-4`}
-              onClick={() => {
-                setTab("general");
-              }}
-            >
-              <IoIosSettings />
-              <p>General</p>
-            </button>
-            <button
-              className={`text-md gap-1 flex justify-start rounded-lg p-2  items-center dark:hover:bg-select-color hover:bg-select-light-mode ${tab === "profile" ? "dark:bg-select-color bg-select-light-mode" : ""}  transition-all duration-100 max-md:px-4`}
-              onClick={() => {
-                setTab("profile");
-              }}
-            >
-              <RxAvatar />
-              <p>Profile</p>
-            </button>
-          </div>
-          {tab === "general" ? (
-            <div className="w-[75%] flex flex-col gap-8 max-md:flex-col max-md:w-full">
-              <div className="flex flex-col gap-3 ">
-                <h1>Theme</h1>
-                <div className="flex gap-2 ">
-                  <button
-                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Light" ? "dar:bg-select-color bg-select-light-mode" : ""}`}
-                    onClick={() => {
-                      setTheme("Light");
-                      localStorage.setItem("theme", "Light");
-
-                      document
-                        .querySelector("#main-page")
-                        .classList.remove("dark");
-                    }}
-                  >
-                    <MdOutlineLightMode />
-                    <p>Light</p>
-                  </button>
-                  <button
-                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Dark" ? "dark:bg-select-color bg-select-light-mode" : ""}`}
-                    onClick={() => {
-                      setTheme("Dark");
-
-                      localStorage.setItem("theme", "Dark");
-                      document
-                        .querySelector("#main-page")
-                        .classList.add("dark");
-                    }}
-                  >
-                    <MdOutlineDarkMode />
-                    <p>Dark</p>
-                  </button>
-                  <button
-                    className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "System" ? "dark:bg-select-color bg-select-light-mode" : ""}`}
-                    onClick={() => {
-                      setTheme("System");
-                    }}
-                  >
-                    <MdComputer />
-                    <p>System</p>
-                  </button>
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <p>Language</p>
-                <div className="flex gap-1">
-                  <button
-                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-light-mode dark:hover:bg-select-color ${Language === "English" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100`}
-                    onClick={() => {
-                      setLanguage("English");
-                    }}
-                  >
-                    English
-                  </button>
-                  <button
-                    className={`px-2 py-1 rounded-[2rem] hover:bg-select-light-mode dark:hover:bg-select-color ${Language === "Persian" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100`}
-                    onClick={() => {
-                      setLanguage("Persian");
-                    }}
-                  >
-                    فارسی
-                  </button>
-                </div>
-              </div>
+            <div className="flex justify-between font-bold ml-2">
+              <h1>Settings</h1>
+              <button
+                className="flex items-center justify-center rounded-full aspect-square dark:hover:bg-second-color-2  hover:bg-select-light-mode  transition-all duration-200"
+                onClick={() => {
+                  handle.setShowSetting(false);
+                }}
+              >
+                <IoClose />
+              </button>
             </div>
-          ) : (
-            <div className="flex flex-col w-[75%]  gap-4 max-md:w-full">
-              <div className="flex justify-between items-center w-[100%] relative ">
-                <h1>Name</h1>
-                <input
-                  onChange={handle_username}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handle_change_name();
-                    }
-                  }}
-                  type="text"
-                  id="user-name-change"
-                  placeholder={handle.user.name}
-                  maxLength={25}
-                  className="dark:bg-second-color-1  bg-select-light-mode rounded-lg p-2 border-none outline-none focus:outline-1 dark:focus:outline-sky-50 focus:outline-gray-500 "
-                />
+
+            <div className="flex mt-3 gap-3 max-md:flex-col">
+              <div className="flex flex-col w-[30%] gap-1 max-md:flex-row max-md:w-full ">
                 <button
-                  className={` absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100 scale-100 " : " pointer-events-none scale-0"} duration-100 transition-all`}
-                  onClick={handle_change_name}
+                  className={`text-md gap-1 flex justify-start rounded-lg p-2 items-center dark:hover:bg-select-color hover:bg-select-light-mode ${tab === "general" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100 max-md:px-4`}
+                  onClick={() => {
+                    setTab("general");
+                  }}
                 >
-                  <IoCheckmarkOutline size={18} />
+                  <IoIosSettings />
+                  <p>General</p>
+                </button>
+                <button
+                  className={`text-md gap-1 flex justify-start rounded-lg p-2  items-center dark:hover:bg-select-color hover:bg-select-light-mode ${tab === "profile" ? "dark:bg-select-color bg-select-light-mode" : ""}  transition-all duration-100 max-md:px-4`}
+                  onClick={() => {
+                    setTab("profile");
+                  }}
+                >
+                  <RxAvatar />
+                  <p>Profile</p>
                 </button>
               </div>
-              <div className="border-b h-0 w-full border-gray-300 dark:border-gray-600"></div>
-              <div className="flex justify-between items-center">
-                <h1>Profile Picture</h1>
-                <div className="flex gap-2 items-center justify-end transition-all duration-100">
-                  <button
-                    className={`p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center ${show_ok_image ? "scale-100 opacity-100" : "scale-0 opacity-0 hidden"} transition-all duration-100`}
-                    onClick={handle_change_image}
-                    data-change-status={false}
-                  >
-                    <IoClose size={18} />
-                  </button>
-                  <button
-                    className={`p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center ${show_ok_image ? "scale-100 opacity-100" : "scale-0 opacity-0 hidden"} transition-all duration-100`}
-                    onClick={handle_change_image}
-                    data-change-status={true}
-                  >
-                    <IoCheckmarkOutline size={18} />
-                  </button>
-                  <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center relative dark:border-gray-500 border-gray-300 border">
-                    <input
-                      type="file"
-                      className="scale-[300%] cursor-pointer"
-                      onChange={handle_set_image}
-                    />
-                    <img
-                      src={
-                        Object.keys(current_image).length === 0
-                          ? handle.user.data_url
-                          : current_image
-                      }
-                      alt=""
-                      className="absolute w-full h-full pointer-events-none bg-gray-800"
-                    />
+              {tab === "general" ? (
+                <div className="w-[75%] flex flex-col gap-8 max-md:flex-col max-md:w-full">
+                  <div className="flex flex-col gap-3 ">
+                    <h1>Theme</h1>
+                    <div className="flex gap-2 ">
+                      <button
+                        className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Light" ? "dar:bg-select-color bg-select-light-mode" : ""}`}
+                        onClick={() => {
+                          setTheme("Light");
+                          localStorage.setItem("theme", "Light");
+
+                          document
+                            .querySelector("#main-page")
+                            .classList.remove("dark");
+                        }}
+                      >
+                        <MdOutlineLightMode />
+                        <p>Light</p>
+                      </button>
+                      <button
+                        className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "Dark" ? "dark:bg-select-color bg-select-light-mode" : ""}`}
+                        onClick={() => {
+                          setTheme("Dark");
+
+                          localStorage.setItem("theme", "Dark");
+                          document
+                            .querySelector("#main-page")
+                            .classList.add("dark");
+                        }}
+                      >
+                        <MdOutlineDarkMode />
+                        <p>Dark</p>
+                      </button>
+                      <button
+                        className={`flex flex-col flex-1 items-center py-4 gap-1 transition-all duration-100 hover:bg-select-light-mode dark:hover:bg-select-color rounded-lg outline-1 outline outline-gray-300 dark:outline-gray-600 ${theme === "System" ? "dark:bg-select-color bg-select-light-mode" : ""}`}
+                        onClick={() => {
+                          setTheme("System");
+                        }}
+                      >
+                        <MdComputer />
+                        <p>System</p>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex justify-between">
+                    <p>Language</p>
+                    <div className="flex gap-1">
+                      <button
+                        className={`px-2 py-1 rounded-[2rem] hover:bg-select-light-mode dark:hover:bg-select-color ${Language === "English" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100`}
+                        onClick={() => {
+                          setLanguage("English");
+                        }}
+                      >
+                        English
+                      </button>
+                      <button
+                        className={`px-2 py-1 rounded-[2rem] hover:bg-select-light-mode dark:hover:bg-select-color ${Language === "Persian" ? "dark:bg-select-color bg-select-light-mode" : ""} transition-all duration-100`}
+                        onClick={() => {
+                          setLanguage("Persian");
+                        }}
+                      >
+                        فارسی
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="flex flex-col w-[75%]  gap-4 max-md:w-full">
+                  <div className="flex justify-between items-center w-[100%] relative ">
+                    <h1>Name</h1>
+                    <input
+                      onChange={handle_username}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handle_change_name();
+                        }
+                      }}
+                      type="text"
+                      id="user-name-change"
+                      placeholder={handle.user.name}
+                      maxLength={25}
+                      className="dark:bg-second-color-1  bg-select-light-mode rounded-lg p-2 border-none outline-none focus:outline-1 dark:focus:outline-sky-50 focus:outline-gray-500 "
+                    />
+                    <button
+                      className={` absolute right-1 p-2 rounded-lg hover:bg-seocnd-color-3 ${show_ok ? "translate-x-0 opacity-100 scale-100 " : " pointer-events-none scale-0"} duration-100 transition-all`}
+                      onClick={handle_change_name}
+                    >
+                      <IoCheckmarkOutline size={18} />
+                    </button>
+                  </div>
+                  <div className="border-b h-0 w-full border-gray-300 dark:border-gray-600"></div>
+                  <div className="flex justify-between items-center">
+                    <h1>Profile Picture</h1>
+                    <div className="flex gap-2 items-center justify-end transition-all duration-100">
+                      <button
+                        className={`p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center ${show_ok_image ? "scale-100 opacity-100" : "scale-0 opacity-0 hidden"} transition-all duration-100`}
+                        onClick={handle_change_image}
+                        data-change-status={false}
+                      >
+                        <IoClose size={18} />
+                      </button>
+                      <button
+                        className={`p-2 rounded-lg hover:bg-seocnd-color-3 aspect-square w-10 h-10 flex justify-center items-center ${show_ok_image ? "scale-100 opacity-100" : "scale-0 opacity-0 hidden"} transition-all duration-100`}
+                        onClick={handle_change_image}
+                        data-change-status={true}
+                      >
+                        <IoCheckmarkOutline size={18} />
+                      </button>
+                      <div className="overflow-hidden w-14 h-14 aspect-square bg-red-100 rounded-full z-10 flex justify-center items-center relative dark:border-gray-500 border-gray-300 border">
+                        <input
+                          type="file"
+                          className="scale-[300%] cursor-pointer"
+                          onChange={handle_set_image}
+                        />
+                        <img
+                          src={
+                            Object.keys(current_image).length === 0
+                              ? handle.user.data_url
+                              : current_image
+                          }
+                          alt=""
+                          className="absolute w-full h-full pointer-events-none bg-gray-800"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </motion.div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 }
 

@@ -3,6 +3,7 @@ import { useGlobalContext } from "../contextHandle/Context";
 import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
 import More from "../more/More";
+
 import { moveToBottom } from "../MainArea/InputArea";
 
 export default function Chats({
@@ -35,25 +36,6 @@ export default function Chats({
     }
   }, [show_more]);
 
-  const go_to_chat_detail = async (e) => {
-    const { conversationId, createdDate, lastEdited } = e.currentTarget.dataset;
-
-    handler.setcurrentconversation({
-      conversation_id: conversationId,
-      created_at: createdDate,
-      lastedited_at: lastEdited,
-    });
-
-    const res = await axios.get(
-      `http://127.0.0.1:8000/get_conversation/${conversation_id}`,
-    );
-
-    // loading initial data
-    handler.setMessages(res.data);
-    moveToBottom();
-  };
-
-  
   const handle_more = (e) => {
     e.stopPropagation();
     // reading conversationId for the more option
@@ -70,6 +52,32 @@ export default function Chats({
     console.log(`conversation id is : ${conversationId}`);
   };
 
+const go_to_chat_detail = async (e) => {
+  // ✅ Use e.currentTarget, not e.target
+  const { dataset } = e.currentTarget;
+  const conversationId = dataset.conversationId;
+  const createdDate = dataset.createdDate;
+  const lastEdited = dataset.lastEdited;
+
+  console.log("Clicked conversation:", conversationId);
+
+  handler.setcurrentconversation({
+    conversation_id: conversationId,
+    created_at: createdDate,
+    lastedited_at: lastEdited,
+  });
+
+  // ✅ Use the conversationId from the dataset, not the prop
+  const res = await axios.get(
+    `http://127.0.0.1:8000/get_conversation/${conversationId}`,
+  );
+
+  handler.setMessages(res.data);
+  moveToBottom();
+};
+
+  console.log(handler.current_conversation);
+
   return (
     <>
       <div
@@ -78,16 +86,16 @@ export default function Chats({
         data-conversation-id={conversation_id}
         data-created-date={created_date}
         data-last-edited={last_edited}
-        style={{
-          
-          // TODO : fix the highlight of the selected chat
-          // backgroundColor: `${conversation_id === handler.current_conversation.conversation_id ? "#e4edfd" : ""}`,
-          // color: `${conversation_id === handler.current_conversation.conversation_id ? "#3964fe" : ""}`,          
-        }}
+        style={
+          {
+            // TODO : fix the highlight of the selected chat
+            backgroundColor: `${conversation_id == handler.current_conversation.conversation_id ? "#2c2c2e" : ""}`,
+            color: `${conversation_id == handler.current_conversation.conversation_id ? "#0077b6" : ""}`,
+          }
+        }
       >
         {conversation_id}
         <div className="z-10 absolute right-1 top-1 aspect-square rounded-full flex group-hover:opacity-100 opacity-0 justify-center items-center p-2  dark:hover:bg-second-color-2 hover:bg-gray-300 dark:outline-gray-700 dark:hover:outline dark:hover:outline-1 transition-all duration-100 ease-in-out ">
-         
           <button
             className="relative"
             data-conversation-id={conversation_id}
@@ -98,7 +106,7 @@ export default function Chats({
           </button>
         </div>
       </div>
-      
+
       <More
         showMore={show_more}
         positions={position}
@@ -106,7 +114,6 @@ export default function Chats({
         conversation_id={conversation_id}
         more_ref={more_ref}
       />
-      
     </>
   );
 }

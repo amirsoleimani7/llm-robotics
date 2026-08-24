@@ -7,7 +7,10 @@ export default function ChatDetail({ covnersation_id }) {
 
   const handler = useGlobalContext();
   
-  useEffect(() => {}, [handler.current_conversation]);
+  useEffect(() => {
+    console.log("curren conversaions is :" , handler.current_conversation.covnersation_id);
+
+  }, [handler.current_conversation]);
   
   const { messages } = useGlobalContext();
   
