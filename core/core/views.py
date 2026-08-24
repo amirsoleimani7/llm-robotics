@@ -10,7 +10,6 @@ from rest_framework.decorators import api_view
 from .utils.create_llm import agent
 from .utils.socket_client import send_commands_to_socket
 
-
 @api_view(['GET', 'POST'])
 def handle_prompt(request):
     if request.method == 'POST':

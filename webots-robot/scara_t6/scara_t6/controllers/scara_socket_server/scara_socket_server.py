@@ -6,6 +6,9 @@ import cmd
 import socket
 import threading
 import re
+import time
+import os
+import datetime
 
 # Cross-platform readline handling
 try:
@@ -17,10 +20,8 @@ except ImportError:
         # Fallback if neither is available
         readline = None
 
-from controller import Robot, Supervisor
-import os
-import datetime
-
+from controller import Supervisor
+# remove: from controller import Robot, Supervisor
 
 class SCARAT6Controller:
     """Main controller class for SCARA T6 robot."""
@@ -33,9 +34,9 @@ class SCARAT6Controller:
     }
     
     def __init__(self):
-        # Initialize robot
-        self.robot = Robot()
-        self.supervisor = Supervisor()
+        # use Supervisor only
+        self.robot = Supervisor()
+        self.supervisor = self.robot
         self.timestep = int(self.robot.getBasicTimeStep())
         
         # Initialize motors
@@ -71,12 +72,17 @@ class SCARAT6Controller:
         self.verbose_level = 1
         self.running = True
         self.attached_object = None
-        # recording folder for command videos
+        # recording folder next to this controller file
         try:
-            self.recordings_dir = os.path.join(os.getcwd(), "webots_recordings")
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            self.recordings_dir = os.path.join(base_dir, "webots_recordings")
             os.makedirs(self.recordings_dir, exist_ok=True)
-        except Exception:
+            print(f"[recording] directory: {self.recordings_dir}")
+        except Exception as e:
+            print(f"[recording] failed to create directory: {e}")
             self.recordings_dir = None
+
+        self.current_recording_basename = None
         
     def _init_suction_cup(self):
         """Initialize the suction cup tool."""
@@ -98,33 +104,55 @@ class SCARAT6Controller:
             print(f"Warning: Could not initialize suction cup: {e}")
 
     def start_recording(self, filename: str, width: int = 640, height: int = 480):
-        """Start movie recording using Supervisor.movieStart.
+        """Start movie recording using Supervisor.movieStartRecording.
 
         Returns the absolute path used (or None on failure).
         """
-        if not self.supervisor:
+        if not self.supervisor or not self.recordings_dir:
+            print("[recording] supervisor or recordings_dir missing")
             return None
 
-        if not self.recordings_dir:
-            return None
+        basename = filename if filename else f"recording_{int(time.time())}.mp4"
+        filepath = os.path.join(self.recordings_dir, basename)
 
-        filepath = os.path.join(self.recordings_dir, filename)
         try:
-            # Webots expects a filename; record as mpeg/mp4
-            # quality 100, no caption
-            self.supervisor.movieStart(filepath, width, height, "mp4", 100, False)
+            print(f"[recording] start -> {filepath}")
+            self.supervisor.movieStartRecording(
+                filepath,
+                width,
+                height,
+                "MPEG4",   # or "H264" if your Webots build supports it
+                100,
+                1,
+                False
+            )
+            self.current_recording_basename = basename
             return filepath
         except Exception as e:
-            if self.verbose_level >= 1:
-                print(f"Warning: movieStart failed: {e}")
+            print(f"[recording] movieStartRecording failed: {e}")
+            self.current_recording_basename = None
             return None
 
     def stop_recording(self):
+        """Stop movie recording and return the saved basename (or None)."""
         try:
-            self.supervisor.movieStop()
+            if not self.supervisor:
+                return None
+
+            print("[recording] stop")
+            self.supervisor.movieStopRecording()
+            time.sleep(0.5)
+
+            basename = self.current_recording_basename
+            self.current_recording_basename = None
+
+            if basename:
+                full_path = os.path.join(self.recordings_dir, basename)
+                print(f"[recording] saved? {os.path.exists(full_path)} -> {full_path}")
+            return basename
         except Exception as e:
-            if self.verbose_level >= 1:
-                print(f"Warning: movieStop failed: {e}")
+            print(f"[recording] movieStopRecording failed: {e}")
+            return None
     
     def get_joint_positions(self):
         """Get current positions of all joints."""
@@ -519,11 +547,13 @@ class SCARATerminal(cmd.Cmd):
                                         video_basename = None
 
                                     video_path = None
+                                    # start recording (store returned start path but use stop result)
+                                    recording_started_path = None
                                     if hasattr(self, 'controller') and self.controller and video_basename:
                                         try:
-                                            video_path = self.controller.start_recording(video_basename)
+                                            recording_started_path = self.controller.start_recording(video_basename)
                                         except Exception:
-                                            video_path = None
+                                            recording_started_path = None
 
                                     # execute command
                                     self.onecmd(cmd_str)
@@ -535,18 +565,18 @@ class SCARATerminal(cmd.Cmd):
                                     except Exception:
                                         pass
 
-                                    # stop recording (if started)
-                                    if hasattr(self, 'controller') and self.controller and video_path:
+                                    # stop recording (capture returned basename)
+                                    recorded_basename = None
+                                    if hasattr(self, 'controller') and self.controller and recording_started_path:
                                         try:
-                                            self.controller.stop_recording()
+                                            recorded_basename = self.controller.stop_recording()
                                         except Exception:
-                                            pass
+                                            recorded_basename = None
 
                                     # Send an acknowledgment back to client including video filename if present
                                     try:
-                                        if video_path:
-                                            # send only basename so clients can reference via known folder
-                                            conn.sendall(f"OK|{os.path.basename(video_path)}\n".encode('utf-8'))
+                                        if recorded_basename:
+                                            conn.sendall(f"OK|{recorded_basename}\n".encode('utf-8'))
                                         else:
                                             conn.sendall(b"OK\n")
                                     except:

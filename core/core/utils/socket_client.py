@@ -23,10 +23,17 @@ def send_commands_to_socket(
     port: int = DEFAULT_SOCKET_PORT,
     timeout: float = DEFAULT_SOCKET_TIMEOUT,
 ) -> List[Dict[str, str]]:
-    """Send validated commands to the SCARA socket server and collect responses."""
+    """Send validated commands to the SCARA socket server and collect responses.
+
+    If no parsed function-calls are found, fall back to sending the raw text
+    as a single command so the Webots server can still execute/record.
+    """
     commands = normalize_socket_commands(command_text)
+    # fallback: if no parsed commands, send raw LLM output as a single command
     if not commands:
-        raise ValueError("No valid socket commands were found in the LLM output.")
+        commands = [command_text.strip()]
+        if not commands[0]:
+            raise ValueError("No valid socket commands were found in the LLM output.")
 
     responses: List[Dict[str, str]] = []
 
@@ -47,6 +54,8 @@ def send_commands_to_socket(
 
             responses.append({"command": command, "response": response})
 
+
+    print(f"responses is : {responses}")
     return responses
 
 
