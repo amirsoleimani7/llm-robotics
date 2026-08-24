@@ -7,7 +7,7 @@ from rest_framework import status
 from .models import Conversation, Message, User
 from .serializers import ConversationSerilizer, MessageSerializer, UserSerializer
 from rest_framework.decorators import api_view
-# from .utils.create_llm import agent
+from .utils.create_llm import agent
 from .utils.socket_client import send_commands_to_socket
 
 

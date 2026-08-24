@@ -5,7 +5,8 @@ from .rag_functions import get_system_prompt, post_process_output
 
 os.environ['HF_HUB_OFFLINE'] = '1'
 os.environ.setdefault('PYTORCH_CUDA_ALLOC_CONF', 'expandable_segments:True')
-MODEL_PATH = "/home/amir/Desktop/projects/llm-con-test/models/hub/models--microsoft--Phi-3.5-mini-instruct/snapshots/2fe192450127e6a83f7441aef6e3ca586c338b77"
+# MODEL_PATH = "/home/amir/Desktop/projects/llm-con-test/models/hub/models--microsoft--Phi-3.5-mini-instruct/snapshots/2fe192450127e6a83f7441aef6e3ca586c338b77"
+MODEL_PATH_1 = "/home/amir/Desktop/projects/models/hub/models--microsoft--Phi-3.5-mini-instruct/snapshots/2fe192450127e6a83f7441aef6e3ca586c338b77"
 
 
 
@@ -98,4 +99,4 @@ class RobotController:
         return "System Error: LLM failed to generate valid commands after multiple attempts."
 
 # making the instance
-# agent = RobotController(model_path=MODEL_PATH)
+agent = RobotController(model_path=MODEL_PATH_1)
