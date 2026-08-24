@@ -175,7 +175,6 @@ function Side() {
           <div className="flex flex-col gap-1">
             <h1 className="text-sm  text-second-color-3 ml-2">Pinned</h1>
             {global_handlers.conversations.map((conv, index) => {
-              // console.log(`${global_handlers.current_conversation.conversation_id} ==? ${conv.conversation_id} , ${global_handlers.current_conversation.conversation_id === conv.conversation_id}`);
               return conv.is_pinned ? (
                 <Chats
                   key={conv.conversation_id}
@@ -183,8 +182,6 @@ function Side() {
                   created_date={conv.created_at}
                   last_edited={conv.lastedited_at}
                   is_pinned={conv.is_pinned}
-                  
-                  
                 />
               ) : (
                 <></>
@@ -201,7 +198,6 @@ function Side() {
                   created_date={conv.created_at}
                   last_edited={conv.lastedited_at}
                   is_pinned={conv.is_pinned}
-                  
                 />
               ) : (
                 <></>

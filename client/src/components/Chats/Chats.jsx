@@ -52,47 +52,40 @@ export default function Chats({
     console.log(`conversation id is : ${conversationId}`);
   };
 
-const go_to_chat_detail = async (e) => {
-  // ✅ Use e.currentTarget, not e.target
-  const { dataset } = e.currentTarget;
-  const conversationId = dataset.conversationId;
-  const createdDate = dataset.createdDate;
-  const lastEdited = dataset.lastEdited;
+  const go_to_chat_detail = async (e) => {
+    // ✅ Use e.currentTarget, not e.target
+    const { dataset } = e.currentTarget;
+    const conversationId = dataset.conversationId;
+    const createdDate = dataset.createdDate;
+    const lastEdited = dataset.lastEdited;
 
-  console.log("Clicked conversation:", conversationId);
+    console.log("Clicked conversation:", conversationId);
 
-  handler.setcurrentconversation({
-    conversation_id: conversationId,
-    created_at: createdDate,
-    lastedited_at: lastEdited,
-  });
+    handler.setcurrentconversation({
+      conversation_id: conversationId,
+      created_at: createdDate,
+      lastedited_at: lastEdited,
+    });
 
-  // ✅ Use the conversationId from the dataset, not the prop
-  const res = await axios.get(
-    `http://127.0.0.1:8000/get_conversation/${conversationId}`,
-  );
+    // ✅ Use the conversationId from the dataset, not the prop
+    const res = await axios.get(
+      `http://127.0.0.1:8000/get_conversation/${conversationId}`,
+    );
 
-  handler.setMessages(res.data);
-  moveToBottom();
-};
+    handler.setMessages(res.data);
+    moveToBottom();
+  };
 
   console.log(handler.current_conversation);
 
   return (
     <>
       <div
-        className="group w-full p-2  rounded-xl duration-75 ease-in-out transition-all dark:hover:bg-second-color-1 hover:bg-select-light-mode hover:cursor-pointer  relative"
+        className={`group w-full p-2 rounded-xl duration-75 ease-in-out transition-all dark:hover:bg-second-color-1 hover:bg-select-light-mode hover:cursor-pointer  relative ${conversation_id == handler.current_conversation.conversation_id ? "dark:bg-[#2c2c2e] bg-select-light-mode" : ""}`}
         onClick={go_to_chat_detail}
         data-conversation-id={conversation_id}
         data-created-date={created_date}
         data-last-edited={last_edited}
-        style={
-          {
-            // TODO : fix the highlight of the selected chat
-            backgroundColor: `${conversation_id == handler.current_conversation.conversation_id ? "#2c2c2e" : ""}`,
-            color: `${conversation_id == handler.current_conversation.conversation_id ? "#0077b6" : ""}`,
-          }
-        }
       >
         {conversation_id}
         <div className="z-10 absolute right-1 top-1 aspect-square rounded-full flex group-hover:opacity-100 opacity-0 justify-center items-center p-2  dark:hover:bg-second-color-2 hover:bg-gray-300 dark:outline-gray-700 dark:hover:outline dark:hover:outline-1 transition-all duration-100 ease-in-out ">

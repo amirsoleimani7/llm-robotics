@@ -98,4 +98,4 @@ class RobotController:
         return "System Error: LLM failed to generate valid commands after multiple attempts."
 
 # making the instance
-agent = RobotController(model_path=MODEL_PATH)
+# agent = RobotController(model_path=MODEL_PATH)

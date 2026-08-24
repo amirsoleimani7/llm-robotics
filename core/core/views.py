@@ -7,7 +7,7 @@ from rest_framework import status
 from .models import Conversation, Message, User
 from .serializers import ConversationSerilizer, MessageSerializer, UserSerializer
 from rest_framework.decorators import api_view
-from .utils.create_llm import agent
+# from .utils.create_llm import agent
 from .utils.socket_client import send_commands_to_socket
 
 
@@ -22,7 +22,8 @@ def handle_prompt(request):
 
             if not llm_response or llm_response.startswith("System Error"):
                 return Response(
-                    {"detail": "LLM did not return a valid robot command.", "llm_response": llm_response},
+                    {"detail": "LLM did not return a valid robot command.",
+                        "llm_response": llm_response},
                     status=status.HTTP_502_BAD_GATEWAY,
                 )
 
@@ -63,7 +64,7 @@ def handle_prompt(request):
             return Response(payload, status=status.HTTP_200_OK)
 
         except Exception as e:
-            print(f"we are in the exception : " , e)
+            print(f"we are in the exception : ", e)
             return Response("error", status=status.HTTP_204_NO_CONTENT)
 
 
@@ -190,7 +191,8 @@ def get_user(request):
             user = User.objects.get(user_id="user")
 
             with user.profile_picture.open('rb') as image_file:
-                encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+                encoded_string = base64.b64encode(
+                    image_file.read()).decode('utf-8')
 
             format = user.profile_picture.name.split('.')[-1].lower()
 
@@ -200,15 +202,14 @@ def get_user(request):
                 'format': format,
                 'data_url': f'data:image/{format};base64,{encoded_string}'
             })
-        
 
         except ObjectDoesNotExist:
             made_user = User(user_id="user", name="change this")
             made_user.save()
-        
-            with made_user.profile_picture.open('rb') as image_file:
-                encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
 
+            with made_user.profile_picture.open('rb') as image_file:
+                encoded_string = base64.b64encode(
+                    image_file.read()).decode('utf-8')
 
             format = made_user.profile_picture.name.split('.')[-1].lower()
 
@@ -218,4 +219,3 @@ def get_user(request):
                 'format': format,
                 'data_url': f'data:image/{format};base64,{encoded_string}'
             })
-        
