@@ -11,12 +11,12 @@ export const topButtons = [
     label: "Toggle Sidebar",
     onClick: "handle_sidebar", // This will be passed from parent
   },
-  {
-    id: "search",
-    icon: FaSearch,
-    label: "Search",
-    onClick: "handle_search",
-  },
+  // {
+  //   id: "search",
+  //   icon: FaSearch,
+  //   label: "Search",
+  //   onClick: "handle_search",
+  // },
   {
     id: "newChat",
     icon: RiChatNewFill,

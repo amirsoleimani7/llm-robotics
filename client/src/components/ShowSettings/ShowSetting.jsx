@@ -130,6 +130,7 @@ function Setting() {
                 display: "flex",
                 justifyContent: "center",
               },
+              
             }}
           />
 
@@ -138,7 +139,7 @@ function Setting() {
             animate={{opacity : 1, y: 0 }}
             exit={{opacity : 0 , y: 10 }}
             transition={{  duration: 0.1 }}
-            className="p-4 flex flex-col w-[700px] h-[500px]  rounded-2xl bg-white  dark:bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none"
+            className="p-4 flex flex-col w-[700px] h-[500px]  rounded-2xl bg-white  dark:bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none select-none"
             ref={SettingsRef}
           >
             <div className="flex justify-between font-bold ml-2">

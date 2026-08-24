@@ -76,12 +76,10 @@ export default function Chats({
     moveToBottom();
   };
 
-  console.log(handler.current_conversation);
-
   return (
     <>
       <div
-        className={`group w-full p-2 rounded-xl duration-75 ease-in-out transition-all dark:hover:bg-second-color-1 hover:bg-select-light-mode hover:cursor-pointer  relative ${conversation_id == handler.current_conversation.conversation_id ? "dark:bg-[#2c2c2e] bg-select-light-mode" : ""}`}
+        className={`group w-full p-2 rounded-xl  duration-75 ease-in-out transition-all dark:hover:bg-second-color-1 hover:bg-select-light-mode hover:cursor-pointer  relative ${conversation_id == handler.current_conversation.conversation_id ? "dark:bg-[#2c2c2e] bg-select-light-mode" : ""}`}
         onClick={go_to_chat_detail}
         data-conversation-id={conversation_id}
         data-created-date={created_date}

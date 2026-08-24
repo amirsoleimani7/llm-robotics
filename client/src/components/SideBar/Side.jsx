@@ -70,7 +70,7 @@ function Side() {
 
   return (
     <>
-      <div className="fixed top-2 w-[170px]  gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start dark:max-md:bg-black-rgba max-md:top-0 max-md:h-12 -left-full ">
+      <div className="fixed top-2 w-[170px]  gap-1 flex justify-around items-center p-1 duration-300 ease-in-out transition-all max-md:left-0 max-md:w-full max-md:justify-start dark:max-md:bg-black-rgba max-md:top-0 max-md:h-12 -left-full select-none">
         <button
           onClick={handle_sidebar}
           className="aspect-square p-3 rounded-[2rem] flex items-center justify-center dark:hover:bg-main-color-3 hover:bg-select-light-mode duration-200 ease-in-out"
@@ -89,7 +89,7 @@ function Side() {
           <SVGComponent />
         </div>
 
-        <div className="flex w-3/4 p-1 gap-1  dark:bg-main-color-2 rounded-[2rem] border  dark:border-gray-600 border-gray-300 shadow-sm">
+        <div className="flex w-1/2 p-1 gap-1  dark:bg-main-color-2 rounded-[2rem] border  dark:border-gray-600 border-gray-300 shadow-sm ">
           {topButtons.map((btn) => {
             const Icon = btn.icon;
             return (
@@ -163,17 +163,17 @@ function Side() {
         </div>
 
         <button
-          className="flex justify-center items-center w-full px-2 py-3  rounded-3xl dark:bg-second-color-2 bg-white shadow-sm border-y dark:border-gray-500 gap-2
-          hover:shadow-md transition-all duration-200 ease-in-out"
+          className="flex justify-center items-center w-full px-2 py-3  rounded-3xl dark:bg-second-color-2 bg-white shadow-sm border-y dark:border-gray-700 dark:hover:shadow-inner gap-2
+          hover:shadow-md transition-all duration-200 ease-in-out "
           onClick={handle_newChat}
         >
           <RiChatNewFill />
           <p className="text-sm font-semibold">New Chat</p>
         </button>
-
+        
         <div className="h-full overflow-y-scroll scrollbar-thin dark:scrollbar-thumb-[#3c3c3d]  dark:scrollbar-track-[#1b1b1c] scrollbar-thumb-[#e6e8ea] scrollbar-track-white">
           <div className="flex flex-col gap-1">
-            <h1 className="text-sm  text-second-color-3 ml-2">Pinned</h1>
+            <h1 className="text-xs text-second-color-3 ml-2">Pinned</h1>
             {global_handlers.conversations.map((conv, index) => {
               return conv.is_pinned ? (
                 <Chats
@@ -189,7 +189,7 @@ function Side() {
             })}
           </div>
           <div className=" flex flex-col gap-1 h-full">
-            <h1 className="text-sm  text-second-color-3 ml-2 ">Other</h1>
+            <h1 className="text-sm  text-second-color-3 ml-2 w-1/2 border-b border-main-color-2 self-center my-1"></h1>
             {global_handlers.conversations.map((conv, index) => {
               return !conv.is_pinned ? (
                 <Chats
