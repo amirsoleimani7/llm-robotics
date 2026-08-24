@@ -11,5 +11,6 @@ urlpatterns = [
     path("update_conversation/<int:conversation_id>", views.update_conversation),
     path("update_user", views.update_user),
     path("get_user" , views.get_user),
-    path("handle_prompt" ,views.handle_prompt)
+    path("handle_prompt" ,views.handle_prompt),
+    path("recordings/<str:filename>/", views.serve_recording_video, name="serve_recording_video"),
 ]

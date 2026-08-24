@@ -1,5 +1,5 @@
 import base64
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse, Http404
 from django.core.files.base import ContentFile
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
@@ -9,6 +9,9 @@ from .serializers import ConversationSerilizer, MessageSerializer, UserSerialize
 from rest_framework.decorators import api_view
 from .utils.create_llm import agent
 from .utils.socket_client import send_commands_to_socket
+import os
+
+WEBOTS_RECORDINGS_DIR = "/home/amir/Desktop/projects/llm-robotics/webots-robot/scara_t6/scara_t6/controllers/scara_socket_server/webots_recordings"
 
 @api_view(['GET', 'POST'])
 def handle_prompt(request):
@@ -218,3 +221,11 @@ def get_user(request):
                 'format': format,
                 'data_url': f'data:image/{format};base64,{encoded_string}'
             })
+
+
+@api_view(['GET'])
+def serve_recording_video(request, filename):
+    file_path = os.path.join(WEBOTS_RECORDINGS_DIR, filename)
+    if not os.path.exists(file_path):
+        raise Http404("Video not found")
+    return FileResponse(open(file_path, "rb"), content_type="video/mp4")

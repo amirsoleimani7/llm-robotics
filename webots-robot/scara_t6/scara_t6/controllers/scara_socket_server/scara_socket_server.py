@@ -507,6 +507,38 @@ class SCARATerminal(cmd.Cmd):
             except:
                 pass
     
+    def _run_command(self, cmd_str):
+        """Run one robot command without starting/stopping recording."""
+        self.onecmd(cmd_str)
+        if self.controller:
+            self.controller.step_simulation(300)
+            time.sleep(0.2)
+
+    def _handle_prompt_batch(self, commands, conn):
+        """Record one video for the whole prompt."""
+        video_basename = f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}_prompt.mp4"
+
+        recording_started_path = None
+        if self.controller:
+            recording_started_path = self.controller.start_recording(video_basename)
+
+        for cmd_str in commands:
+            cmd_str = cmd_str.strip()
+            if not cmd_str:
+                continue
+            print(f"\n[Remote] {cmd_str}")
+            self._run_command(cmd_str)
+
+        recorded_basename = None
+        if self.controller and recording_started_path:
+            recorded_basename = self.controller.stop_recording()
+            time.sleep(1.0)
+
+        if recorded_basename:
+            conn.sendall(f"OK|{recorded_basename}\n".encode("utf-8"))
+        else:
+            conn.sendall(b"OK\n")
+
     def start_socket_server(self):
         """Start a background socket server to receive remote commands."""
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -526,65 +558,23 @@ class SCARATerminal(cmd.Cmd):
                     conn, addr = self.server_socket.accept()
                     print(f"\n[*] Socket connection established by {addr}")
                     print(self.prompt, end='', flush=True)
+
                     with conn:
+                        buffer = ""
                         while self.running:
-                            data = conn.recv(1024)
+                            data = conn.recv(4096)
                             if not data:
                                 break
-                            # Handle potentially batched strings split by newlines
-                            commands = data.decode('utf-8').strip().split('\n')
-                            for cmd_str in commands:
-                                cmd_str = cmd_str.strip()
-                                if cmd_str:
-                                    print(f"\n[Remote] {cmd_str}")
-                                    # prepare recording filename
-                                    video_basename = None
-                                    try:
-                                        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-                                        safe_cmd = re.sub(r'[^A-Za-z0-9_\-]', '_', cmd_str)[:80]
-                                        video_basename = f"{timestamp}_{safe_cmd}.mp4"
-                                    except Exception:
-                                        video_basename = None
+                            buffer += data.decode("utf-8")
 
-                                    video_path = None
-                                    # start recording (store returned start path but use stop result)
-                                    recording_started_path = None
-                                    if hasattr(self, 'controller') and self.controller and video_basename:
-                                        try:
-                                            recording_started_path = self.controller.start_recording(video_basename)
-                                        except Exception:
-                                            recording_started_path = None
+                        commands = [c for c in buffer.split("\n") if c.strip()]
+                        if commands:
+                            self._handle_prompt_batch(commands, conn)
+                            print(self.prompt, end='', flush=True)
 
-                                    # execute command
-                                    self.onecmd(cmd_str)
-
-                                    # allow simulation to run briefly to capture motion
-                                    try:
-                                        if hasattr(self, 'controller') and self.controller:
-                                            self.controller.step_simulation(100)
-                                    except Exception:
-                                        pass
-
-                                    # stop recording (capture returned basename)
-                                    recorded_basename = None
-                                    if hasattr(self, 'controller') and self.controller and recording_started_path:
-                                        try:
-                                            recorded_basename = self.controller.stop_recording()
-                                        except Exception:
-                                            recorded_basename = None
-
-                                    # Send an acknowledgment back to client including video filename if present
-                                    try:
-                                        if recorded_basename:
-                                            conn.sendall(f"OK|{recorded_basename}\n".encode('utf-8'))
-                                        else:
-                                            conn.sendall(b"OK\n")
-                                    except:
-                                        pass
-                                    print(self.prompt, end='', flush=True)
                 except socket.timeout:
                     continue
-                except Exception as e:
+                except Exception:
                     pass # Ignore standard disconnect/timeout errors
                     
         # Run socket server daemon thread so it doesn't block Webots stdin
