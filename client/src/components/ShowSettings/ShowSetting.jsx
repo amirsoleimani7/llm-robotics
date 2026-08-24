@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Toaster, toast } from "sonner";
 import { useGlobalContext } from "../contextHandle/Context";
 import { IoClose } from "react-icons/io5";
@@ -94,9 +94,27 @@ function Setting() {
     }
   };
 
+  const SettingsRef = useRef(null);
+
+  useEffect(() => {
+    function clickOutside(event) {
+      if (
+        SettingsRef.current &&
+        !SettingsRef.current.contains(event.target) &&
+        handle.show_settings
+      ) {
+        handle.setShowSetting(false);
+      }
+    }
+    document.addEventListener("mousedown", clickOutside);
+    return () => {
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, [SettingsRef, handle]);
+
   return (
     <div
-      className="z-50 absolute w-screen h-screen bg-[rgba(0,0,0,0.7)] flex justify-center items-center backdrop-blur-sm"
+      className="z-50  absolute w-screen h-screen bg-[rgba(0,0,0,0.7)] flex justify-center items-center backdrop-blur-sm"
       style={{
         display: `${handle.show_settings ? "flex" : "none"}`,
       }}
@@ -114,7 +132,10 @@ function Setting() {
         }}
       />
 
-      <div className="p-4 flex flex-col w-[700px] h-[500px] rounded-2xl bg-white  dark:bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none">
+      <div
+        className="p-4 flex flex-col w-[700px] h-[500px]  rounded-2xl bg-white  dark:bg-second-color max-md:w-full max-md:h-[80%] max-md:mt-auto max-md:rounded-b-none"
+        ref={SettingsRef}
+      >
         <div className="flex justify-between font-bold ml-2">
           <h1>Settings</h1>
           <button

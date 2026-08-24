@@ -50,7 +50,7 @@ function App() {
       >
         {handler.messages.length === 0 ? (
           <>
-            <div className="w-[100%] h-[50px] text-center flex items-center justify-center gap-5">
+            <div className="w-[100%] h-[50px] text-center flex items-center justify-center gap-5 ">
               <div className="w-[50px] h-[50px]">
                 <SVGComponent />
               </div>

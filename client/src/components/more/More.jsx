@@ -55,7 +55,7 @@ function More({ showMore, positions, is_pinned, conversation_id, more_ref }) {
 
   return createPortal(
     <div
-      className="flex dark:text-white bg-white   dark:bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-xl top-10 -right-[35%] p-1 shadow-lg z-40"
+      className="flex  dark:text-white bg-white   dark:bg-second-color-1 flex-col w-[125px] transition-all duration-100 absolute rounded-xl top-10 -right-[35%] p-1 shadow-lg z-40"
       id="more-div"
       ref={more_ref}
       style={{
@@ -64,10 +64,10 @@ function More({ showMore, positions, is_pinned, conversation_id, more_ref }) {
         pointerEvents: "auto",
       }}
     >
-      <button className="flex items-center gap-1  h-[40px] hover:bg-select-light-mode dark:hover:bg-second-color-2 rounded-xl px-2">
+      {/* <button className="flex items-center gap-1  h-[40px] hover:bg-select-light-mode dark:hover:bg-second-color-2 rounded-xl px-2">
         <MdDriveFileRenameOutline size={20} className="w-1/4" />
         <p className="w-3/4 text-left">Rename</p>
-      </button>
+      </button> */}
       {!is_pinned ? (
         <button
           className="flex items-center gap-1  h-[40px] hover:bg-select-light-mode  dark:hover:bg-second-color-2 rounded-xl px-2"
@@ -87,10 +87,10 @@ function More({ showMore, positions, is_pinned, conversation_id, more_ref }) {
           <p className="w-3/4 text-left">unPin</p>
         </button>
       )}{" "}
-      <button className="flex items-center gap-1  h-[40px] hover:bg-select-light-mode dark:hover:bg-second-color-2 rounded-xl px-2">
+      {/* <button className="flex items-center gap-1  h-[40px] hover:bg-select-light-mode dark:hover:bg-second-color-2 rounded-xl px-2">
         <RiShareForwardLine size={20} className="w-1/4" />{" "}
         <p className="w-3/4 text-left">Share</p>
-      </button>
+      </button> */}
       <button
         className="flex items-center gap-1  h-[40px] dark:hover:bg-red-950 hover:bg-red-100  text-red-500 rounded-xl px-2 font-semibold"
         onClick={handle_delete}
