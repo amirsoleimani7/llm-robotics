@@ -28,6 +28,10 @@ export default function ChatDetail({ covnersation_id }) {
                   </React.Fragment>
                 ))}
               </p>
+              <div className="w-1/2 h-80  rounded-xl bg-main-color-2 overflow-hidden">
+                {/* video should go here */}
+                <video src="" controls className="w-full h-full "></video>
+              </div>
             </div>
           ) : null}
         </React.Fragment>
