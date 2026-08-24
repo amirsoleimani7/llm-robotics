@@ -49,7 +49,7 @@ export default function Chats({
     });
 
     setShowMore(!show_more);
-    console.log(`conversation id is : ${conversationId}`);
+    // console.log(`conversation id is : ${conversationId}`);
   };
 
   const go_to_chat_detail = async (e) => {
@@ -59,7 +59,7 @@ export default function Chats({
     const createdDate = dataset.createdDate;
     const lastEdited = dataset.lastEdited;
 
-    console.log("Clicked conversation:", conversationId);
+    // console.log("Clicked conversation:", conversationId);
 
     handler.setcurrentconversation({
       conversation_id: conversationId,

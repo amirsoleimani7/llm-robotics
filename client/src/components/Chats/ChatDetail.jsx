@@ -6,11 +6,7 @@ import Typewriter from "./typewriter";
 export default function ChatDetail({ covnersation_id }) {
 
   const handler = useGlobalContext();
-  
-  useEffect(() => {
-    console.log("curren conversaions is :" , handler.current_conversation.covnersation_id);
 
-  }, [handler.current_conversation]);
   
   const { messages } = useGlobalContext();
   

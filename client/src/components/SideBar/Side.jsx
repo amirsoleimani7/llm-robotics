@@ -24,7 +24,7 @@ export const update_conversations = async (handler) => {
 export const update_user = async (handler) => {
   const res = await axios.get("http://127.0.0.1:8000/get_user");
   handler.setUser(res.data);
-  console.log(res.data);
+  // console.log(res.data);
 };
 
 function Side() {
@@ -90,7 +90,7 @@ function Side() {
         </div>
 
         <div className="flex w-1/2 p-1 gap-1  dark:bg-main-color-2 rounded-[2rem] border  dark:border-gray-600 border-gray-300 shadow-sm ">
-          {topButtons.map((btn) => {
+          {topButtons.map((btn, index) => {
             const Icon = btn.icon;
             return (
               <Tooltip
@@ -101,7 +101,7 @@ function Side() {
                 mouseEnterDelay={0}
                 mouseLeaveDelay={0}
                 arrow={true}
-                key={btn.id}
+                key={index}
               >
                 <button
                   key={btn.id}
@@ -171,13 +171,14 @@ function Side() {
           <p className="text-sm font-semibold">New Chat</p>
         </button>
         
-        <div className="h-full overflow-y-scroll scrollbar-thin dark:scrollbar-thumb-[#3c3c3d]  dark:scrollbar-track-[#1b1b1c] scrollbar-thumb-[#e6e8ea] scrollbar-track-white">
+        <div className="h-full overflow-y-scroll scrollbar-thin dark:scrollbar-thumb-[#3c3c3d]  dark:scrollbar-track-[#1b1b1c] scrollbar-thumb-[#e6e8ea] scrollbar-track-white"
+        >
           <div className="flex flex-col gap-1">
             <h1 className="text-xs text-second-color-3 ml-2">Pinned</h1>
             {global_handlers.conversations.map((conv, index) => {
               return conv.is_pinned ? (
                 <Chats
-                  key={conv.conversation_id}
+                  key={index}
                   conversation_id={conv.conversation_id}
                   created_date={conv.created_at}
                   last_edited={conv.lastedited_at}
