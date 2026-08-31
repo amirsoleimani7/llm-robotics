@@ -66,7 +66,7 @@ def handle_prompt(request):
             return Response(payload, status=status.HTTP_200_OK)
 
         except Exception as e:
-            print(f"we are in the exception : ", e)
+            print(f"we are in the exception : asdas", e)
             return Response("error", status=status.HTTP_204_NO_CONTENT)
 
 

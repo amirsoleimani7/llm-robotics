@@ -1,17 +1,16 @@
-
-import re
 import math
+import re
 from typing import Dict, List, Optional, Tuple
+
+from .command_docs import COMMAND_DOCS
 
 
 AVAILABLE_FUNCTIONS = {
     "home": {"params": [], "ranges": {}, "aliases": ["move_home"]},
     "park": {"params": [], "ranges": {}, "aliases": []},
-   
     "base": {"params": ["angle"], "ranges": {"angle": (-3.14159, 3.14159)}, "aliases": []},
     "arm": {"params": ["angle"], "ranges": {"angle": (-1.50, 1.50)}, "aliases": []},
     "shaft": {"params": ["position"], "ranges": {"position": (-0.15, 0.0)}, "aliases": []},
-   
     "base_rel": {"params": ["delta"], "ranges": {"delta": (-1.57, 1.57)}, "aliases": []},
     "arm_rel": {"params": ["delta"], "ranges": {"delta": (-1.50, 1.50)}, "aliases": []},
     "shaft_rel": {"params": ["delta"], "ranges": {"delta": (-0.15, 0.15)}, "aliases": []},
@@ -70,6 +69,8 @@ def _parse_command(command_text: str) -> Tuple[Optional[str], List[str]]:
         return name, args
 
     parts = command_text.split()
+    if not parts:
+        return None, []
     name = parts[0].lower()
     args = parts[1:]
     return name, args
@@ -130,9 +131,7 @@ def validate_function_call(function_call: str) -> Tuple[bool, Optional[str], Opt
 
         if param_name == "level":
             normalized_args.append(str(int(value)))
-        elif param_name == "factor":
-            normalized_args.append(f"{value:.3f}".rstrip("0").rstrip("."))
-        elif param_name == "seconds":
+        elif param_name in {"factor", "seconds"}:
             normalized_args.append(f"{value:.3f}".rstrip("0").rstrip("."))
         else:
             normalized_args.append(f"{value:.6f}".rstrip("0").rstrip("."))
@@ -170,14 +169,13 @@ def extract_function_calls(text: str) -> List[Dict]:
                 spec = AVAILABLE_FUNCTIONS[command_name]
                 params = {name: raw_args[idx] for idx, name in enumerate(spec["params"])}
 
-                # If command is move_to, ensure target is within kinematic reach.
                 if command_name == "move_to":
                     try:
                         x = float(params.get("x", 0.0))
                         y = float(params.get("y", 0.0))
                         z = float(params.get("z", 0.0))
 
-                        # SCARA link lengths (match controller): L1=0.3, L2=0.3
+                        # SCARA reach check
                         L1 = 0.3
                         L2 = 0.3
                         max_reach = L1 + L2
@@ -185,10 +183,8 @@ def extract_function_calls(text: str) -> List[Dict]:
                         r = math.hypot(x, y)
                         if r > max_reach:
                             scale = max_reach / r
-                            new_x = x * scale
-                            new_y = y * scale
-                            params["x"] = f"{new_x:.6f}".rstrip("0").rstrip(".")
-                            params["y"] = f"{new_y:.6f}".rstrip("0").rstrip(".")
+                            params["x"] = f"{x * scale:.6f}".rstrip("0").rstrip(".")
+                            params["y"] = f"{y * scale:.6f}".rstrip("0").rstrip(".")
                             params["z"] = f"{z:.6f}".rstrip("0").rstrip(".")
                             normalized_command = f"move_to {params['x']} {params['y']} {params['z']}"
                     except Exception:
@@ -215,41 +211,26 @@ def format_function_calls(function_calls: List[Dict]) -> str:
 def post_process_output(raw_output: str) -> str:
     """Clean and validate LLM output for the socket server."""
     function_calls = extract_function_calls(raw_output)
+    return format_function_calls(function_calls) if function_calls else ""
 
-    if function_calls:
-        return format_function_calls(function_calls)
 
-    return ""
+def _format_retrieved_docs(retrieved_docs: List[str]) -> str:
+    if not retrieved_docs:
+        return "- No relevant docs found."
 
-def get_system_prompt() -> str:
-    """Get the system prompt with available socket commands."""
-    command_lines = []
-    for command_name, spec in AVAILABLE_FUNCTIONS.items():
-        params = spec["params"]
-        if not params:
-            example = command_name
-        elif command_name == "led":
-            example = "led on"
-        elif command_name == "save_pos":
-            example = "save_pos pickup_pose"
-        elif command_name == "goto_pos":
-            example = "goto_pos pickup_pose"
-        elif command_name == "move_to":
-            example = "move_to 0.30 0.20 -0.10"
-        elif command_name == "speed":
-            example = "speed 0.5"
-        elif command_name == "wait":
-            example = "wait 2.0"
-        elif command_name == "verbose":
-            example = "verbose 1"
-        else:
-            example = f"{command_name} <{' '.join(params)}>"
-        command_lines.append(f"- {example}")
+    return "\n".join(f"- {doc}" for doc in retrieved_docs)
+
+
+def build_system_prompt(retrieved_docs: List[str]) -> str:
+    docs_text = _format_retrieved_docs(retrieved_docs)
 
     return f"""You are a robot command generator for a SCARA socket server.
 
-AVAILABLE COMMANDS:
-{chr(10).join(command_lines)}
+RETRIEVED COMMAND DOCS:
+{docs_text}
+
+AVAILABLE COMMAND SCHEMA:
+{AVAILABLE_FUNCTIONS}
 
 CRITICAL RULES:
 1. Output ONLY valid socket commands.
@@ -257,30 +238,10 @@ CRITICAL RULES:
 3. Do not add step numbers, explanations, markdown, or code fences.
 4. Use the exact command names accepted by the socket server.
 5. Keep numeric values within valid ranges.
+6. Prefer commands supported by the retrieved docs.
+"""
 
-VALID RANGES:
-- base: [-3.14159, 3.14159]
-- arm: [-1.50, 1.50]
-- shaft: [-0.15, 0.00]
-- move_to: x/y roughly within [-0.60, 0.60], z within [-0.15, 0.00]
-- speed: [0.1, 2.0]
-- verbose: [0, 2]
 
-EXAMPLES:
-home
-base 0.5
-arm -0.3
-shaft -0.1
-move_to 0.30 0.20 -0.10
-grip
-release
-save_pos pickup_pose
-goto_pos pickup_pose
-list_pos
-delete_pos pickup_pose
-speed 0.5
-led on
-wait 2.0
-status
-
-Only output commands that the socket server can execute directly."""
+def get_system_prompt() -> str:
+    """Fallback static prompt."""
+    return build_system_prompt([])
