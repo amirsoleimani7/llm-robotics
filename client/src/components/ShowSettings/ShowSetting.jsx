@@ -219,7 +219,7 @@ function Setting() {
                       </button>
                     </div>
                   </div>
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <p>Language</p>
                     <div className="flex gap-1">
                       <button
@@ -239,7 +239,7 @@ function Setting() {
                         فارسی
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               ) : (
                 <div className="flex flex-col w-[75%]  gap-4 max-md:w-full">

@@ -29,10 +29,11 @@ export default function ChatDetail({ covnersation_id }) {
 
               {m.video_url ? (
                 <div className="w-1/2 h-80 rounded-xl bg-main-color-2 overflow-hidden mt-2">
+
                   <video
                     src={`${VIDEO_BASE_URL}${m.video_url}`}
-                    controls
-                    className="w-full h-full"
+                    controls  
+                    className="w-full h-full object-cover"
                   />
                 </div>
               ) : null}
