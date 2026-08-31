@@ -213,7 +213,7 @@ The React app will run on `http://localhost:3000`
 ## 📸 User Interface Screenshots
 
 ### Main Chat Interface
-![Main Chat Area](docs/appscreens/main-chat-section.png)
+![Main Chat Area](docs/appscreens/new-pic.png)
 
 The main conversation area showing the chat history with user queries and robot responses. Users can enter natural language commands in the input field at the bottom.
 
